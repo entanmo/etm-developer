@@ -11,7 +11,7 @@
     "rules": {
         "comma-dangle": [2, "always-multiline"],
         "no-var": "error",
-        "no-unused-vars": "warn",
+        "no-unused-vars": "off",
         "camelcase": "off",
         "no-extra-boolean-cast": "off"
     }
