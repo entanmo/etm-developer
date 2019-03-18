@@ -1,6 +1,59 @@
-# 智能合约SDK详解
-开发之前：
-开发dapp中的智能合约需要了解合约本身支持什么功能，这里列举了所有的功能，大家可以根据自己的需求查找相应功能函数。也可以参照给出的[demo](demo.md)进行学习。
+# 合约SDK
+开发DApp的智能合约需要了解entanmo侧链支持的合约相关功能，本章列举了所有的功能，大家可以根据自己的需求查找相应功能函数。更多功能可以参考后续【案例】章节。
+
+* [智能合约SDK](#-智能合约SDK详解)
+	* [1.余额](#1余额)
+		* [1.1 获取账户余额](#11-获取账户余额)
+		* [1.2 增加余额](#12-增加余额)
+		* [1.3 减少余额](#13-减少余额)
+		* [1.4 转账](14-转账)
+	* [2.数据库](#2数据库)
+		* [2.1 加载模型](#21-加载模型)
+		* [2.2 获取模型](#22-获取模型)
+		* [2.3 获取索引](#23-获取索引)
+		* [2.4 获取模型缓存](#24-获取模型缓存)
+		* [2.5 锁定](#25-锁定)
+		* [2.6 创建模型](#26-创建模型)
+		* [2.7 替代模型](#27-替代模型)
+		* [2.8 更新模型](#28-更新模型)
+		* [2.9 更新整数模型](#29-更新整数模型)
+		* [2.10 删除模型](#210-删除模型)
+	* [3.数据模型](#3数据模型)
+		* [3.1 获取实例](#31-获取实例)
+		* [3.2 获取所有字段](#32-获取所有字段)
+		* [3.3 计数](#33-计数)
+		* [3.4 是否存在](#34-是否存在)
+		* [3.5 查找](#35-查找)
+		* [3.6 查找全部](#36-查找全部)
+	* [4.路由](#4路由)
+		* [4.1 get](#41-get)
+		* [4.2 post](#42-post)
+		* [4.3 put](#43-put)
+	* [5.手续费](#5手续费)
+		* [5.1 添加手续费](#51-添加手续费)
+	* [6.日志](#6日志)
+		* [6.1 设置等级](#61-设置等级)
+		* [6.2 日志](#62-日志)
+		* [6.3 跟踪](#63跟踪)
+		* [6.4 调试](#64-调试)
+		* [6.5 信息输出](65-信息输出)
+		* [6.6 警告](#66-警告)
+		* [6.7 错误](#67-错误) 
+	* [7.工具](#7工具)
+		* [7.1 验证](#71-验证)
+		* [7.2 注册合约](#72-注册合约)
+		* [7.3 获取合约名字](#73-获取合约名字)
+		* [7.4 初始化手续费](#74-初始化手续费)
+		* [7.5 获取手续费](#75-获取手续费)
+		* [7.6 获取默认手续费](#76-获取默认手续费)
+		* [7.7 获取真实时间戳](#77-获取真实时间戳)
+		* [7.8 注册回调](#78-注册回调)
+		* [7.9 应用列表](#79-应用列表)
+		* [7.10 自增id获取](#710-自增id获取)
+		* [7.11 自增id增加](#711-自增id增加)
+		* [7.12 混沌随机](#712-混沌随机)
+
+以下所有接口都可以在[helloworld](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)中查询
 
 ### 1.余额
 余额接口是在合约中操作用户余额的方法集合，所有的操作接口都会在此做详细的说明。
@@ -18,15 +71,18 @@
 示例:
 
 
-	app.balances.get('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM')
-
-	//输出结果
-	{
-	  address: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85',
-	  currency: 'ETM',
-	  balance: '10000000'
-	}
-
+	app.route.get("/balance/:address", async req => {
+	  	let address = req.params.address
+	  	let balance = await app.balances.get(address, 'HLB')
+	  	return { balance }
+	})
+	
+	//输出结果 1*10^16 
+	>{"b":{"s":1,"e":16,"c":[1]},"success":true}
+	//同样可以http访问
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
+	>{"balances":[{"currency":"HLB","balance":"10000000000000000"}],"success":true}
+	
 
 
 #### 1.2 增加余额
@@ -38,13 +94,29 @@
 
 说明：
 
-- 无返回值
+- 无返回值	
 - 增加指定账户、指定币种的余额
-- 只有dapp合约发布者才有权限做此操作
 
 示例:
+	
+	//第一步 查询新账户的余额
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
+	> {"balances":[],"success":true}
+	
+	// 第二步 增加余额
+	
+	app.route.get("/increase", async req => {
+	  await app.balances.increase('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',100000000)
+	})
+	
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/increase
+	> {"success":true}
+	
+	//第三步 再次查询
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
+	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
+	
 
-	app.balances.increase('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 #### 1.3 减少余额
 **app.balances.decrease(address, currency, amount)**
@@ -55,15 +127,27 @@
 
 说明：
 
-- 无返回值
+- 无返回值	
 - 减少指定账户、指定币种的余额
-- 只有dapp合约发布者才有权限做此操作
 
 示例:
 
-```
-app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
-```
+	//第一步 查询
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
+	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
+	
+	//第二步 减少余额
+	app.route.get("/decrease", async req => {
+  		await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
+	})
+	
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/decrease
+	> {"success":true}
+	
+	//第一步 再次查询
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
+	> {"balances":[{"currency":"HLB","balance":"50000000"}],"success":true}
+	
 #### 1.4 转账
 **app.balances.transfer(currency, amount, from, to)**
 
@@ -78,12 +162,19 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.balances.transfer('ETM', '100000', 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'A4MFPoF3c9vCzZ3GGf9sNQ3rDy2q8aXuVF')
+	// 转账
+	app.route.get("/transfer", async req => {
+	  await app.balances.transfer('HLB', 50000000, 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr', 'AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX')
+	})
+	//调用接口并查询 相比上一小节多了50000000
+	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
 
 ### 2.数据库
 #### 2.1 加载模型
 **`aync` app.sdb.load(model, fields, indices)**
+
+参考[init.js](../example/helloworld/init.js)
 
 - `model` 模型名称
 - `fields` 加载到内存中的字段
@@ -97,8 +188,8 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
+	//最重要的工作是把数据加载到内存中，app.sdb.*是操作的内存数据，等区块打包，才会写入数据库，所以load可以保持数据一致性
 	await app.sdb.load('Balance', app.model.Balance.fields(), [['address', 'currency']])
-	await app.sdb.load('Variable', ['key', 'value'], ['key'])
 
 
 #### 2.2 获取模型
@@ -114,22 +205,20 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.sdb.get('Variable', { key: 'foo' })
-	//输出
-	{
-	  key: 'foo',
-	  value: 'bar'
-	}
-
-
-	let balance = app.sdb.get('Balance', { address: 'foo', currency: 'ETM' })
-	//输出
-	{
-	  address: 'foo',
-	  currency: 'ETM',
-	  balance: '1000000'
-	}
-
+	//获取内存中的模型数据
+	app.route.get("/getModel", async req => {
+	  let balance = await app.sdb.get('Balance', {
+	    address: 'AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX',
+	    currency: 'HLB'
+	  })
+	  return {
+	    balance
+	  }
+	})
+	
+	//调用合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getModel
+	> {"balance":{"address":"AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX","currency":"HLB","balance":"100000000"},"success":true}
 
 #### 2.3 获取索引
 **app.sdb.keys(model)**
@@ -141,15 +230,19 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 - 返回一个数据模型的全部索引字段
 
 示例:
-
-	let keys = app.sdb.keys('Variable')
-	for (let i of keys) {
-	  console.log(i)
-	}
-	//输出
-	foo
-	foo1
-	foo2
+	
+	//获取索引
+	app.route.get("/getKeys", async req => {
+	  let keys = await app.sdb.keys('Balance')
+	  return {
+	    keys
+	  }
+	})
+	
+	//调用合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getKeys
+	//TODO  返回值有问题 
+	> {"keys":{},"success":true}
 
 
 #### 2.4 获取模型缓存
@@ -163,17 +256,22 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	let entries = app.sdb.entries('Variable')
-	for (let [key, value] of entries) {
-	  console.log(key, value)
-	}
-	//输出
-	foo bar
-	foo1 bar1
-	foo2 bar2
+	//获取模型缓存
+	app.route.get("/getEntry", async req => {
+	  let entries = await app.sdb.entries('Balance')
+	  return {
+	    entries
+	  }
+	})	
+	// 请求接口以及输出
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getEntry
+	//TODO 返回数据有问题
+	> {"entries":{},"success":true}
 
 #### 2.5 锁定
 **app.sdb.lock(key)**
+
+参考[helloworld.js](../example/helloworld/contract/helloworld.js)
 
 - `key` 索引
 
@@ -185,11 +283,12 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.sdb.lock('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85@nickname'
+	app.sdb.lock("add-word")
 
 
 #### 2.6 创建模型
 **app.sdb.create(model, values)**
+参考[helloworld.js](../example/helloworld/contract/helloworld.js)
 
 - `model` 模型名称
 - `values` 待创建的数据项
@@ -200,12 +299,13 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.sdb.create('Article', {
-	  title: 'This is an article title',
-	  content: 'article contents',
-	  author: 'qingfeng',
-	  tag: 'Science'
-	})
+	hello: async function(words) {
+    //单步添加单词
+    app.sdb.lock("add-word")
+    app.sdb.create('Word', {
+      'words': words
+    })
+  }
 
 #### 2.7 替代模型
 **app.sdb.replace(model, values)**
@@ -219,7 +319,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-
+	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.replace('Account', {
 	  address: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85',
 	  nickname: 'Nakamoto'
@@ -238,6 +338,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
+	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.update('Account', { nickname: 'Nakamoto' }, { nickname: 'Satoshi' })
 
 
@@ -253,7 +354,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-
+	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.increment('Article', { votes: -10 }, { id: '10000' })
 	app.sdb.increment('Article', { comments: 1 }, { id: '10000' })
 
@@ -271,29 +372,56 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 - 删除操作的底层实现目前是标记为deleted, 默认的查询接口都会过滤掉被标记的数据, 但非标准接口或协议仍然可以获取到这些已经被`删除`的数据
 
 示例:
-
+	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.del('Article', { id: '100001' })
 
 
 ### 3.数据模型
 #### 3.1 获取实例
-**app.model[name]**
+**app.model.[name]**
 
 - `name` 模型名称
 说明：
 
-- 返回一个模型的实例, 主要用于查询已确认的数据
+- 返回一个模型的实例, 主要用于查询已确认的数据   
+
+示例：
+	
+	//获取数据库模型
+	app.route.get("/getDBModel", async req => {
+	  let entries = await app.model.Words.findAll({})
+	  return {
+	    entries
+	  }
+	})
+	//请求合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBModel
+	//返回数据
+	> {"entries":[{"words":"helloworld"},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello ray "}],"success":true}
 
 #### 3.2 获取所有字段
-**fields()**
+**app.model.[table].fields()**
 
 说明：
 
 - 返回该模型所有字段
 
+示例：
+	
+	//获取数据库模型字段
+	app.route.get("/getDBMFields", async req => {
+	  let fields = await app.model.Words.fields()
+	  return {
+	    fields
+	  }
+	})
+	//请求接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBMFields
+	//返回结果
+	> {"fields":["words"],"success":true}
 
 #### 3.3 计数
-**app.model.Block.count(cond)**
+**app.model.[table].count(cond)**
 
 - `cond` 查询条件
 
@@ -303,15 +431,27 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 - 表示指定条件的数据项总数
 
 示例:
-
+	
+	//获取数据库模型数据数量
+	app.route.get("/getDBMCount", async req => {
+	  let count = await app.model.Words.count({})
+	  return {
+	    count
+	  }
+	})
+	//请求合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBMCount
+	//返回结果
+	> {"count":12,"success":true}
+	
+	//或者
 	app.model.Block.count({ height: { $lt: 100 } })
 	//输出
-	99
+	> 99
 
 
 #### 3.4 是否存在
-**app.model.Transaction.exists(cond)**
-**app.model.Account.exists(cond)**
+**app.model.[table].exists(cond)**
 
 - `cond` 查询条件
 
@@ -322,17 +462,30 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-
+	
+	//获取数据库中是否存在某些数据
+	app.route.get("/exist", async req => {
+	  let exist = await app.model.Words.exists({"words":" hello ray "})
+	  return {
+	    exist
+	  }
+	})
+	//请求合约
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/exist
+	//返回结果
+	> {"exist":true,"success":true}
+	
+	//或者
 	app.model.Transaction.exists({ id: '9a5ec0669c79b9f5a1d5a4dbb2c200bc28c9ea829dbff71f41cbb2ad5a7d9b01' })
 	//输出
 	false
-
+	
 	app.model.Account.exists({ nickname: 'Nakamoto' })
 	//输出
 	true
 
 #### 3.5 查找
-**app.model.Account.findOne(condition)**
+**app.model.[table].findOne(condition)**	
 
 `options`是一个对象, 包含以下元素
 
@@ -343,8 +496,20 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 - 查询一个指定条件的数据项
 
 示例:
-
-
+	
+	//查找数据库中的数据
+	app.route.get("/findOne", async req => {
+	  let one = await app.model.Words.findOne({"words":" hello ray "})
+	  return {
+	    one
+	  }
+	})
+	//调用接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/findOne
+	//返回结果
+	> {"one":{"words":"helloworld"},"success":true}
+	
+	//或者
 	app.model.Account.findOne({ nickname: 'Nakamoto' })
 	//输出
 	{
@@ -354,7 +519,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 	}
 
 #### 3.6 查找全部
-**app.model.Transfer.findAll(condition）**
+**app.model.[table].findAll(condition）**
 
 `options`是一个对象, 包含以下元素
 
@@ -366,11 +531,22 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 说明：
 
-- 查询指定条件的所有数据项
+- 查询指定条件的所有数据项 
 
 示例:
-
-
+	
+	// 获取所有单词
+	app.route.get("/words", async req => {
+	  let words = await app.model.Words.findAll({})
+	  return {
+	    words
+	  }
+	})
+	//调用合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/words
+	//返回结果
+	> {"words":[{"words":"helloworld"},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello ray "}],"success":true}
+	
 	app.model.Transfer.findAll({ senderId: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85'})
 	//输出
 	[
@@ -405,15 +581,22 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 **app.route.get(path, handler)**
 
 	注册一个`get`类型的http请求处理函数
+	app.route.get('/helloworld', async function(req) {
+	  return {
+	    message: 'helloworld'
+	  }
+	})
 
 #### 4.2 post
 **app.route.post(path, handler)**
 
 	注册一个`post`类型的http请求处理函数
+	
 #### 4.3 put
 **app.route.put(path, handler)**
 
 	注册一个`put`类型的http请求处理函数
+	
 ### 5.手续费
 #### 5.1 添加手续费
 **app.feePool.add(currency, amount)**
@@ -428,27 +611,34 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.feelPool.add('ETM', '10000000')
+	//----------添加费用池----------
+	app.route.get("/addFee", async req => {
+	  await app.feePool.add('HLB', '10000000000')
+	})
+	
+	//查看数据库中 
+	sqlite3 blockchain.db
+	sqlite> select * from round_fees;
+	//结果中增加了
+	> 12565|HLB|10000000000|0
 
 
 ### 6.日志
 #### 6.1 设置等级
-#### 6.2 日志
-#### 6.3 跟踪
-#### 6.4 调试
-#### 6.5 信息输出
-#### 6.6 警告
-#### 6.7 错误
-示例:
-
+	
 	app.logger.setLevel('debug')
 	app.logger.setLevel('info')
-
+#### 6.2 日志
 	logger.log('hello');
+#### 6.3 跟踪
 	logger.trace('hello', 'world');
+#### 6.4 调试
 	logger.debug('hello %s',  'world', 123);
+#### 6.5 信息输出
 	logger.info('hello %s %d',  'world', 123, {foo:'bar'});
+#### 6.6 警告
 	logger.warn('hello %s %d %j', 'world', 123, {foo:'bar'});
+#### 6.7 错误 
 	logger.error('hello %s %d %j', 'world', 123, {foo:'bar'}, [1, 2, 3, 4], Object);
 
 
@@ -474,6 +664,8 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 #### 7.2 注册合约
 **app.registerContract(type, name)**
 
+参考[init.js](../example/helloworld/init.js)
+
 - `type` 合约数值类型或编号
 - `name` 合约的字符串名称
 
@@ -484,7 +676,9 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.registerContract(1001, 'cctime.postArticle')
+	//注册合约方法
+  	app.registerContract(1000, 'helloworld.hello')
+
 
 
 
@@ -499,7 +693,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.getContractName(1001) === 'cctime.postArticle'
+	app.getContractName(1000) === 'helloworld.hello'
 
 #### 7.4 初始化手续费
 **app.registerFee(type, min, currency)**
@@ -515,7 +709,7 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.registerFee(1001, '100000', 'ETM')
+	app.registerFee(1000, '100000', 'HLB')
 
 #### 7.5 获取手续费
 **app.getFee(type)**
@@ -528,11 +722,11 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.getFee(1001)
+	app.getFee(1000)
 	//输出
 	{
 	  min: '100000',
-	  currency: 'ETM'
+	  currency: 'HLB'
 	}
 #### 7.6 获取默认手续费
 **app.setDefaultFee(min, currency)**
@@ -545,7 +739,8 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 
 示例:
 
-	app.setDefaultFee('10000', 'ETM')
+	app.setDefaultFee('10000000', 'HLB')
+	
 
 #### 7.7 获取真实时间戳
 **app.getRealTime(epochTime)**
@@ -555,20 +750,32 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 说明：
 
 - 返回完整的时间戳, 即区块创世时间加上偏移量, 单位为毫秒
-- etm系统中底层存储和上层查询的时间戳均为一个偏移量, 并非实际时间戳, 可以调用这个函数转换为真实的时间戳
+- entanmo系统中底层存储和上层查询的时间戳均为一个偏移量, 并非实际时间戳, 可以调用这个函数转换为真实的时间戳
 
 示例:
 
-	app.getRealTime(4353634)
+	//获取真实时间戳
+	app.route.get("/getRealTime", async req => {
+	  let realtime = await app.getRealTime(4353634)
+	  return {
+	    realtime
+	  }
+	})
+	//调用合约接口
+	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getRealTime
+	//返回结果
+	> {"realtime":1543699234000,"success":true}
 
 
 #### 7.8 注册回调
 **app.registerHook**
 
 	//TODO
-
+	
 #### 7.9 应用列表
 **app.custom[]**
+
+	//TODO
 
 说明：
 
@@ -594,13 +801,18 @@ app.balances.decrease('AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85', 'ETM', '100000')
 - 对指定类型的ID增加1并以字符串形式返回更新后的数值, 相当于原子的`++1`, 超大数也适用
 
 示例:
-
-	const AID = 'article_id'
-	app.autoID.get(AID) === '0'
-	app.autoID.increment(AID) === '1'
-	app.autoID.get(AID) === '1'
+	
+	//示例 加密马合约部分代码
+	app.sdb.create("Market", {
+        id: app.autoID.increment("market_max_id"),
+        type: 1,
+        status: 1,
+        price: Math.round(price),
+        horse: id,
+        seller: sender
+      })
 
 
 #### 7.12 混沌随机
 
-
+	//TODO 暂时还没有接口
