@@ -24,6 +24,8 @@
 		* [1.10 生成新账户](#110-生成新账户)
 		* [1.11 获取账户排行榜前100名](#111-获取账户排行榜前100名)
 		* [1.12 获取当前链上账户总个数](#112-获取当前链上账户总个数)
+		* [1.13 查询延迟到账列表](#113-查询延迟到账列表)
+		* [1.14 账户是否在链上](#114-账户是否在链上)
 	* [2.交易](#2交易)
 		* [2.1 获取交易信息](#21-获取交易信息)
 		* [2.2 根据交易id查看交易详情](#22-根据交易id查看交易详情)
@@ -416,21 +418,13 @@ JSON返回示例：
 请求方式：GET   
 支持格式：urlencoded   
 
-请求参数说明：   
-
-| 参数        | 类型           |必填|  说明 |
-| ------------- |:-------------:| :-------------:|:-------------:|
-| secret      | String| Y|账户密钥| 
-| publicKey      | String| N|账户公钥| 
-| secondSecret      | String| N|账户二级密码| 
-| delegates      | Array | Y|受托人公钥数组，每个公钥前需要加上+或者-号，代表增加/取消对其的投票| 
-
 返回参数说明：   
 
 |名称	|类型   |说明              |   
 |------ |-----  |----              |   
 |success|boolean  |是否成功获得response数据      |   
-| transaction | json  |投票交易详情|   
+| fee | Integer  |手续费|   
+
   
 
 请求示例： 
@@ -451,13 +445,22 @@ JSON返回示例：
 请求方式：PUT    
 支持格式：JSON    
     
+请求参数说明：   
+
+| 参数        | 类型           |必填|  说明 |
+| ------------- |:-------------:| :-------------:|:-------------:|
+| secret      | String| Y|账户密钥| 
+| publicKey      | String| N|账户公钥| 
+| secondSecret      | String| N|账户二级密码| 
+| delegates      | Array | Y|受托人公钥数组，每个公钥前需要加上+或者-号，代表增加/取消对其的投票| 
+
 
 返回参数说明：   
 
 |名称	|类型   |说明              |   
 |------ |-----  |----              |   
 |success|boolean  |是否成功获得response数据      |   
-| fee | Integer  |手续费|   
+| transaction | json  |投票交易详情|   
   
 
 请求示例： 
@@ -594,6 +597,82 @@ JSON返回示例：
 		"success":true,
 		"count":209
 	}
+
+
+#### 1.13 查询延迟到账列表   
+接口地址：/api/accounts/delayOrders    
+请求方式：GET       
+支持格式：urlencoded    
+
+
+| 参数        | 类型           |必填|  说明 |
+| ------------- |:-------------:| :-------------:|:-------------:|
+| address      | String| Y|查询地址| 
+| mode      | Integer | Y|延时到账交易状态,0 - 未到账; 1 - 已到账| 
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| latestHeight | Integer  |最后高度|
+| result | array  |查询结果，包括发送者、接受者、金额、到账⾼高度|
+
+  
+
+请求示例： 
+	
+	//get请求
+	curl -k -X GET 'http://etm.red:8097/api/accounts/delayOrders?address=A2uWo5F3YTyTbxqbpXKqyXmNJNA4oRrTb8&mode=0'    
+
+JSON返回示例：  
+	
+	{
+		"success": true,
+		"result": [{
+			"transactionId": "60a945e64cd02ed98d6598d08ceb62dc226e6b7d5495adbbebfde15dbbbac66b",
+			"senderId": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+			"recipientId": "A2uWo5F3YTyTbxqbpXKqyXmNJNA4oRrTb8",
+			"amount": 55500000000,
+			"expired": 185930
+		}],
+		"latestHeight": 183915
+	}
+
+#### 1.14 账户是否在链上   
+接口地址：/api/accounts/effectivity    
+请求方式：GET       
+支持格式：urlencoded    
+
+
+| 参数        | 类型           |必填|  说明 |
+| ------------- |:-------------:| :-------------:|:-------------:|
+| address      | String| Y|查询地址| 
+
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| effectivity | boolean  |是否在链上|
+
+
+  
+
+请求示例： 
+	
+	//get请求
+	curl -k -X GET 'http://etm.red:8097/api/accounts/effectivity?address=A2uWo5F3YTyTbxqbpXKqyXmNJNA4oRrTb8'    
+
+JSON返回示例：  
+	
+	{
+		"success": true,
+		"effectivity": true
+	}
+
+
 
 ### 2.交易
 
@@ -846,7 +925,7 @@ JSON返回示例：
 
   
 
-请求示例([参考](../utils/transactions.js))： 
+请求示例： 
 	
 	//此方式不安全，可以查考./issueAssert.js中transferETM()
 	function createTransaction() {
@@ -872,6 +951,61 @@ JSON返回示例：
 	} 
 	//使用钱包查询接受地址账户余额
 	普通转账	A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr	A66taz8N3f67dzSULHSUunfPx82J25BirZ	2019-02-25 14:40:02		555
+
+#### 2.6 延迟到账交易
+接口地址：/api/transactions/delay    
+请求方式：PUT       
+支持格式：JSON      
+请求参数说明：  
+  
+|参数	|类型   |必填 |说明              |   
+|------ |-----  |---  |----              |   
+| secret | String | Y   |账户密码  |  
+| amount | Integer | Y   | 金额，最小值：1，最大值：10000000000000000  |  
+| recipientId | String | Y   | 接收者地址,最小长度：1  |
+| publicKey | String | N   | 发送者公钥  |
+| secondSecret | String | N   | 发送者二级密码，最小长度1，最大长度：100  |
+| multisigAccountPublicKey | String | N   | 多重签名账户公钥  |
+| message | String | N   | 信息 |
+| args | array | Y  | 延迟时间参数，数组元素个数为1，表示指定 的到账⽇日期时间(UTC)  |
+
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| transactionId | String  |交易id|
+
+  
+
+请求示例： 
+	
+	//此方式不安全
+	function createTransaction() {
+	  return JSON.stringify({
+	    'secret':secret,
+	    'amount':55500000000,
+	    'recipientId':'A2uWo5F3YTyTbxqbpXKqyXmNJNA4oRrTb8',
+	    'args':['1552983692000'] //时间戳
+	  });
+	}
+	
+	
+	axios.put(url, createTransaction()).then(res => {
+	  console.log(res);
+	}).catch(err => {
+	  console.error(err);
+	})   
+
+JSON返回示例：  
+
+	//请求成功并返回交易id	
+	{
+		success: true,
+		transactionId: '60a945e64cd02ed98d6598d08ceb62dc226e6b7d5495adbbebfde15dbbbac66b'
+	}
+
 
 ### 3.区块
 
@@ -1508,7 +1642,7 @@ JSON返回示例：
 
   
 
-请求示例([参考](../utils/delegate.js))： 
+请求示例： 
 	
 	//注册受托人
 	function registerDelegate() {
@@ -1829,7 +1963,7 @@ JSON返回示例：
 
   
 
-请求示例([参考](../utils/signatures.js))： 
+请求示例： 
 	
 	//主链
 	let url = 'http://etm.red:8096/api/signatures'
@@ -1924,7 +2058,7 @@ JSON返回示例：
 
   
 
-请求示例([参考](../utils/multisignatures.js))： 
+请求示例： 
 	
 	//第一步 设置多重签名密码
 	function setMultisignature() {
@@ -1972,7 +2106,7 @@ JSON返回示例：
 
   
 
-请求示例（[参考](../utils/multisignatures.js)）： 
+请求示例： 
 	
 	//第二步  非交易发起人对设置多重签名交易进行签名
 	function signatureMu() {
@@ -2054,1314 +2188,231 @@ JSON返回示例：
 	}
 
 ### 9.点对点传输
-#### 9.1 说明
-/peer相关的api，在请求时都需要设置一个header
-	
-	axios.defaults.headers = {
-	  'Content-Type': 'application/json',
-	  'magic': 'personal',//测试链  根据链参数填写
-	  'version': ''
-	}
-#### 9.2 普通交易
 
-entanmo系统的所有写操作都是通过发起一个交易来完成的。 交易数据通过一个叫做etm-js的库来创建，然后再通过一个POST接口发布出去。   
+#### 9.1 增加锁仓
 
-
-##### 9.2.1 设置二级密码
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.signature.createSignature生成的交易数据 |
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |  
-| transactionId |String  |交易id      |   
-
-  
-
-请求示例（[参考](../utils/normal_transactions.js)）： 
-	
-	//9.2.1 设置二级密码
-	function setSecondPassword() {
-	  let secondPassword = 'test001';
-	  let transaction = etmjs.signature.createSignature(secret, secondPassword);
-	  return JSON.stringify({
-	    "transaction": transaction
-	  })
-	}   
-
-JSON返回示例：  
-	
-	{ 
-		success: true,
-		transactionId: '9cb72093de3b2c9fd3c87d6131f71e948c852a6c43c80611e56a9766087da696' 
-    }
-
-##### 9.2.2 转账
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON         
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.transaction.createTransaction生成的交易数据 |
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例（[参考](../utils/normal_transactions.js)）： 
-	
-	//9.2.2 转账 （转ETM）
-	function transferETM() {
-	  let targetAddress = "APeskjFa4KRR3oHHP7wqFP8tpQxiTrDD9a";
-	  let amount = 100*100000000;
-	  let password1 = 'race forget pause shoe trick first abuse insane hope budget river enough';
-	  let secondPassword  = '';
-	  let message = ''; // 转账备注
-	
-	  // 其中password是在用户登录的时候记录下来的，secondPassword需要每次让用户输入
-	  // 可以通过user.secondPublicKey来判断用户是否有二级密码，如果没有，则不必输入，以下几个交易类型类似
-	  let transaction = etmjs.transaction.createTransaction(targetAddress, amount, message, password1, secondPassword || undefined);
-	
-	  return JSON.stringify({
-	    "transaction": transaction
-	  })
-	}  
-
-JSON返回示例：  
-	
-	{ 
-		success: true,
-		transactionId: '1e35552a2b2ea4ad3426e2482e8c117e4943d77e14a3807bd8a786d4cbf9a95e' 
-	}
-
-##### 9.2.3 注册受托人
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON         
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.delegate.createDelegate生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.2.3 注册受托人
-	function registerDelegate() {
-	  let secondPassword  = 'test001';
-	  let userName = 'test001';
-	
-	  let transaction = etmjs.delegate.createDelegate(userName, secret, secondPassword || undefined);
-	  return JSON.stringify({
-	    "transaction": transaction
-	  })
-	}  
-
-JSON返回示例：  
-	
-	//TODO 接口有问题
-	{ 
-		success: false,
-		error: 'Invalid transaction type/fee: 70e21df3b3a348e05cc91a9d3d2e75653925dc2ad212ba5e59a1bec1fd54c798' 
-	}
-
-##### 9.2.4 投票与取消投票
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON         
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.vote.createVote生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-
-	//9.2.4 投票与取消投票
-	function vote() {
-	  let secondPassword = 'test001';
-	  // 投票内容是一个列表，列表中的每一个元素是一个符号加上所选择的受托人的公钥，符号为+表示投票，符号为-表示取消投票
-	  let voteContent = [
-	    '-ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c',
-	    '+a08dc0d7b170a0e12caff0a7faaef952741e65f3585905a5847e4d877d650f07'
-	  ];
-	  let transaction = etmjs.vote.createVote(voteContent, secret, secondPassword || undefined);
-	  return JSON.stringify({
-	    "transaction": transaction
-	  })
-	}  
-
-JSON返回示例：  
-
-	//TODO  一次投几票？	
-	{ 
-		success: true,
-		transactionId: '69b52c38b63711a1a9ee117c27e3a8a775eca6bef5bd0992328fbed5b10ccbd8' 
-	}
-
-##### 9.2.5 账户锁仓
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON   
-请求说明：锁仓后且区块高度未达到锁仓高度，则该账户不能执行如下操作   
-
-|交易类型type	|备注  |  
-|------ |-----  |
-| 0 | 主链ETM转账 |
-| 6 | Dapp充值 |
-| 7 | Dapp提现 |
-| 8 | 存储小文件 |
-| 9 | 发行商注册 |
-| 10 | 资产注册 |
-| 13 | 资发行产 |
-| 14 | 主链uia转账 |
-
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.transaction.createLock生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.2.5 锁仓
-	function createLock() {
-	  let height = 344900; // 锁仓高度 要大于主链高度
-	  let secondPassword = 'test001';
-	  // 其中password是在用户登录的时候记录下来的，secondPassword需要每次让用户输入
-	  // 可以通过user.secondPublicKey来判断用户是否有二级密码，如果没有，则不必输入，以下几个交易类型类似
-	  let transaction = etmjs.transaction.createLock(height, secret, secondPassword || undefined);
-	  return JSON.stringify({
-	    "transaction": transaction
-	  })
-	}
-  
-
-JSON返回示例：  
-	
-	{ 
-		success: true,
-		transactionId: 'a9907b367c40244153a82e78343e7663e749937c7351cf4005893dfd87a46628' 
-	}
-
-#### 9.3 UIA相关交易
-##### 9.3.1 注册资产发行商
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON         
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createIssuer根据发行商名字、描述、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.1 注册资产发行商  花费100 ETM
-	function registerAssertIssuer() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let secondPassword ='test001'
-	  let transaction = etmjs.uia.createIssuer('issuerName', "issuer", password, secondPassword);
-	  return JSON.stringify({
-	    transaction
-	  });
-	} 
-
-JSON返回示例：  
-	
-	{ 
-		success: true,
-		transactionId: '2c093b41dbae45a20095dc623359d4cb71975d441b3ca7aaf1d1b5d21cb25dbe' 
-	}
-
-##### 9.3.2 注册资产
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createAsset根据资产名字、描述、上限、精度、策略、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.2 注册资产 500 ETM
-	function registerAssrt() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  // 资产名称，发行商名.资产名，唯一标识
-	  let name = 'issuerName.CNY';
-	  let desc = '测试';
-	  // 上限 10亿
-	  let maximum = '100000000000000000';
-	  // 精度，小数点的位数，这里上限是100000000000000000，精度为8，代表资产IssuerName.CNY的最大发行量为1000000000.00000000
-	  let precision = 8;
-	  // 策略
-	  let strategy = '';
-	  // 是否允许注销，默认不允许。0：不允许，1：允许
-	  let allowWriteoff = 0;
-	  // 是否允许白名单，默认不允许。0：不允许，1：允许
-	  let allowWhitelist = 0;
-	  // 是否允许黑名单，默认不允许。0：不允许，1：允许
-	  let allowBlacklist = 0;
-	
-	  let secondPassword ='test001'
-	  // 构造交易数据
-	  let trs = etmjs.uia.createAsset(name, desc, maximum, precision, strategy, allowWriteoff, allowWhitelist, allowBlacklist, password, secondPassword)
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	 { 
-	 	success: true,
-	 	transactionId: 'db46dea3f1a5c99d2b4e3186b950f1ee309c95291d4874a8b839f0d26c63d1c9' 
-	 }
-
-##### 9.3.3 资产设置acl模式
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createFlags根据资产名、流通状态、黑白名单模式、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.3 资产设置acl模式
-	function setAcl() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let secondSecret = 'test001'
-	  let currency = 'issuerName.CNY'
-	  // 资产是否注销，1：流通，2：注销
-	  let flagType = 1
-	  // 访问控制列表的类型，0：黑名单， 1：白名单，资产创建后默认为黑名单模式
-	  let flag = 1
-	  let trs = etmjs.uia.createFlags(currency, flagType, flag, password, secondSecret)
-	
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	//TODO 接口有问题
-	{ 
-		success: false,
-		error: 'Whitelist not allowed' 
-	}
-
-##### 9.3.4 更新访问控制列表
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createAcl根据资产名字、列表操作方法、黑名单还是白名单、地址列表、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.4 更新访问控制列表
-	function updateAcl() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let secondSecret = 'test001'
-	  let currency = 'issuerName.CNY'
-	  // '+'表示增加列表， ‘-’表示删除列表
-	  var operator = '+'
-	  // 将生成的交易数据通过post发送给server，把地址列表['A77LPkv5jEkMXAcsQ5iTzUS9rUeLezWxdB']增加到该白名单中，只修改名单列表，不修改acl模式，手续费0.2ETM
-	  var list = ['A77LPkv5jEkMXAcsQ5iTzUS9rUeLezWxdB']
-	  // 访问控制列表的类型，0：黑名单， 1：白名单
-	  var flag =1
-	  var trs = etmjs.uia.createAcl(currency, operator, flag, list, password, secondSecret)
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	//TODO 接口有问题
-	{ 
-		success: false, 
-		error: 'Whitelist not allowed' 
-	} 
-
-##### 9.3.5 资产发行
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON     
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createIssuer根据发行商名字、描述、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.5 资产发行  0.1 ETM
-	function issueAssert() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let currency = 'issuerName.CNY';
-	  let secondSecret = 'test001'
-	  // 本次发行量=真实数量（100）*10**精度（3），所有发行量之和需 <= 上限*精度
-	  //发行1亿
-	  let amount = '10000000000000000'
-	  let trs = etmjs.uia.createIssue(currency, amount, password, secondSecret)
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	{ 
-		success: true,
-		transactionId: '901ebff4dca989eef66265a86a96a3d34689c045ada327919b49c3a41d7e6b84' 
-	}
-##### 9.3.6 资产转账
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON   
-请求说明：对比参考 [10.12.5 资产转账](#10125-资产转账)   
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createTransfer根据资产名字、数量、接收者地址、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.6 发行的资产转账
-	function transferIssueAssert() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let currency = 'issuerName.CNY';
-	  let secondSecret = 'test001'
-	  // 本次转账数（10000）=真实数量（10）*10**精度（3），需 <= 当前资产发行总量
-	  let amount = '10000'
-	  // 接收地址，需满足前文定义好的acl规则
-	  let recipientId = 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr'
-	  let trs = etmjs.uia.createTransfer(currency, amount, recipientId, password, secondSecret)
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	//TODO 接口有问题
-	{ 
-		success: false, 
-		error: 'loadAccount : can not found Account' 
-	} 
-
-##### 9.3.7 资产注销
-接口地址：/peer/transactions     
-请求方式：POST       
-支持格式：JSON       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| transaction | json | Y  | etm-js.uia.createFlags根据资产名字、注销状态、黑白名单模式、一级密码、二级密码生成的交易数据|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id |
-
-  
-
-请求示例： 
-	
-	//9.3.7 注销资产
-	function destroyAssert() {
-	  let password = 'found razor spring fish surprise liar else argue tongue crouch fatal lucky'
-	  let currency = 'issuerName.CNY';
-	  let secondSecret = 'test001'
-	  // flagType为资产是否注销，1：流通，2：注销
-	  var flagType = 2
-	  // flag为黑、白名单模式
-	  var flag =1
-	  var trs = etmjs.uia.createFlags(currency, flagType, flag, password, secondSecret)
-	
-	  return JSON.stringify({
-	    "transaction": trs
-	  })
-	} 
-
-JSON返回示例：  
-	
-	//TODO 接口有问题
-	{ 
-		success: false, 
-		error: 'Writeoff not allowed' 
-	} 
-
-
-
-### 10.用户自定义资产
-#### 10.1 获取全网所有发行商
-接口地址：/api/uia/issuers     
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| issuers | array  |查找的发行商|
-| count | integer  |发行商总个数|
-
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/issuers?offset=0&limit=5 
-
-JSON返回示例：  
-	
-	{
-		"success": true,
-		"issuers": [{
-			"name": "RAY",
-			"desc": "issuer",
-			"issuerId": "AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX"
-		}, {
-			"name": "issuerName",
-			"desc": "issuer",
-			"issuerId": "AGKTTewJzJkteWJ9MVEupgCLhgKELsvU7T"
-		}],
-		"count": 2
-	}
-
-
-#### 10.2 查询指定发行商的信息
-接口地址：/api/uia/issuers/:name     
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| name | String | Y  | 可以为发行商名称或ETM账户地址|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| issuers | array  |包含发行商名字、描述、id(地址)|
-
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/issuers/RAY 
-
-JSON返回示例：  
-	
-	{
-		"success": true,
-		"issuer": {
-			"name": "RAY",
-			"desc": "issuer",
-			"issuerId": "AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX"
-		}
-	}
-	
-#### 10.3 查看指定发行商的资产
-接口地址：/api/uia/issuers/:name/assets     
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| name | String | Y  | 可以为发行商名称或ETM账户地址|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| assets | array  |每个元素是一个字典，每个字典是一个资产详情，包含资产名字、描述、上限（最大发行量=真实发行量*10**精度）、精度、策略、当前发行量、发行高度、发行商id，acl模式（0：黑名单，1：白名单）、是否注销|
-| count | integer  |该发行商注册的资产总个数（包含已注销的）|
-
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/issuers/RAY/assets
-
-JSON返回示例：  
-	
-	{
-		"success": true,
-		"assets": [{
-			"name": "RAY.CNY",
-			"desc": "测试",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"strategy": "",
-			"quantity": "10000000000000000",
-			"height": 1777,
-			"issuerId": "AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX",
-			"acl": 0,
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000"
-		}],
-		"count": 1
-	}
-	
-#### 10.4 获取全网所有资产信息
-接口地址：/api/uia/assets   
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| assets | array  |每个元素是一个字典，每个字典是一个资产详情，包含资产名字、描述、上限、精度、策略、当前发行量、发行高度、发行商id，acl、是否注销|
-| count | integer  |所有资产的个数|
-
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/assets
-
-JSON返回示例：  
-		
-	{
-		"success": true,
-		"assets": [{
-			"name": "RAY.CNY",
-			"desc": "测试",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"strategy": "",
-			"quantity": "10000000000000000",
-			"height": 1777,
-			"issuerId": "AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX",
-			"acl": 0,
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000"
-		}, {
-			"name": "issuerName.CNY",
-			"desc": "测试",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"strategy": "",
-			"quantity": "10000000000000000",
-			"height": 345640,
-			"issuerId": "AGKTTewJzJkteWJ9MVEupgCLhgKELsvU7T",
-			"acl": 0,
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000"
-		}],
-		"count": 2
-	}
-
-#### 10.5 获取指定资产信息
-接口地址：/api/uia/assets/:name   
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| name | String | Y  | 资产名|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| asset | json  |包含资产名字、描述、上限、精度、策略、当前发行量、发行高度、发行商id，acl、是否注销|
-
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/assets/RAY.CNY
-
-JSON返回示例：  
-		
-	{
-		"success": true,
-		"asset": {
-			"name": "RAY.CNY",
-			"desc": "测试",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"strategy": "",
-			"quantity": "10000000000000000",
-			"height": 1777,
-			"issuerId": "AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX",
-			"acl": 0,
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000"
-		}
-	}
-
-#### 10.6 获取指定资产的访问控制列表
-接口地址：/api/uia/assets/:name/acl/flag   
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| name | String | Y  | 资产名|
-| flag | boolen | Y  | 取值0和1，0表示黑名单，1表示白名单|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| list | array  |符合规则的账户列表|
-| count | integer  |符合规则账户总数|
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/assets/RAY.CNY/acl/1
-	http://etm.red:8096/api/uia/assets/RAY.CNY/acl/0
-
-JSON返回示例：  
-		
-	//TODO 这里肯定有问题 发行的资产默认全部都是黑名单中的，需要设置acl
-	//flag = 1	
-	{
-		"success": true,
-		"list": [],
-		"count": 0
-	}
-	//flag = 0 
-	{
-		"success": true,
-		"list": [],
-		"count": 0
-	}
-
-
-#### 10.7 获取指定账户所有uia的余额
-接口地址：/api/uia/balances/:address   
-请求方式：GET       
-支持格式：urlencoded       
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| balances | array  |拥有的资产详情列表，每个元素是一个资产，包含资产名、余额、上限、精度、当前发行量、是否注销（0：未注销，1：已注销）|
-| count | integer  |当前该地址拥有的资产个数|
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
-
-JSON返回示例：  
-		
-	{
-		"success": true,
-		"balances": [{
-			"currency": "RAY.CNY",
-			"balance": "9998000000000000",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"quantity": "10000000000000000",
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000",
-			"balanceShow": "99980000"
-		}],
-		"count": 1
-	}
-
-
-#### 10.8 获取指定账户所有资产相关操作记录
-接口地址：/api/uia/transactions/my/:address   
-请求方式：GET       
-支持格式：urlencoded  
-请求说明：包含发行商创建以及资产创建、发行、转账等        
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactions | array  |交易列表，每个元素是一个字典代表一次交易，包含交易id、区块高度、区块id、交易类型、时间戳、发送者公钥、发送者id、接收者id（系统为空，如资产注册）、交易数量（资产交易都为0）、手续费0.1ETM、签名、多重签名、确认数、资产信息（包含发行商id、发行商名字、描述）、交易id|
-| count | integer  |资产交易总个数|
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/my/transactions/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
-
-JSON返回示例：  
-		
-	//TODO接口不存在	
-	{
-		"success":false,
-		"error":"API endpoint not found"
-	}
-	//应该出现的结果
-	{
-		"success": true,
-		"transactions": [{
-			"id": "12372526051670720162",   // 交易id
-			"height": "286",    // 交易所在区块高度
-			"blockId": "14863181420651287815",  // 交易所在区块id
-			"type": 9,  // 交易类型，9代表注册发行商
-			"timestamp": 17597873,  // 交易时间，距离创世块的offset
-			"senderPublicKey": "d39d6f26869067473d685da742339d1a9117257fe14b3cc7261e3f2ed5a339e3",  // 交易发起者公钥
-			"senderId": "AKKHPvQb2A119LNicCQWLZQDFxhGVEY57a",   // 交易发起者id
-			"recipientId": "",  //  接收者id，如果是系统则为空
-			"amount": 0,    //  交易数量，如果是资产或者XAS则为非0，否则为0
-			"fee": 10000000,    // 交易费
-			"signature": "6a1e66387f610de5a89489105697082037b82bff4fb6f95f9786304176efe59f7d41e8fe9c5501e1b0b34a47e957a38e10e940fdb180f8ebcaf0ac062a63c601", // 交易签名
-			"signSignature": "",    // 二级签名，有二级密码时才有
-			"signatures": null, // 多重签名，使用多重签名账户时才有
-			"confirmations": "155998",  // 交易确认数
-			"asset": {
-				"uiaIssuer": {
-					"transactionId": "12372526051670720162",    // 交易id
-					"name": "zhenxi",   // 发行商名字
-					"desc": "注册资产发行商-测试"   // 发行商描述
-				}
-			},
-			"t_id": "12372526051670720162"  // 交易id
-		},
-		{
-			"id": "17308768226103450697",
-			"height": "371",
-			"blockId": "244913990990213995",
-			"type": 9,
-			"timestamp": 17598730,
-			"senderPublicKey": "7bd645f9626820d390311fb28dc30875e8bd26cce2d04ba2809df82e84088020",
-			"senderId": "AEVWQWAq3TEJkCPSDxXMP2uCRrL2xbQnsy",
-			"recipientId": "",
-			"amount": 0,
-			"fee": 10000000,
-			"signature": "6ea76ff6f58f1bc99d6b40ece45e371948db58a68f6fa41e13b34ff86bbf1f0bea53d6afe982562392861727f879205efc7d1342f6e963028985e243a94e5507",
-			"signSignature": "",
-			"signatures": null,
-			"confirmations": "155913",
-			"asset": {
-				"uiaIssuer": {
-					"transactionId": "17308768226103450697",
-					"name": "speedtest",
-					"desc": "speedtest"
-				}
-			},
-			"t_id": "17308768226103450697"
-		}],
-		"count": 58
-	}	
-	
-#### 10.9 获取指定账户指定资产的余额
-接口地址：/api/uia/balances/:address/:currency   
-请求方式：GET       
-支持格式：urlencoded        
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| currency | String | Y  | 资产名字|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| balances | array  |包含资产名、余额、最大发行量、精度、当前发行量、是否注销|
-  
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX/RAY.CNY
-
-JSON返回示例：  
-		
-	{
-		"success": true,
-		"balance": {
-			"currency": "RAY.CNY",
-			"balance": "9998000000000000",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"quantity": "10000000000000000",
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000",
-			"balanceShow": "99980000"
-		}
-	}
-
-
-#### 10.10 获取指定账户指定资产转账记录
-接口地址：/api/uia/transactions/my/:address/:currency   
-请求方式：GET       
-支持格式：urlencoded        
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| currency | String | Y  | 资产名字|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactions | array  |交易列表，每个元素是一个字典代表一次交易，包含交易id、区块高度、区块id、交易类型、时间戳、发送者公钥、发送者id、接收者id（系统为空，如资产注册）、交易数量（资产交易都为0）、手续费0.1ETM、签名、多重签名、确认数、资产信息（包含发行商id、发行商名字、描述）、交易id|
-| count | integer  |资产交易总个数|   
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/transactions/my/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX/RAY.CNY
-JSON返回示例：  
-		
-	//TODO  应该是有交易的	
-	{
-		"success":true,
-		"transactions":[],
-		"count":0
-	}
-	
-	//应该出现的结果
-	{
-		"success": true,
-		"transactions": [{
-			"id": "d6102fc30931e4dc449811cbbab705fd64bc79b09de703e8172f7bdd90835abc",
-			"height": "173109",
-			"blockId": "baa23acd566780e338436b48e4eb79a87d3bdd67caeb3812a663da8f77ae87d9",
-			"type": 14,
-			"timestamp": 19481489,
-			"senderPublicKey": "fafcd01f6b813fdeb3c086e60bc7fa9bfc8ef70ae7be47ce0ac5d06e7b1a8575",
-			"senderId": "16358246403719868041",
-			"recipientId": "AKKHPvQb2A119LNicCQWLZQDFxhGVEY57a",
-			"amount": 0,
-			"fee": 10000000,
-			"signature": "77789071a2ad6d407b9d1e0d654a9deb6d85340a3d2a13d786030e26ac773b4e9b5f052589958d2b8553ae5fc9449496946b5c225e0baa723e7ddecbd89f060a",
-			"signSignature": "f0d4a000aae3dd3fa48a92f792d4318e41e3b56cdbaf98649261ae34490652b87645326a432d5deb69f771c133ee4b67d2d22789197be34249e6f7f0c30c1705",
-			"signatures": null,
-			"confirmations": "90853",
-			"asset": {
-				"uiaTransfer": {
-					"transactionId": "d6102fc30931e4dc449811cbbab705fd64bc79b09de703e8172f7bdd90835abc",
-					"currency": "IssuerName.CNY",
-					"amount": "10000",
-					"amountShow": "10"
-				}
-			},
-			"t_id": "d6102fc30931e4dc449811cbbab705fd64bc79b09de703e8172f7bdd90835abc"
-		}],
-		"count": 15
-	}
-
-
-#### 10.11 获取指定资产转账记录
-接口地址：/api/uia/transactions/my/:address/:currency   
-请求方式：GET       
-支持格式：urlencoded        
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| currency | String | Y  | 资产名字|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactions | array  |交易列表，每个元素是一个字典代表一次交易，包含交易id、区块高度、区块id、交易类型、时间戳、发送者公钥、发送者id、接收者id（系统为空，如资产注册）、交易数量（资产交易都为0）、手续费0.1ETM、签名、多重签名、确认数、资产信息（包含发行商id、发行商名字、描述）、交易id|
-| count | integer  |资产交易总个数|   
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/transactions/RAY.CNY
-JSON返回示例：  
-		
-	//TODO  应该是有交易的	
-	{
-		"success":true,
-		"transactions":[],
-		"count":0
-	}
-	
-	//应该出现的结果
-	{
-		success: true,
-		transactions: [{
-			id: "a1ff79e3f37fd73b41abd293c22171ac7760160ad457e55f028e7a8b527651d3",
-			height: "43",
-			blockId: "b16b87e79b47edffdc2fd93bd1de70cbe3541684d5dbf8dc1d292903275e03dc",
-			type: 14,
-			timestamp: 39167334,
-			senderPublicKey: "2856bdb3ed4c9b34fd2bba277ffd063a00f703113224c88c076c0c58310dbec4",
-			senderId: "ANH2RUADqXs6HPbPEZXv4qM8DZfoj4Ry3M",
-			recipientId: "AMzDw5BmZ39we18y7Ty9VW79eL9k7maZPH",
-			amount: 0,
-			fee: 10000000,
-			signature: "a4e6b0e2c265e0d601fdfc9e82d971e7908457383835b801c725cdaac01bd619a435344241c64247599255f43a43b6576e1da3a357eac5bbd7058e013a8aa60e",
-			signSignature: "",
-			signatures: null,
-			confirmations: "809",
-			args: null,
-			message: "",
-			asset: {
-				uiaTransfer: {
-					transactionId: "a1ff79e3f37fd73b41abd293c22171ac7760160ad457e55f028e7a8b527651d3",
-					currency: "absorb.YLB",
-					amount: "200000000",
-					amountShow: "2",
-					precision: 8
-				}
-			}
-		},
-		{
-			id: "7cf50223e12b6eb51096353a066befcf2ef862bdd4d4eddcba28a79aa0249af9",
-			height: "809",
-			blockId: "278b096893bc028bb79692faec02de8c2f367804485b71f14e46027f3dd3000c",
-			type: 14,
-			timestamp: 39182041,
-			senderPublicKey: "b33b5fc45640cfc414981985bf92eef962c08c53e1a34f90dab039e985bb5fab",
-			senderId: "AMzDw5BmZ39we18y7Ty9VW79eL9k7maZPH",
-			recipientId: "1",
-			amount: 0,
-			fee: 10000000,
-			signature: "560bd31a4efe103ef9bd92f52cae5cf5a3b2aeb90fc83298498ff4126705e0433f751169bc32a3a7cfe894c7d8586d7182ebc790f2311daf9f02b881dc2aca0e",
-			signSignature: "",
-			signatures: null,
-			confirmations: "43",
-			args: null,
-			message: "",
-			asset: {
-				uiaTransfer: {
-					transactionId: "7cf50223e12b6eb51096353a066befcf2ef862bdd4d4eddcba28a79aa0249af9",
-					currency: "absorb.YLB",
-					amount: "100000000",
-					amountShow: "1",
-					precision: 8
-				}
-			}
-		}],
-		count: 2
-	}
-
-
-#### 10.12 资产创建相关
-接口地址：/api/uia/transactions/my/:address/:currency   
-请求方式：GET       
-支持格式：urlencoded        
-请求参数说明：  
-  
-|参数	|类型   |必填 |说明              |   
-|------ |-----  |---  |----              |   
-| address | String | Y  | 账户地址|
-| currency | String | Y  | 资产名字|
-| limit | Integer | N  | 限制结果集个数，最小值：0,最大值：100|
-| offset | Integer | N  | 偏移量，最小值0|
-
-返回参数说明：   
-
-|名称	|类型   |说明              |   
-|------ |-----  |----              |   
-|success|boolean  |是否成功获得response数据      |   
-| transactions | array  |交易列表，每个元素是一个字典代表一次交易，包含交易id、区块高度、区块id、交易类型、时间戳、发送者公钥、发送者id、接收者id（系统为空，如资产注册）、交易数量（资产交易都为0）、手续费0.1ETM、签名、多重签名、确认数、资产信息（包含发行商id、发行商名字、描述）、交易id|
-| count | integer  |资产交易总个数|   
-
-请求示例： 
-	
-	//get 请求
-	http://etm.red:8096/api/uia/transactions/RAY.CNY
-JSON返回示例：  
-		
-	//TODO  应该是有交易的	
-	{
-		"success":true,
-		"transactions":[],
-		"count":0
-	}
-
-##### 10.12.1 注册资产发行商
-对比参考 [9.3 UIA相关交易](#93-UIA相关交易) 
-##### 10.12.2 注册资产
-对比参考 [9.3 UIA相关交易](#93-UIA相关交易) 
-##### 10.12.3 更新资产访问控制列表
-对比参考 [9.3 UIA相关交易](#93-UIA相关交易) 
-##### 10.12.4 资产发行
-对比参考 [9.3 UIA相关交易](#93-UIA相关交易) 
-##### 10.12.5 资产转账
-接口地址：/api/uia/transfers   
+接口地址：/api/lockvote/put     
 请求方式：PUT       
-支持格式：json        
+支持格式：JSON      
 请求参数说明：  
   
 |参数	|类型   |必填 |说明              |   
 |------ |-----  |---  |----              |   
-| secret | String | Y  | 账户密码|
-| currency | String | Y  | 资产名字|
-| amount | String | Y  | 转账金额，最大长度50|
-| recipientId | String | Y  | 接收地址，最小长度1|
-| publicKey | String | N  | 发送者公钥，格式必须符合公钥格式|
-| secondSecret | String | N  | 发送者二级密码，最小长度1，最大长度：100|
-| multisigAccountPublicKey | String | N  | 多签账户公钥，格式必须符合公钥格式|
-| message | String | N  | 转账备注，最大长度256|
+| secret | String | Y   | 账户密码 |
+| publicKey | String | N   | 公钥 |
+| secondSecret | String | N   | 账户二级密码，最小长度：1，最大长度：100 |
+| multisigAccountPublicKey | String | N   | 多重签名公钥 |
+| args | array | Y   | 包含锁仓金额的数组，如:[1000]|
 
 返回参数说明：   
 
 |名称	|类型   |说明              |   
 |------ |-----  |----              |   
 |success|boolean  |是否成功获得response数据      |   
-| transactionId | String  |交易id|
+| transactionId | String  |多重签名交易id|
 
-请求示例([参考](../utils/normal_transactions.js))： 
+  
+
+请求示例： 
 	
-	//10.12.5 转账 pepper sleep youth blast vivid circle cross impact zebra neck salmon fee
-	//url: etm.red:8096/api/uia/transfers
-	function transferIssueAssert2() {
-	  let password = 'pepper sleep youth blast vivid circle cross impact zebra neck salmon fee'
-	  let currency = 'RAY.CNY';
-	  let recipientId = 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr'
-	  let amount ='1000000000'
+	let url = 'http://etm.red:8097/api/lockvote/'
+	let secret = 'race forget pause shoe trick first abuse insane hope budget river enough';
 	
+	
+	//创建交易
+	//此方式不安全，可以查考./issueAssert.js中transferETM()
+	function createTransaction() {
 	  return JSON.stringify({
-	    "secret": password,
-	    "amount":amount,
-	    "recipientId":recipientId,
-	    "currency":currency,
-	    "secondSecret":"test001"
-	  })
+	    'secret':secret,
+	    'args':["100000000"],
+	  });
 	}
-	axios.put('http://etm.red:8096/api/uia/transfers', transferIssueAssert2()).then(res => {
+	
+	
+	axios.put(url, createTransaction()).then(res => {
 	  console.log(res);
 	}).catch(err => {
 	  console.error(err);
 	})
 
 JSON返回示例：  
-		
+	
 	{ 
 		success: true,
-		transactionId: '118b19b3c48d3660434b3016df08f94ef49458a800cbf4e7da6ae7ecc72b3a82' 
+	  	transactionId: '66cf7e7fa6c7bcc8f69ca76d05e341f02643732a7e48bbd1b308e90047ae2de8' 
 	}
-	//查询转账信息
-	http://etm.red:8096/api/uia/balances/A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
-	//结果
+	  	
+#### 9.2 获取特定锁仓信息
+接口地址：/api/lockvote/get      
+请求方式：GET       
+支持格式：urlencoded     
+请求参数说明：  
+  
+|参数	|类型   |必填 |说明              |   
+|------ |-----  |---  |----              |   
+| id | String | Y  | 交易id |
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| id | String  |交易id|
+| blockId | String  |区块id|
+| senderId | String  |发送人id|
+| timestamp | Integer  |交易创建时间|
+| asset | json  |锁仓交易易的详细信息|
+
+  
+
+请求示例： 
+	
+	//get请求
+	http://etm.red:8097/api/lockvote/get?id=66cf7e7fa6c7bcc8f69ca76d05e341f02643732a7e48bbd1b308e90047ae2de8 
+
+JSON返回示例：  
+	
 	{
 		"success": true,
-		"balances": [{
-			"currency": "RAY.CNY",
-			"balance": "1000000000",
-			"maximum": "100000000000000000",
-			"precision": 8,
-			"quantity": "10000000000000000",
-			"writeoff": 0,
-			"allowWriteoff": 0,
-			"allowWhitelist": 0,
-			"allowBlacklist": 0,
-			"maximumShow": "1000000000",
-			"quantityShow": "100000000",
-			"balanceShow": "10"
+		"id": "66cf7e7fa6c7bcc8f69ca76d05e341f02643732a7e48bbd1b308e90047ae2de8",
+		"blockId": "1e8ef5d16293be10720f3c04efe1d2c8c24c0bbc31ae2857c2fb40d5add0bf84",
+		"timestamp": 13634034,
+		"senderId": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+		"asset": {
+			"state": 1,
+			"lockAmount": 100000000,
+			"currentHeight": 183712,
+			"originHeight": 183712,
+			"address": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+			"factor": 0,
+			"numOfVotes": 0
+		}
+	}
+
+#### 9.3 获取所有锁仓信息
+接口地址：/api/lockvote/all     
+请求方式：GET       
+支持格式：urlencoded     
+请求参数说明：  
+  
+|参数	|类型   |必填 |说明              |   
+|------ |-----  |---  |----              |   
+| address | String | Y  | 指定的交易发起人地址 |
+| state | Integer | N  | 1 表示正在锁定的锁仓，0 表示已经解锁的锁仓 |
+| limit | Integer | N  | 最大100 |
+| offset | Integer | N  | 偏移量 |
+| orderByHeight | Integer | N  | ⾼度排序 -1表示升序排列，0表示不排列，-1表示降序排列 |
+| orderByAmount | Integer | N  |锁仓量排序 -1表示升序排列，0表示不排列，-1表示降序排列 |
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| trs | array  |所有锁仓交易信息|
+
+
+  
+
+请求示例： 
+	
+	//get请求
+	http://etm.red:8097/api/lockvote/all?address=A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
+
+JSON返回示例：  
+	
+	{
+		"success": true,
+		"trs": [{
+			"id": "79810571ae6ef5bdbf7feca9030732efe8932f78ed03d8f018edd21acd2f8ffb",
+			"blockId": "9e8d940ab55ee1f67a78cd856083c130daac020a2bbdfcdb6ed3ffac20a1372e",
+			"timestamp": 13633238,
+			"senderId": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+			"asset": {
+				"state": 1,
+				"lockAmount": 111100000000,
+				"currentHeight": 183569,
+				"originHeight": 183569,
+				"address": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+				"factor": 0,
+				"numOfVotes": 0
+			}
+		}, {
+			"id": "66cf7e7fa6c7bcc8f69ca76d05e341f02643732a7e48bbd1b308e90047ae2de8",
+			"blockId": "1e8ef5d16293be10720f3c04efe1d2c8c24c0bbc31ae2857c2fb40d5add0bf84",
+			"timestamp": 13634034,
+			"senderId": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+			"asset": {
+				"state": 1,
+				"lockAmount": 100000000,
+				"currentHeight": 183712,
+				"originHeight": 183712,
+				"address": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr",
+				"factor": 0,
+				"numOfVotes": 0
+			}
 		}],
-		"count": 1
+		"count": 2
+	}
+
+
+#### 9.4 解除锁仓
+接口地址：/api/lockvote/remove     
+请求方式：PUT       
+支持格式：JSON      
+请求参数说明：  
+  
+|参数	|类型   |必填 |说明              |   
+|------ |-----  |---  |----              |   
+| secret | String | Y   | 账户密码 |
+| publicKey | String | N   | 公钥 |
+| secondSecret | String | N   | 账户二级密码，最小长度：1，最大长度：100 |
+| multisigAccountPublicKey | String | N   | 多重签名公钥 |
+| args | array | Y   | 包含锁仓交易的id列表，如:[id1, id2, id3]|
+
+返回参数说明：   
+
+|名称	|类型   |说明              |   
+|------ |-----  |----              |   
+|success|boolean  |是否成功获得response数据      |   
+| transactionId | String  |多重签名交易id|
+
+  
+
+请求示例： 
+	
+	let url = 'http://etm.red:8097/api/lockvote/remove'
+	let secret = 'race forget pause shoe trick first abuse insane hope budget river enough';
+	
+	
+	//创建交易
+	//此方式不安全，可以查考./issueAssert.js中transferETM()
+	function createTransaction() {
+	  return JSON.stringify({
+	    'secret':secret,
+	    'args':["66cf7e7fa6c7bcc8f69ca76d05e341f02643732a7e48bbd1b308e90047ae2de8"],
+	  });
 	}
 	
-##### 10.12.6 更新黑白名单
-	//TODO 没有接口
+	
+	axios.put(url, createTransaction()).then(res => {
+	  console.log(res);
+	}).catch(err => {
+	  console.error(err);
+	})
 
-### 11 自定义合约接口调用
+
+JSON返回示例：  
+	
+	{
+		success: true,
+		transactionId: '0a27ae10e1b8c55d2d75b0fed093d0466598e6b99243c113f33ff6d5473b4654'
+	}
+
+### 10 自定义合约接口调用
 参考[合约](https://github.com/etm-dev/secretDapp)，在此示例中，定义了多种合约，可以根据接口功能的不同使用不同的方式请求合约。
 
-#### 11.1 获取信息
+#### 10.1 获取信息
 接口地址：/api/dapps/[dappID]/[router]/[params]
 请求方式：GET       
 支持格式：urlencoded   
