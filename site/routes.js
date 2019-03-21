@@ -68,6 +68,26 @@ export default [
         beforeEnter,
       },
       {
+        path: 'docs/algorithm',
+        component: () => import('../docs/vue/algorithm.md'),
+        beforeEnter,
+      },
+      {
+        path: 'docs/algorithm-cn',
+        component: () => import('../docs/vue/algorithm.md'),
+        beforeEnter,
+      },
+      {
+        path: 'docs/extend',
+        component: () => import('../docs/vue/extend.md'),
+        beforeEnter,
+      },
+      {
+        path: 'docs/extend-cn',
+        component: () => import('../docs/vue/extend.md'),
+        beforeEnter,
+      },
+      {
         path: 'docs/dapp-introduction',
         component: () => import('../docs/vue/dapp-introduction.md'),
         beforeEnter,
@@ -117,8 +137,8 @@ export default [
         component: () => import('../CHANGELOG.zh-CN.md'),
         beforeEnter,
       },
-      { path: '', redirect: '/docs/use-dapp/' },
+      { path: '', redirect: '/docs/use-dapp-cn/' },
     ],
   },
-  { path: '/*', redirect: '/docs/use-dapp/' },
+  { path: '/*', redirect: '/docs/use-dapp-cn/' },
 ]

@@ -41,11 +41,5 @@ export default[
   }, {
     path: 'question-cn',
     component: () => import('../docs/dapp/question/index.vue'),
-  }, {
-    path: 'todo',
-    component: () => import('../docs/dapp/todo/index.vue'),
-  }, {
-    path: 'todo-cn',
-    component: () => import('../docs/dapp/todo/index.vue'),
   },
 ]

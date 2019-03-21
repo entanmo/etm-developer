@@ -1,7 +1,11 @@
-# 智能合约
+# 合约开发
+简单地说，一个现实世界的合约是一个管理行动结果的协议，给定一组输入。合同的范围可以从正式的法律合同（例如，金融交易）到诸如游戏“规则”之类的简单实现。典型的行为可以是诸如资金转移（在金融合约的情况下）或游戏下注（在游戏合约的情况下）的事情。
 
-### 1.开始之前
-开始编写合约之前，大家一定保证看完前一章[开发前准备](./before_dev.md)，保证大家的测试主链已经运行起来，开始出块。
+entanmo智能合约定义了接口（操作，参数，数据结构）和实现接口的代码。代码被编译成规范的字节码格式，区块链存储合约的交易（例如，转账，游戏下注）。每一个智能合约都必须附有一份李嘉图合同，该合同定义了合同中具有法律约束力的条款和条件。
+
+
+### 1. 开始之前
+开始编写合约之前，大家一定保证看完前一章【开发准备】，保证大家的测试主链已经运行起来，开始出块。
 
 我们再来回顾下entanmo主链与侧链的关系，请看下图：
 ![](/images/sidechain1.png)
@@ -11,13 +15,44 @@
 	3.各个侧链之间的价值交换，需要通过主链完成。
 	4.可以起无数条侧链，这也是第一章讲的侧链之间是合作共赢关系，可以无限横向拓展。
 
-### 2.应用节点同步
-一般entanmo出块节点是需要投票和挖矿来决定的，所以在现实情况中，我们一般只是充当一个应用节点，只同步数据，而此应用节点会维护自己的一条侧链（在多节点情况下，充当一个侧链的出块节点。）
+在了解了主链与侧链的关系之后，再来看看entanmo的网络分类。
+entanmo有三种网络类型，分别是localnet，testnet，mainnet，后两种是发布到线上的，可通过公网访问。下面对这三种网络做一个介绍：
 
-#### 配置
+- localnet：运行在本地的、只有一个节点（101个受托人都配置在本地的config.json文件中）的私链，主要是为了方便本地测试和开发。locanet就是私有链。
+- testnet：ETM链公网测试环境，由多个服务器组成，具备完整的p2p广播、分布式存储等，在功能上跟mainnet一致，和mainnet的区别在于magic不同（可以理解为用于区分不同链的id，目前ETM testnet的magic为594fe0f3，mainnet的magic为：5f5b3cf5）
+- mainnet：ETM主网正式环境，这上面的ETM Token会在各大交易平台进行交易。
+
+Dapp的开发同样要涉及到这三种网络，即
+
+- 第一步，在localnet开发、本地调试
+- 第二步，在testnet测试
+- 第三步，正式发布到mainnet，其他节点可以安装
+
+### 2. 启动节点
+
+#### 测试节点
+在未正式发布合约前，开发者可以使用自己搭建的测试网络进行合约开发。
+
+配置方式请参考【开发准备（2.开发环境准备）】
+
+entanmo官方已经为开发者修改好了配置：
+
+	//如果是单机测试，请使用 config-personal.json 替换 config.json(同时也需要使用genesisBlock-personal.json 替换genesisBlock.json)
+		cd config
+		mv config.json config.json.bk && mv config-personal.json config.json
+		mv genesisBlock.json genesisBlock.json.bk && mv cgenesisBlock-personal.json genesisBlock.json
+
+#### 应用节点
+
+一般entanmo出块节点是需要投票和挖矿来决定的，所以在现实情况中，开发者一般只是充当一个应用节点，只同步数据，而此应用节点会维护自己的一条侧链（在多节点情况下，充当一个侧链的出块节点。）
+
+**配置**
+
 假设出块节点ip为：xxx.xx.xx.xxx，端口4096，如果是测试主链（第一章已经可以知道如何搭建测试主链），端口就是config.json中的端口，ip就是本机ip。
 
-#### 同步数据
+
+
+**同步数据**
 
 *ps：如果大家闲麻烦，测试主链节点也可以当作应用节点完全可以不用再同步，即可跳过此步骤*
 
@@ -33,30 +68,23 @@
     	...
     }
 
-参考[config.json](../img/config_sigle_node.json)
+参考[config.json](../../../images/config_sigle_node.json)
 
 配置完成以后即可启动应用节点
 
 	//可以参考第一章，启动主链，启动侧链也是一样的
 	node app.js
-TODO:缺少运行成功图片
+	...
+	> info 2019-02-15 14:48:05 764 blocks.js:962 Block applied correctly 	with 0 transactions
+	> log 2019-02-15 14:48:05 764 blocks.js:1468 Forged new block id: 	b40c48deaeb23b7cedd59515e8665f7b347aa86f565a21cbd53283365ec3237a 	> height: 6 round: 1 slot: 3632162 reward: 600000000
+	> [transport] 3s boardcast tr count: 0
 
-### 3.初始化
-	TODO
-### 4.helloworld
-ETM有三种网络类型，分别是localnet，testnet，mainnet，后两种是发布到线上的，可通过公网访问。下面对这三种网络做一个介绍：
 
-- localnet：运行在本地的、只有一个节点（101个受托人都配置在本地的config.json文件中）的私链，主要是为了方便本地测试和开发。locanet就是私有链。
-- testnet：ETM链公网测试环境，由多个服务器组成，具备完整的p2p广播、分布式存储等，在功能上跟mainnet一致，和mainnet的区别在于magic不同（可以理解为用于区分不同链的id，目前ETM testnet的magic为594fe0f3，mainnet的magic为：5f5b3cf5）
-- mainnet：ETM主网正式环境，这上面的ETM Token会在各大交易平台进行交易。
 
-Dapp的开发同样要涉及到这三种网络，即
+### 3. helloworld
+每一个程序的开始都是从[hello world](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)开始的，entanmo也不例外，此小节大致介绍合约发布的过程以及简单的调用。
 
-- 第一步，在localnet开发、本地调试
-- 第二步，在testnet测试
-- 第三步，正式发布到mainnet，其他节点可以安装
-
-#### 4.1 注册代理人账号
+#### 3.1 注册代理人账号
 每个dapp都有独立的受托人，这些受托人也是默认的记账人，他们负责区块的生产，跨链资产的中转，与此同时可以获得交易手续费。
 注册dapp的时候，我们只需要收集受托人的公钥就行，为了权力分散，最好每个秘钥分别由一个人保管。
 这里为了演示，我们一次性创建5个账户，一个dapp最多有101个受托人，最少是5个。
@@ -84,7 +112,7 @@ Dapp的开发同样要涉及到这三种网络，即
     secret: 'response modify knife brass excess absurd chronic original digital surge note spare',
     publicKey: '6b2594ebeee9b072087e5f1e89e5c41ee2d73eb788b63abeedf5c04664f0ce5b' } ]
 ```
-#### 4.2 生成dapp模版
+#### 3.2 生成dapp模版
 应用模板包括注册dapp必须的元信息、创世块以及一个初始的目录结构
 
 生成应用模板需要使用`dapps`子命令，如下所示
@@ -145,7 +173,7 @@ etm-test-dapp/
 
 ```
 
-#### 4.3 注册dapp到主链
+#### 3.3 注册dapp到主链
 注意这里的`主链`不是指`mainnet`， 每个`net`下都有相应的主链， 主链是相对Dapp（侧链）而言。
 
 我们可以使用`registerdapp`注册应用到主链，如下所示
@@ -193,7 +221,7 @@ Done
 }
 ```
 
-#### 4.4 部署代码到应用节点
+#### 3.4 部署代码到应用节点
 现在我们把4.2小节中创建的模板代码拷贝到etm的安装目录下的dapp子目录，并改名为dapp的id
 
 ```
@@ -217,10 +245,14 @@ Done
 }
 ```
 
+注意别忘了新建目录
+
+	mkdir -p path/to/etm/public/dist/dapps/
+
 这里我们把所有受托人的配置到同一个节点了，在生产环境中不推荐这样做，应该把秘钥尽量分散到多个节点，以防止单点故障。
 至此，dapp手工安装部署完成，开发调试阶段需要这样。等以后正式发布到mainnet后，其他节点只需要在钱包页面点击dapp就可以安装。
 
-#### 4.5 重启etm应用节点
+#### 3.5 重启etm应用节点
 
 ```
 > node ETM_HOME/app.js  //contrl+c 结束  然后重新运行，参考 3.初始化 中的运行系统
@@ -234,13 +266,84 @@ Done
 > tail -f path/to/etm/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb/logs/debug.*.log
 ```
 
-#### 4.6 验证helloworld
-	//TODO 展示helloworld 请求成功
+#### 3.6 验证helloworld
 
-### 5.发币转币
+	//查看侧链是否启动
+	http://xxx.xxx.xxx.xxx:port/api/dapps/launched
+	> {"success":true,"launched":["fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236"]}
+	//查看侧链高度
+	http://xxx.xxx.xxx.xxx:port/api/dapps/fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236/blocks/height
+	> {"height":88,"success":true}
 
-### 6.数据储存
+只要能显示以上信息就代表该dapp发布成功
+新建的dapp模块没有修改任何信息，可以查看interface目录下的[helloworld.js](../example/helloworld/interface/helloworld.js)
 
-### 7.单节点运行与多节点运行
+	...
+	app.route.get('/helloworld',  async function (req) {
+  		return { message: 'helloworld' }
+	})
+	...
+
+根据此代码，请求该接口
+
+	http://etm.red:8096/api/dapps/fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236/helloworld
+	> {"message":"helloworld","success":true}
+
+就此，一个helloworld就发布成功了。
 
 
+### 4.多节点运行
+
+以上小节为开发者演示了单节点运行dapp示例，下面为开发者演示多节点（2个节点）配置方式。
+
+#### 4.1 多个代理人配置
+
+查看dapp目录结构：
+
+	-rw-r--r--@  1 wanglei  staff   469 Feb 20 16:43 config.json
+	drwxr-xr-x   3 wanglei  staff    96 Feb 18 14:50 contract
+	-rw-r--r--   1 wanglei  staff   619 Feb 17 21:54 dapp.json
+	-rw-r--r--   1 wanglei  staff  1010 Feb 17 21:54 genesis.json
+	-rw-r--r--@  1 wanglei  staff   411 Feb 20 17:35 init.js
+	drwxr-xr-x   3 wanglei  staff    96 Feb 18 14:48 interface
+	drwxr-xr-x   3 wanglei  staff    96 Feb 19 13:56 model
+	drwxr-xr-x   3 wanglei  staff    96 Feb 17 21:52 public
+
+`config.json`中`secrets`数组与`dapp.json`中`delegates`数组是一一对应的，需要修改成多节点，就要把对应secret与delegate复制到另外一个节点上。
+
+	//比如  第一与第二个secret
+	"secrets": [
+    "brave friend tumble below garden beyond salmon voyage reflect weasel live emerge",
+    "subject dutch flavor short kit creek owner throw analyst trick melody target",
+    "neck hole winter frown aunt print dutch round clip minute milk olive",
+    "metal taxi judge raw agent wire close muffin bicycle royal current moral",
+    "cat coconut mouse rule crack habit holiday useless mobile flag picnic hockey"
+  	]
+	//也需要复制第一与第二个delegate
+	"delegates": [
+	    "8169c6672f5985d8b13d81c17c16a4f2318779bdcd676385f755535883a9b2ad",
+	    "7004f44fb5849b8628ee8431fa3e1a95b06d0cc70e414c875603e0fead739362",
+	    "b21360d7c0f4c55bfe30d6f9291000b171442f04c887a03f6466d9dcac1fcb79",
+	    "4f73d11c9a6eddbc46cb3af17debb2350cc702240493032761287f387128cc58",
+	    "6271ff0d381b0bf8d24661b2b4902c3d1ac5411fa502bf32696a7ca2569e1eed"
+	  ]
+
+#### 4.2 修改config中的peers
+
+在`config.json`中还有一个属性，就是peers字段，如果是多节点启动，就需要把所有节点的ip端口都写进去（除开本节点ip端口）。
+
+	//...
+	"peers": {
+    "list": [
+      {"ip": "45.32.19.241", "port": 4096},
+      {"ip": "45.32.62.184", "port": 4096},
+      {"ip": "45.32.22.78", "port": 4096},
+      {"ip": "45.32.248.33", "port": 4096}
+    ],
+    "blackList": [],
+    "options": {
+      "timeout": 4000
+    }
+    //...
+
+ 重启所有节点即可看到应用启动成功。

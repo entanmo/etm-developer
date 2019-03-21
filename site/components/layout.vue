@@ -15,7 +15,9 @@ const docsList = [
   // { key: 'dapp-dev-tutorials', enTitle: 'DApp Tutorials', title: 'DApp 核心开发流程解析' },
   { key: 'use-dapp', enTitle: 'Use in DApp', title: '选择 ETM 轻松开发 DApp' },
   { key: 'upos', enTitle: 'UPoS', title: 'UPoS 共识机制详解' },
-  { key: 'vote', enTitle: 'Vote', title: 'ETM 投票与分红机制详解' },
+  { key: 'vote', enTitle: 'Vote', title: 'ETM 投票、优选与分红机制详解' },
+  { key: 'algorithm', enTitle: 'algorithm', title: 'ETM 混沌排序与时间塔算法详解' },
+  { key: 'extend', enTitle: 'extend', title: 'ETM 侧链机制打破资源壁垒' },
   // { key: 'getting-started', enTitle: 'Getting Started', title: '快速上手' },
   // { key: 'customize-theme', enTitle: 'Customize Theme', title: '定制主题' },
   // { key: 'changelog', enTitle: 'Change Log', title: '更新日志' },
@@ -197,7 +199,7 @@ export default {
           subtitle,
           url: `/dapp/${key}/`,
         })
-        MenuItems.push(<a-menu-item key={key}>
+        MenuItems.push(<a-menu-item key={key} style='paddingLeft : 50px'>
           <router-link to={`/dapp/${key}/`}>{linkValue}</router-link>
         </a-menu-item>)
       })
@@ -233,7 +235,7 @@ export default {
                   inlineIndent={40}
                   mode='inline'>
                   {docsMenu}
-                  <a-sub-menu title={`DApp(${searchData.length})`} key='Components1'>
+                  <a-sub-menu title={ isCN ? `DApp 教程 (${searchData.length})` : `DApp Tutorials (${searchData.length})`} key='Components1'>
                     {MenuGroup}
                   </a-sub-menu>
                 </a-menu>
