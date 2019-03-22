@@ -411,16 +411,10 @@ JSON返回示例：
 
 
 #### 1.9 给受托人投票
-<<<<<<< HEAD
 接口地址：/api/accounts/delegates   
 请求方式：PUT    
 支持格式：JSON    
 接口说明：调用此接口时需要先锁仓，然后再投票，如果之前有投给其他人，需要同时解除（删除）之前的投票
-=======
-接口地址：/api/accounts/delegates
-请求方式：PUT
-支持格式：JSON
->>>>>>> 2dec55be5e3cb74067049dea736a91b1ea4cfc9d
 
 请求参数说明：
 
@@ -443,12 +437,8 @@ JSON返回示例：
 请求示例：
 
 	//put请求
-<<<<<<< HEAD
 	curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"pepper sleep youth blast vivid circle cross impact zebra neck salmon fee","publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961","delegates":["-ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c",
 	"+9dad1254907d9966841b92ae03078dfe16cf84fe459e6cbc4670470597adda1e"]}' 'http://etm.red:8096/api/accounts/delegates'   
-=======
-	curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"pepper sleep youth blast vivid circle cross impact zebra neck salmon fee","publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961","delegates":["+ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c"]}' 'http://etm.red:8096/api/accounts/delegates'
->>>>>>> 2dec55be5e3cb74067049dea736a91b1ea4cfc9d
 
 JSON返回示例：
 
