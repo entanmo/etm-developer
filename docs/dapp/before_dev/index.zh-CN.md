@@ -21,11 +21,11 @@
 ### 1.介绍
 #### 1.1 entanmo组件版本
 | 组件        | version           |
-| ------------- |:-------------:| 
-| entanmo主链      | preview-1.0.0 | 
-| 侧链      | preview-1.0.0      | 
+| ------------- |:-------------:|
+| entanmo主链      | preview-1.0.0 |
+| 侧链      | preview-1.0.0      |
 | etm-cli | preview-1.0.0      |
-| wallet | preview-1.0.0      | 
+| wallet | preview-1.0.0      |
 
 #### 1.2 etm-js功能
 etm-js是entanmo官方给开发者提供的工具库。开发者可以通过etm-js简单的填写相关参数，就可以方便的拼装成一个请求。后续远程接口章节中将会给开发者使用示例。
@@ -64,19 +64,19 @@ MacOS（暂不支持）
 官方推荐版本：Ubuntu18.04
 
 由于市面16.04版本居多，本文以16.04系统安装举例。
-	
+
 	//版本信息（阿里云服务器）
 	Linux version 4.4.0-85-generic (buildd@lcy01-21) (gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.4) ) #108-Ubuntu SMP Mon Jul 3 17:23:59 UTC 2017
-	
+
 **2.安装库文件**
-	
+
 	//更新源
 	sudo apt-get update
 	//安装lib库
 	sudo apt-get install curl sqlite3 ntp wget git libssl-dev openssl make gcc g++ autoconf automake python build-essential libtool libtool-bin -y
 
 **3.安装nodejs**
-	
+
 	//获取安装脚本并执行
 	curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 	//安装
@@ -85,7 +85,7 @@ MacOS（暂不支持）
 **4.修改配置**
 
 修改config文件
-	
+
 	//主目录下文件
 	-rw-rw-r--   1 wanglei wanglei   5229 Feb 15 22:24 app.js
 	drwxrwxr-x   2 wanglei wanglei   4096 Feb 15 22:52 config
@@ -96,20 +96,20 @@ MacOS（暂不支持）
 	-rw-rw-r--   1 wanglei wanglei 126339 Feb 15 22:34 package-lock.json
 	-rw-rw-r--   1 wanglei wanglei   1693 Feb 15 22:24 package.json
 	drwxrwxr-x  12 wanglei wanglei   4096 Feb 15 22:24 src
-	
+
 	//如果是单机测试，请使用 config-personal.json 替换 config.json(同时也需要使用genesisBlock-personal.json 替换genesisBlock.json)
-	cd config 
+	cd config
 	mv config.json config.json.bk && mv config-personal.json config.json
 	mv genesisBlock.json genesisBlock.json.bk && mv cgenesisBlock-personal.json genesisBlock.json
 
 运行代码 `node app.js`
-	
+
 	> blockTick: []
 	> debug 2019-02-15 14:48:05 762 blocks.js:1040 apply block ok
 	> debug 2019-02-15 14:48:05 762 blocks.js:1055 save block ok
 	> -------------- round tick: 6
 	> debug 2019-02-15 14:48:05 763 round.js:390 Round tick completed 	> { block:
-   		{ 	
+   		{
    			version: 0,
      		totalAmount: 0,
      		totalFee: 0,
@@ -122,17 +122,17 @@ MacOS（暂不支持）
      		generatorPublicKey: '99e5d86cc35cc31d3be8ec4e4a296b080820d396a875fad2bd60e17201bf4dc5',
      		blockSignature: '591948fccf06b180d6c001f8706518c07e65317267cdbf500dfc656dfeb173de5c3b5ddf7bb5d34fc108321376edf736dca3f991a1b2b2adffdfa047f383790b',
      		id: 'b40c48deaeb23b7cedd59515e8665f7b347aa86f565a21cbd53283365ec3237a',
-     		height: 6 
-     	} 
+     		height: 6
+     	}
     }
 	> info 2019-02-15 14:48:05 764 blocks.js:962 Block applied correctly 	with 0 transactions
 	> log 2019-02-15 14:48:05 764 blocks.js:1468 Forged new block id: 	b40c48deaeb23b7cedd59515e8665f7b347aa86f565a21cbd53283365ec3237a 	> height: 6 round: 1 slot: 3632162 reward: 600000000
 	> [transport] 3s boardcast tr count: 0
 
-如果本机只是做为测试使用，可以修改./config/miner-cfg.json 将该选项关掉	
+如果本机只是做为测试使用，可以修改./config/miner-cfg.json 将该选项关掉
 
 	//修改成false
-	"enableGPU": true 
+	"enableGPU": true
 
 
 **5.运行成功**
@@ -162,7 +162,7 @@ MacOS（暂不支持）
 这一步比较麻烦
 
 简单步骤（如果大家时间比较多，网速比较好）
-	
+
 	//请以管理员的身份运行命令后
 	npm install --global --production windows-build-tools
 	//等着就行了
@@ -171,21 +171,21 @@ MacOS（暂不支持）
 
 	//下载Microsoft Build Tools 2015
 	https://www.microsoft.com/en-us/download/details.aspx?id=48159
-	
+
 	//下载安装 python2.7
 	https://www.python.org/
-	
+
 	//配置
 	npm config set python python2.7
 	npm config set msvs_version 2015
 
 
 **4.安装sqlite3**
-	
+
 	//下载文件
 	https://www.sqlite.org/2018/sqlite-dll-win32-x86-3260000.zip
 	https://www.sqlite.org/2018/sqlite-tools-win32-x86-3260000.zip
-	
+
 解压两个文件夹
 
 将dll（其中一个文件夹）文件移动到sqlite3.exe（另一个文件夹）文件夹中
@@ -204,7 +204,7 @@ MacOS（暂不支持）
 	docker run -it --rm --name etm-dev -v $(pwd):/etm -p 4096:4096 ray0523/etm_base /bin/bash -c "npm install https://github.com/entanmo/etm-js.git https://github.com/entanmo/etm-vm.git && npm install && node app.js"
 	//如果配置不正确，进入docker环境，此镜像已经安装好了lib，然后重复mac的验证过程即可
 	docker run -it --rm --name etm-dev -v $(pwd):/etm -p 4096:4096 ray0523/etm_base /bin/bash
-	
+
 #### 2.4 一键安装相关环境
 
 [参考](https://github.com/entanmo/etm/blob/testNet/README.zh-CN.md)
@@ -216,28 +216,28 @@ MacOS（暂不支持）
 	cd entanmo
 
 运行：
-	
-	./entanmod configure 
-	./entanmod start	
+
+	./entanmod configure
+	./entanmod start
 
 **windows**
-	
+
 	//下载解压
 	http://www.entanmo.com/download/entanmo-windows.zip
 
 运行：
-	
-	./entanmod.bat start	
+
+	./entanmod.bat start
 
 命令解释：
-	
+
 	start: 在前台启动节点系统，此时控制台(终端)会被节点系统进程独占
 	start_daemon: 在后台启动节点系统，此时控制台(终端)不会被节点系统独占
 	stop: 停止后台运行的节点系统
 	restart: 前台重启节点系统
 	restart_daemon: 后台重启节点系统
 	status: 查看节点系统是否启动
-	
+
 
 --------------
 
@@ -248,25 +248,25 @@ clone钱包代码：
 	git clone  -b dev2.0 https://github.com/entanmo/etm-wallet.git
 
 修改配置：
-	
+
 	cd etm-wallet
-	vi config/dev.env.js 
+	vi config/dev.env.js
 		BASE_API:'"https://xxx.xxx.xxx.xx:4096"'//修改ip地址为本地etm主链ip端口
 
 编译运行：
-	
+
 	npm install //安装库文件
 	npm run dev //运行
 	-----------------------------------------------------------------
 	//or docker运行
 	docker run -d --name etm-wallet -w /etm -v $(pwd):/etm -p 8080:8080 node /bin/bash -c "npm install && npm run dev"
-	
+
 验证：
-	
+
 	访问http://0.0.0.0:8080 显示钱包网页，即为编译成功
 
 新建账号：
-	
+
 	1.进入钱包首页
 	2.点击新建账号
 	3.按照要求完成注册（牢记密钥）
@@ -275,20 +275,20 @@ clone钱包代码：
 	6.牢记密钥
 	7.登录
 	8.个人中心查看钱包地址（类似：ANZccyU3CFJSmS2bfC5MRneoaCzAXEK5ki）
-	
+
 	or：
 	//下一小节会讲到etm-cli命令行工具
-	etm-cli crypto -g 
+	etm-cli crypto -g
 
 获取私链代币：
 
-一般新建账号是没有代币的，如果是新启动的私链，entanmo官方为开发者创建了一个超级账号，该账户中有非常多的代币	
+一般新建账号是没有代币的，如果是新启动的私链，entanmo官方为开发者创建了一个超级账号，该账户中有非常多的代币
 
 	//该超级账号中有非常多的测试币，只在测试网中有效
 	race forget pause shoe trick first abuse insane hope budget river enough
 
 还有就是config/config.json中101个出块节点是有代币的：
-	
+
 	//可以在config/config.json中查看101个出块节点私钥
 	...
 	"forging": {
@@ -312,11 +312,11 @@ clone钱包代码：
 
 ### 4.etm-cli介绍
 下载安装etm-cli
-	
+
 	//clone代码
 	git clone https://github.com/etm-developer/etm-cli.git
 	//安装库文件
-	cd etm-cli && npm install 
+	cd etm-cli && npm install
 	//将目录下的bin目录设置到path环境下
 	set xx/xx/etm-cli/bin to path //伪代码，根据不同系统设置不同
 
@@ -330,7 +330,7 @@ clone钱包代码：
     	-P, --port <port>                      指定端口(default: 4096)
     	-M, --main                             Specify the mainnet, default: false
     	-h, --help                             帮助
-    
+
     command:
     	getheight                              get block height
     	getblockstatus                         get block status
@@ -392,4 +392,9 @@ clone钱包代码：
   	>	  "supply": 10016816200000000
 	> }
 
+<<<<<<< HEAD
 更多命令，以后章节将会详细讲述。
+=======
+
+下一章节讲合约的时候会用到更多的命令，这里就不一一列举，大家先对这个命令工具有一个大致的了解即可。
+>>>>>>> 2dec55be5e3cb74067049dea736a91b1ea4cfc9d

@@ -22,7 +22,7 @@ import {
   Form,
   Icon,
   Input,
-  InputNumber,
+  // InputNumber,
   Layout,
   List,
   LocaleProvider,
@@ -40,7 +40,7 @@ import {
   Select,
   Slider,
   Spin,
-  Steps,
+  // Steps,
   // Switch,
   Table,
   Transfer,
@@ -56,7 +56,7 @@ import {
   // version,
   Drawer,
   // Skeleton,
-} from 'ant-design-vue'
+} from 'En-Tan-Mo'
 
 // Vue.prototype.$message = message
 // Vue.prototype.$notification = notification
@@ -90,7 +90,7 @@ Vue.use(Dropdown)
 Vue.use(Form)
 Vue.use(Icon)
 Vue.use(Input)
-Vue.use(InputNumber)
+// Vue.use(InputNumber)
 Vue.use(Layout)
 Vue.use(List)
 Vue.use(LocaleProvider)
@@ -106,7 +106,7 @@ Vue.use(Row)
 Vue.use(Select)
 Vue.use(Slider)
 Vue.use(Spin)
-Vue.use(Steps)
+// Vue.use(Steps)
 // Vue.use(Switch)
 Vue.use(Table)
 Vue.use(Transfer)

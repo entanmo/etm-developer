@@ -41,11 +41,5 @@ export default {
     type: 'General',
     title: 'question',
   },
-  todo: {
-    category: 'Components',
-    subtitle: 'todo',
-    type: 'General',
-    title: 'todo',
-  },
 
 }

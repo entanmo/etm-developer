@@ -38,7 +38,7 @@
 		* [6.4 调试](#64-调试)
 		* [6.5 信息输出](65-信息输出)
 		* [6.6 警告](#66-警告)
-		* [6.7 错误](#67-错误) 
+		* [6.7 错误](#67-错误)
 	* [7.工具](#7工具)
 		* [7.1 验证](#71-验证)
 		* [7.2 注册合约](#72-注册合约)
@@ -76,13 +76,13 @@
 	  	let balance = await app.balances.get(address, 'HLB')
 	  	return { balance }
 	})
-	
-	//输出结果 1*10^16 
+
+	//输出结果 1*10^16
 	>{"b":{"s":1,"e":16,"c":[1]},"success":true}
 	//同样可以http访问
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
 	>{"balances":[{"currency":"HLB","balance":"10000000000000000"}],"success":true}
-	
+
 
 
 #### 1.2 增加余额
@@ -94,28 +94,28 @@
 
 说明：
 
-- 无返回值	
+- 无返回值
 - 增加指定账户、指定币种的余额
 
 示例:
-	
+
 	//第一步 查询新账户的余额
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[],"success":true}
-	
+
 	// 第二步 增加余额
-	
+
 	app.route.get("/increase", async req => {
 	  await app.balances.increase('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',100000000)
 	})
-	
+
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/increase
 	> {"success":true}
-	
+
 	//第三步 再次查询
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
-	
+
 
 
 #### 1.3 减少余额
@@ -127,7 +127,7 @@
 
 说明：
 
-- 无返回值	
+- 无返回值
 - 减少指定账户、指定币种的余额
 
 示例:
@@ -135,19 +135,19 @@
 	//第一步 查询
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
-	
+
 	//第二步 减少余额
 	app.route.get("/decrease", async req => {
   		await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
 	})
-	
+
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/decrease
 	> {"success":true}
-	
+
 	//第一步 再次查询
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"50000000"}],"success":true}
-	
+
 #### 1.4 转账
 **app.balances.transfer(currency, amount, from, to)**
 
@@ -215,7 +215,7 @@
 	    balance
 	  }
 	})
-	
+
 	//调用合约接口
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getModel
 	> {"balance":{"address":"AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX","currency":"HLB","balance":"100000000"},"success":true}
@@ -230,7 +230,7 @@
 - 返回一个数据模型的全部索引字段
 
 示例:
-	
+
 	//获取索引
 	app.route.get("/getKeys", async req => {
 	  let keys = await app.sdb.keys('Balance')
@@ -238,10 +238,10 @@
 	    keys
 	  }
 	})
-	
+
 	//调用合约接口
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getKeys
-	//TODO  返回值有问题 
+	//TODO  返回值有问题
 	> {"keys":{},"success":true}
 
 
@@ -262,7 +262,7 @@
 	  return {
 	    entries
 	  }
-	})	
+	})
 	// 请求接口以及输出
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getEntry
 	//TODO 返回数据有问题
@@ -383,10 +383,10 @@
 - `name` 模型名称
 说明：
 
-- 返回一个模型的实例, 主要用于查询已确认的数据   
+- 返回一个模型的实例, 主要用于查询已确认的数据
 
 示例：
-	
+
 	//获取数据库模型
 	app.route.get("/getDBModel", async req => {
 	  let entries = await app.model.Words.findAll({})
@@ -407,7 +407,7 @@
 - 返回该模型所有字段
 
 示例：
-	
+
 	//获取数据库模型字段
 	app.route.get("/getDBMFields", async req => {
 	  let fields = await app.model.Words.fields()
@@ -431,7 +431,7 @@
 - 表示指定条件的数据项总数
 
 示例:
-	
+
 	//获取数据库模型数据数量
 	app.route.get("/getDBMCount", async req => {
 	  let count = await app.model.Words.count({})
@@ -443,7 +443,7 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBMCount
 	//返回结果
 	> {"count":12,"success":true}
-	
+
 	//或者
 	app.model.Block.count({ height: { $lt: 100 } })
 	//输出
@@ -462,7 +462,7 @@
 
 示例:
 
-	
+
 	//获取数据库中是否存在某些数据
 	app.route.get("/exist", async req => {
 	  let exist = await app.model.Words.exists({"words":" hello ray "})
@@ -474,18 +474,18 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/exist
 	//返回结果
 	> {"exist":true,"success":true}
-	
+
 	//或者
 	app.model.Transaction.exists({ id: '9a5ec0669c79b9f5a1d5a4dbb2c200bc28c9ea829dbff71f41cbb2ad5a7d9b01' })
 	//输出
 	false
-	
+
 	app.model.Account.exists({ nickname: 'Nakamoto' })
 	//输出
 	true
 
 #### 3.5 查找
-**app.model.[table].findOne(condition)**	
+**app.model.[table].findOne(condition)**
 
 `options`是一个对象, 包含以下元素
 
@@ -496,7 +496,7 @@
 - 查询一个指定条件的数据项
 
 示例:
-	
+
 	//查找数据库中的数据
 	app.route.get("/findOne", async req => {
 	  let one = await app.model.Words.findOne({"words":" hello ray "})
@@ -508,7 +508,7 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/findOne
 	//返回结果
 	> {"one":{"words":"helloworld"},"success":true}
-	
+
 	//或者
 	app.model.Account.findOne({ nickname: 'Nakamoto' })
 	//输出
@@ -531,10 +531,10 @@
 
 说明：
 
-- 查询指定条件的所有数据项 
+- 查询指定条件的所有数据项
 
 示例:
-	
+
 	// 获取所有单词
 	app.route.get("/words", async req => {
 	  let words = await app.model.Words.findAll({})
@@ -546,7 +546,7 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/words
 	//返回结果
 	> {"words":[{"words":"helloworld"},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello ray "}],"success":true}
-	
+
 	app.model.Transfer.findAll({ senderId: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85'})
 	//输出
 	[
@@ -591,12 +591,12 @@
 **app.route.post(path, handler)**
 
 	注册一个`post`类型的http请求处理函数
-	
+
 #### 4.3 put
 **app.route.put(path, handler)**
 
 	注册一个`put`类型的http请求处理函数
-	
+
 ### 5.手续费
 #### 5.1 添加手续费
 **app.feePool.add(currency, amount)**
@@ -615,8 +615,8 @@
 	app.route.get("/addFee", async req => {
 	  await app.feePool.add('HLB', '10000000000')
 	})
-	
-	//查看数据库中 
+
+	//查看数据库中
 	sqlite3 blockchain.db
 	sqlite> select * from round_fees;
 	//结果中增加了
@@ -625,7 +625,7 @@
 
 ### 6.日志
 #### 6.1 设置等级
-	
+
 	app.logger.setLevel('debug')
 	app.logger.setLevel('info')
 #### 6.2 日志
@@ -638,7 +638,7 @@
 	logger.info('hello %s %d',  'world', 123, {foo:'bar'});
 #### 6.6 警告
 	logger.warn('hello %s %d %j', 'world', 123, {foo:'bar'});
-#### 6.7 错误 
+#### 6.7 错误
 	logger.error('hello %s %d %j', 'world', 123, {foo:'bar'}, [1, 2, 3, 4], Object);
 
 
@@ -740,7 +740,7 @@
 示例:
 
 	app.setDefaultFee('10000000', 'HLB')
-	
+
 
 #### 7.7 获取真实时间戳
 **app.getRealTime(epochTime)**
@@ -771,7 +771,7 @@
 **app.registerHook**
 
 	//TODO
-	
+
 #### 7.9 应用列表
 **app.custom[]**
 
@@ -801,7 +801,7 @@
 - 对指定类型的ID增加1并以字符串形式返回更新后的数值, 相当于原子的`++1`, 超大数也适用
 
 示例:
-	
+
 	//示例 加密马合约部分代码
 	app.sdb.create("Market", {
         id: app.autoID.increment("market_max_id"),

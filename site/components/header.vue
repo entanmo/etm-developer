@@ -3,7 +3,7 @@ import { isZhCN } from '../util'
 import sortBy from 'lodash/sortBy'
 import packageInfo from '../../package.json'
 import NProgress from 'nprogress'
-
+import logo from '../logo200x200-black.png'
 export default {
   props: {
     name: String,
@@ -39,7 +39,7 @@ export default {
         <a-row>
           <a-col class='header-left' xxl={4} xl={5} lg={5} md={6} sm={24} xs={24}>
             <router-link to={{ path: '/' }} id='logo'>
-              <img alt='logo' height='32' src='/images/logo200x200-black.png' />
+              <img alt='logo' height='32' src={logo} />
               <span style='color: black;font-size: 16px;font-weight: 400;'>En-Tan-Mo Developer</span>
             </router-link>
             <a-button ghost size='small' onClick={this.handleClick} class='header-lang-button' key='lang-button'>
@@ -73,7 +73,7 @@ export default {
             </a-button>
             <a-menu selectedKeys={['components']} mode='horizontal' class='menu-site' id='nav'>
               <a-menu-item key='components'>
-                {isCN ? '组件' : 'Components'}
+                {isCN ? '文档' : 'Documents'}
               </a-menu-item>
               <a-menu-item key='github'>
                 <a href='https://github.com/entanmo' target='_blank' >GitHub</a>
