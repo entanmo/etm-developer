@@ -212,7 +212,7 @@ MacOS（暂不支持）
 **ubuntu**
 
 	wget http://www.entanmo.com/download/entanmo-ubuntu.tar.gz
-	tar zxvf entanmo-ubuntu.tar.gz
+	tar -zxvf entanmo-ubuntu.tar.gz
 	cd entanmo
 
 运行：
