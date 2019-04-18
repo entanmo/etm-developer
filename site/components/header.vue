@@ -51,7 +51,7 @@ export default {
               <a-icon type='search' />
               <a-select
                 ref='selectBox'
-                placeholder={isCN ? '搜索DApp...' : 'input search text'}
+                placeholder={isCN ? '搜索文章...' : 'input search text'}
                 style='width: 200px'
                 defaultActiveFirstOption={false}
                 showArrow={false}

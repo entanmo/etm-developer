@@ -1,5 +1,7 @@
 <script>
 import AllDemo from '../dapp'
+import AllDemo1 from '../skill'
+import AllDemo2 from '../intro'
 import Header from './header'
 import Footer from './footer'
 import zhCN from 'antd/locale-provider/zh_CN'
@@ -10,22 +12,8 @@ import { Provider, create } from '../../components/_util/store'
 import NProgress from 'nprogress'
 
 const docsList = [
-  // { key: 'introduce', enTitle: 'Introduction', title: '介绍' },
-  // { key: 'dapp-introduction', enTitle: 'DApp Introduction', title: 'DApp 介绍' },
-  // { key: 'dapp-dev-tutorials', enTitle: 'DApp Tutorials', title: 'DApp 核心开发流程解析' },
-  { key: 'use-dapp', enTitle: 'Use in DApp', title: '选择 ETM 轻松开发 DApp' },
-  { key: 'upos', enTitle: 'UPoS', title: 'UPoS 共识机制详解' },
-  { key: 'vote', enTitle: 'Vote', title: 'ETM 投票、优选与分红机制详解' },
-  { key: 'algorithm', enTitle: 'algorithm', title: 'ETM 混沌排序与时间塔算法详解' },
-  { key: 'extend', enTitle: 'extend', title: 'ETM 侧链机制打破资源壁垒' },
-  // { key: 'getting-started', enTitle: 'Getting Started', title: '快速上手' },
-  // { key: 'customize-theme', enTitle: 'Customize Theme', title: '定制主题' },
-  // { key: 'changelog', enTitle: 'Change Log', title: '更新日志' },
-  // { key: 'i18n', enTitle: 'Internationalization', title: '国际化' },
-  // { key: 'faq', enTitle: 'FAQ', title: '常见问题' },
-  // { key: 'sponsor', enTitle: 'Sponsor', title: '赞助我们' },
+  // { key: 'home', enTitle: 'Use in DApp', title: '选择 ETM 轻松开发 DApp' },
 ]
-
 export default {
   props: {
     name: String,
@@ -38,7 +26,7 @@ export default {
     })
     this.subscribe()
     return {
-      showSideBars: true,
+      showSideBars: false,
       currentSubMenu: [],
       sidebarHeight: document.documentElement.offsetHeight,
     }
@@ -79,7 +67,9 @@ export default {
   },
   methods: {
     addSubMenu () {
-      if (this.$route.path.indexOf('/docs/') !== -1 || this.$route.path.indexOf('/dapp/') !== -1) {
+      const pathArr = ['/docs/', '/doc/', '/skill/', '/dapp/']
+      const hasPath = pathArr.some(item => this.$route.path.indexOf(item) >= 0)
+      if (hasPath) {
         this.$nextTick(() => {
           const menus = []
           const doms = [...this.$refs.doc.querySelectorAll(['h2', 'h3'])]
@@ -107,7 +97,6 @@ export default {
         const title = isCN ? cnTitle : usTitle
         lis.push(<a-anchor-link key={id} href={`#${id}`} title={title} />)
       })
-      const showApi = this.$route.path.indexOf('/dapp/') !== -1
       return (
         <a-anchor offsetTop={100} class='demo-anchor'>
           {lis}
@@ -148,81 +137,115 @@ export default {
       NProgress.done()
       document.documentElement.scrollTop = 0
     },
-  },
+    createMenu (options, route, MenuGroup, AllDemo) {
+      const titleMap = {}
 
-  render () {
-    const name = this.name
-    const isCN = isZhCN(name)
-    const titleMap = {}
-    const menuConfig = {
-      General: [],
+      const menuConfig = {
+        General: [],
       // Layout: [],
       // Navigation: [],
       // 'Data Entry': [],
       // 'Data Display': [],
       // Feedback: [],
       // Other: [],
+      }
+      for (const [title, d] of Object.entries(AllDemo)) {
+        const type = d.type || 'Other'
+        const key = `${title.replace(/(\B[A-Z])/g, '-$1').toLowerCase()}`
+        titleMap[key] = title
+        AllDemo[title].key = key
+        menuConfig[type] = menuConfig[type] || []
+        menuConfig[type].push(d)
+      }
+      const reName = name.replace(/-cn\/?$/, '')
+
+      for (const [type, menus] of Object.entries(menuConfig)) {
+        const MenuItems = []
+        menus.forEach(({ title, subtitle, entitle }) => {
+          const linkValue = options.isCN
+            ? [<span>{title}</span>, <span class='chinese'>{subtitle}</span>]
+            : [<span>{entitle}</span>]
+          let key = `${title.replace(/(\B[A-Z])/g, '-$1').toLowerCase()}`
+          if (options.isCN) {
+            key = `${key}-cn`
+          }
+          options.pagesKey.push({
+            name: key,
+            url: `/${route}/${key}/`,
+            title: options.isCN ? `${title} ${subtitle}` : title,
+          })
+          options.searchData.push({
+            title,
+            subtitle,
+            url: `/${route}/${key}/`,
+          })
+          if (route === 'dapp') {
+            options.dappData.push({
+              title,
+              subtitle,
+              url: `/${route}/${key}/`,
+            })
+          } else if (route === 'skill') {
+            options.skillData.push({
+              title,
+              subtitle,
+              url: `/${route}/${key}/`,
+            })
+          } else if (route === 'doc') {
+            options.introData.push({
+              title,
+              subtitle,
+              url: `/${route}/${key}/`,
+            })
+          }
+          MenuItems.push(<a-menu-item key={key} style='paddingLeft : 50px'>
+            <router-link to={`/${route}/${key}/`}>{linkValue}</router-link>
+          </a-menu-item>)
+        })
+        MenuGroup.push(<a-menu-item-group >{MenuItems}</a-menu-item-group>)
+      }
+      const config = AllDemo[titleMap[reName]]
+      this.resetDocumentTitle(config, reName, options.isCN)
+    },
+  },
+
+  render () {
+    const name = this.name
+    const isCN = isZhCN(name)
+    const options = {
+      pagesKey: [],
+      isCN: isCN,
+      searchData: [],
+      skillData: [],
+      dappData: [],
+      introData: [],
     }
-    const pagesKey = []
+    const docsMenu = this.getDocsMenu(options.isCN, options.pagesKey)
+    const routes = ['dapp', 'skill', 'doc']
+    const MenuGroup = []
+    const MenuGroup1 = []
+    const MenuGroup2 = []
     let prevPage = null
     let nextPage = null
-    const searchData = []
-    for (const [title, d] of Object.entries(AllDemo)) {
-      const type = d.type || 'Other'
-      const key = `${title.replace(/(\B[A-Z])/g, '-$1').toLowerCase()}`
-      titleMap[key] = title
-      AllDemo[title].key = key
-      menuConfig[type] = menuConfig[type] || []
-      menuConfig[type].push(d)
-    }
-    const docsMenu = this.getDocsMenu(isCN, pagesKey)
-    const reName = name.replace(/-cn\/?$/, '')
-    const MenuGroup = []
-    for (const [type, menus] of Object.entries(menuConfig)) {
-      // console.log(sortBy(menus, ['title']))
-      const MenuItems = []
-      menus.forEach(({ title, subtitle }) => {
-        const linkValue = isCN
-          ? [<span>{title}</span>, <span class='chinese'>{subtitle}</span>]
-          : [<span>{title}</span>]
-        let key = `${title.replace(/(\B[A-Z])/g, '-$1').toLowerCase()}`
-        if (isCN) {
-          key = `${key}-cn`
-        }
-        pagesKey.push({
-          name: key,
-          url: `/dapp/${key}/`,
-          title: isCN ? `${title} ${subtitle}` : title,
-        })
-        searchData.push({
-          title,
-          subtitle,
-          url: `/dapp/${key}/`,
-        })
-        MenuItems.push(<a-menu-item key={key} style='paddingLeft : 50px'>
-          <router-link to={`/dapp/${key}/`}>{linkValue}</router-link>
-        </a-menu-item>)
-      })
-      MenuGroup.push(<a-menu-item-group >{MenuItems}</a-menu-item-group>)
-    }
-    pagesKey.forEach((item, index) => {
+    this.createMenu(options, routes[2], MenuGroup2, AllDemo2)
+    this.createMenu(options, routes[1], MenuGroup1, AllDemo1)
+    this.createMenu(options, routes[0], MenuGroup, AllDemo)
+
+    options.pagesKey.forEach((item, index) => {
       if (item.name === name) {
-        prevPage = pagesKey[index - 1]
-        nextPage = pagesKey[index + 1]
+        prevPage = options.pagesKey[index - 1]
+        nextPage = options.pagesKey[index + 1]
       }
     })
     let locale = zhCN
     if (!isCN) {
       locale = enUS
     }
-    const config = AllDemo[titleMap[reName]]
-    // console.log(config)
-    this.resetDocumentTitle(config, reName, isCN)
-
     const { showSideBars } = this
+
     return (
       <div class='page-wrapper'>
-        <Header searchData={searchData} name={name}/>
+        <Header searchData={options.searchData} name={name}/>
         <a-locale-provider locale={locale}>
           <div class='main-wrapper'>
             <a-row>
@@ -235,7 +258,13 @@ export default {
                   inlineIndent={40}
                   mode='inline'>
                   {docsMenu}
-                  <a-sub-menu title={ isCN ? `DApp 教程 (${searchData.length})` : `DApp Tutorials (${searchData.length})`} key='Components1'>
+                  <a-sub-menu title={ isCN ? `简介 (${options.introData.length})` : `Intro (${options.introData.length})`} key='Components'>
+                    {MenuGroup2}
+                  </a-sub-menu>
+                  <a-sub-menu title={ isCN ? `技术解读 (${options.skillData.length})` : `Technical Interpretation (${options.skillData.length})`} key='Components2'>
+                    {MenuGroup1}
+                  </a-sub-menu>
+                  <a-sub-menu title={ isCN ? `DApp 开发教程 (${options.dappData.length})` : `DApp Tutorials (${options.dappData.length})`} key='Components3'>
                     {MenuGroup}
                   </a-sub-menu>
                 </a-menu>
@@ -251,19 +280,20 @@ export default {
                   <div class='toc-affix' style='width: 120px;'>
                     {this.getSubMenu(isCN)}
                   </div>
-                  {
-                    // this.showDemo ? <Provider store={this.store} key={isCN ? 'cn' : 'en'}>
-                    //   <router-view
-                    //     class={`demo-cols-${config.cols || 2}`}
-                    //     {...{ directives: [
-                    //       {
-                    //         name: 'mountedCallback',
-                    //         value: this.mountedCallback,
-                    //       },
-                    //     ] }}
-                    //   ></router-view>
-                    // </Provider> : ''
-                  }
+                  {/*
+                    this.showDemo ? <Provider store={this.store} key={isCN ? 'cn' : 'en'}>
+                      <router-view
+                        // class={`demo-cols-${config.cols || 2}`}
+
+                        {...{ directives: [
+                          {
+                            name: 'mountedCallback',
+                            value: this.mountedCallback,
+                          },
+                        ] }}
+                      ></router-view>
+                    </Provider> : ''
+                  */}
                   {<div class='markdown api-container' ref='doc'>
                     <router-view
                       {...{ directives: [
@@ -290,3 +320,5 @@ export default {
   },
 }
 </script>
+
+

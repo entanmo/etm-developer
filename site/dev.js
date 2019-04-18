@@ -31,7 +31,7 @@ const i18n = new VueI18n({
 })
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     { path: '/*', component: Test },
   ],

@@ -1,5 +1,7 @@
 # Q&A
 
+<img src="/images/dapp/dapp07.jpg"  >
+
 这篇文档里，我们讲述常见的DApp开发问题和它们的解决方案.
 
 **Dapp 安装在哪个目录？**
