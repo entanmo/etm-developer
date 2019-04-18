@@ -215,7 +215,7 @@ MacOS（暂不支持）
 **ubuntu**
 
 	wget http://www.entanmo.com/download/entanmo-ubuntu.tar.gz
-	tar zxvf entanmo-ubuntu.tar.gz
+	tar -zxvf entanmo-ubuntu.tar.gz
 	cd entanmo
 
 运行：
@@ -395,5 +395,4 @@ clone钱包代码：
   	>	  "supply": 10016816200000000
 	> }
 
-
-下一章节讲合约的时候会用到更多的命令，这里就不一一列举，大家先对这个命令工具有一个大致的了解即可。
+更多命令，以后章节将会详细讲述。

@@ -412,9 +412,10 @@ JSON返回示例：
 
 
 #### 1.9 给受托人投票
-接口地址：/api/accounts/delegates
-请求方式：PUT
-支持格式：JSON
+接口地址：/api/accounts/delegates   
+请求方式：PUT    
+支持格式：JSON    
+接口说明：调用此接口时需要先锁仓，然后再投票，如果之前有投给其他人，需要同时解除（删除）之前的投票
 
 请求参数说明：
 
@@ -437,12 +438,34 @@ JSON返回示例：
 请求示例：
 
 	//put请求
-	curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"pepper sleep youth blast vivid circle cross impact zebra neck salmon fee","publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961","delegates":["+ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c"]}' 'http://etm.red:8096/api/accounts/delegates'
+	curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"pepper sleep youth blast vivid circle cross impact zebra neck salmon fee","publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961","delegates":["-ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c",
+	"+9dad1254907d9966841b92ae03078dfe16cf84fe459e6cbc4670470597adda1e"]}' 'http://etm.red:8096/api/accounts/delegates'   
 
 JSON返回示例：
 
-	//TODO  这里请求有问题
-	{"success":false,"error":"Number of votes  (2 > 1)."}
+	{
+	    "success":true,
+	    "transaction":{
+	        "type":3,
+	        "amount":0,
+	        "senderPublicKey":"bd93add22ab931a279f0ef741b768796afc3756ec697f76bef4e2f634969294d",
+	        "requesterPublicKey":null,
+	        "timestamp":13791388,
+	        "asset":{
+	            "vote":{
+	                "votes":[
+	                    "-ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c",
+	                    "+9dad1254907d9966841b92ae03078dfe16cf84fe459e6cbc4670470597adda1e"
+	                ]
+	            }
+	        },
+	        "recipientId":null,
+	        "signature":"647e43f09ba19facc7c0b9bae93e19393958b5865fce51b23c68be2c1eb5219ac0a52ece4e9cccefe557fab23faf24b27263efe96efc0ae910f8e3e7a0e9f206",
+	        "id":"7125a018018ba80bd54956e62e952382e72cda49fc0d438a3f695913cad58b78",
+	        "fee":10000000,
+	        "senderId":"A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr"
+	    }
+	}
 
 
 
@@ -2003,6 +2026,8 @@ JSON返回示例：
 	}
 
 ### 8.多重签名
+//TODO
+暂未开放权限
 #### 8.1 设置普通账户为多重签名账户
 //TODO 该接口没有验证成功，没有设置成功，主要是因为还需要其他人签名，如何签名？
 接口地址：/api/multisignatures
