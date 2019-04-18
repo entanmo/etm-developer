@@ -1,6 +1,6 @@
 
 
-# En-Tan-Mo
+# ETM 是什么？
 
 
 En-Tan-Mo 灵感来源于 Entente （联盟）、 Transaction （交易）和 Mobius （莫比乌斯），是基于纳什均衡和价值传递理论的新一代区块链项目。

@@ -1,4 +1,3 @@
-# 远程接口
 <img src="/images/dapp/dapp04.jpg"  >
 
 开发DApp应该分为智能合约开发、前端界面开发。本小节主要讲述了前端界面如何调用合约接口，重点关注[10.自定义合约接口调用](#10自定义合约接口调用)，因为大家的dapp功能各异，只有学习到了如何调用自定义的接口，大家调用起合约来才能得心应手。
@@ -412,9 +411,9 @@ JSON返回示例：
 
 
 #### 1.9 给受托人投票
-接口地址：/api/accounts/delegates   
-请求方式：PUT    
-支持格式：JSON    
+接口地址：/api/accounts/delegates
+请求方式：PUT
+支持格式：JSON
 接口说明：调用此接口时需要先锁仓，然后再投票，如果之前有投给其他人，需要同时解除（删除）之前的投票
 
 请求参数说明：
@@ -439,7 +438,7 @@ JSON返回示例：
 
 	//put请求
 	curl -k -H "Content-Type: application/json" -X PUT -d '{"secret":"pepper sleep youth blast vivid circle cross impact zebra neck salmon fee","publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961","delegates":["-ae28cc3069f4291756168e602a11e5b5d13e546050e3c1d9a09c0311f53a159c",
-	"+9dad1254907d9966841b92ae03078dfe16cf84fe459e6cbc4670470597adda1e"]}' 'http://etm.red:8096/api/accounts/delegates'   
+	"+9dad1254907d9966841b92ae03078dfe16cf84fe459e6cbc4670470597adda1e"]}' 'http://etm.red:8096/api/accounts/delegates'
 
 JSON返回示例：
 

@@ -1,11 +1,9 @@
 
 
-# En-Tan-Mo
+# What's ETM
 
 
-En-Tan-Mo 灵感来源于 Entente （联盟）、 Transaction （交易）和 Mobius （莫比乌斯），是基于纳什均衡和价值传递理论的新一代区块链项目。
-
-2011 年诺贝尔经济学奖得主、理性预期学派领袖托马斯·萨金特教授，1979 年诺贝尔物理学奖得主、美国科学院院士谢尔登·格拉肖教授以及来自于美国加州理工大学、美国马里兰大学、法国庞加莱研究所的各领域学者和软件工程师一起，将博弈论的研究成果革命性融入区块链中，共同创作了具有 SHD 完备性的 En-Tan-Mo。
-
-En-Tan-Mo 是一个能够负载亿万用户的区块链操作系统，一个为用户提供去中心化服务的联盟矿池，还是一个承载高频次、高流量的大型分布式数字权证交易所，一个开放的开发者社区和自演进区块链应用组件承载平台，更是一个打通金融、能源、商业、生活等生态环境和价值传递的新一代互联网平台 。
+En-Tan-Mo is a next-generation blockchain based on Nash equilibrium and the idea of value transfer. Its name emerged from Entente, Transaction and Mobius.
+The core En-Tan-Mo team includes Prof. Thomas Sargent, leader of the rational expectation revolution and winner of the 2011 Nobel Prize in Economics, Professor Sheldon Lee Glashow, the Nobel Prize-winning theoretical physicist who proposed the Grand Unified Theory; as well as scholars from Califor- nia Institute of Technology, the University of Maryland and the institut Henri Poincare who realized SHD completeness by innovatively incorporating game theory in blockchain develop- ment.
+En-Tan-Mo is a blockchain operating system with the capacity to carry hundreds of millions of users, a coalition mining pool that provides distributed services, and a high-frequency high-traffic exchange for digital token. It is not only an open developers’ community and a self-evolving blockchain-based platform, but also an ecosystem that connects finance, energy, business and people’s lives and a next-generation internet platform for value trans-fer.
 

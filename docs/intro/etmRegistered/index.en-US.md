@@ -1,4 +1,4 @@
-# ETM Wallet 使用教程
+# Participate In Voting To Receive Dividends
 
 ## 1.ETM 钱包介绍
 

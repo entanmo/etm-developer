@@ -1,4 +1,3 @@
-# Q&A
 
 <img src="/images/dapp/dapp07.jpg"  >
 

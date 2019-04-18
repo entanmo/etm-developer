@@ -1,4 +1,4 @@
-# ETM Wallet 使用教程
+# 注册并使用 ETM Wallet
 
 ## 1.ETM 钱包介绍
 

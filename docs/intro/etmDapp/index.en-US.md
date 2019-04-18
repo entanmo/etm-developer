@@ -1,4 +1,4 @@
-# 加入ETM成为开发者
+# Join ETM To Become A DApp Developer
 
 ## 什么是DApp？
 

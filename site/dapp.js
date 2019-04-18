@@ -1,7 +1,7 @@
 export default {
   beforeDev: {
     category: 'Components',
-    subtitle: '准备',
+    subtitle: '开发准备',
     entitle: 'ready',
     type: 'General',
     title: 'beforeDev',

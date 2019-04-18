@@ -1,4 +1,3 @@
-# 开发准备
 
 <img src="/images/dapp/dapp01.jpg"  >
 

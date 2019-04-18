@@ -1,4 +1,3 @@
-# 查看日志
 <img src="/images/dapp/dapp06.jpg"  >
 
 ### 主链log查看

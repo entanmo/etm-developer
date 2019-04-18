@@ -81,8 +81,8 @@ export default [
         component: () => import('../CHANGELOG.zh-CN.md'),
         beforeEnter,
       },
-      { path: '', redirect: 'doc/etm-info-cn/' },
+      { path: '', redirect: 'doc/etm-info/' },
     ],
   },
-  { path: '/*', redirect: 'doc/etm-info-cn/' },
+  { path: '/*', redirect: 'doc/etm-info/' },
 ]
