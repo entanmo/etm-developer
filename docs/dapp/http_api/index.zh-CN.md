@@ -1,6 +1,7 @@
+# 远程接口
 <img src="/images/dapp/dapp04.jpg"  >
 
-开发DApp应该分为智能合约开发、前端界面开发。本小节主要讲述了前端界面如何调用合约接口，重点关注[10.自定义合约接口调用](#10自定义合约接口调用)，因为大家的dapp功能各异，只有学习到了如何调用自定义的接口，大家调用起合约来才能得心应手。
+开发DApp应该分为智能合约开发、前端界面开发。本小节主要讲述了前端界面如何调用合约接口，重点关注[10.自定义合约接口调用](#10自定义合约接口调用)。
 
 **构建请求过程：**
 1. 构造请求数据，用户数据按照entanmo提供的接口规则，通过程序生成签名，生成请求数据集合；
@@ -122,22 +123,21 @@ JSON返回示例：
 
 	{
 		success: true,
-     	account:{
-      		address: 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr',
-        	unconfirmedBalance: 9996006130000000,
-        	balance: 9996006130000000,
-        	publicKey: 'bd93add22ab931a279f0ef741b768796afc3756ec697f76bef4e2f634969294d',
-        	unconfirmedSignature: false,
-        	secondSignature: false,
-        	secondPublicKey: '',
-        	multisignatures: [],
-        	u_multisignatures: [],
-        	lockHeight: 0
-    	}
-    	latestBlock: { height: 52372, timestamp: 11457690 },
-     	version: { version: '1.0.0', build: 'development', net: 'localnet' }
-    }
-
+	 	account:{
+	  		address: 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr',
+	    	unconfirmedBalance: 9996006130000000,
+	    	balance: 9996006130000000,
+	    	publicKey: 'bd93add22ab931a279f0ef741b768796afc3756ec697f76bef4e2f634969294d',
+	    	unconfirmedSignature: false,
+	    	secondSignature: false,
+	    	secondPublicKey: '',
+	    	multisignatures: [],
+	    	u_multisignatures: [],
+	    	lockHeight: 0
+		}
+		latestBlock: { height: 52372, timestamp: 11457690 },
+	 	version: { version: '1.0.0', build: 'development', net: 'localnet' }
+	}
 
 #### 1.2 不加密直接登录
 接口地址：/api/accounts/open/
@@ -177,19 +177,19 @@ JSON返回示例：
 
 	{
 		success: true,
-     	account:
-      	{
-      		address: 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr',
-        	unconfirmedBalance: 9996006130000000,
-        	balance: 9996006130000000,
-        	publicKey: 'bd93add22ab931a279f0ef741b768796afc3756ec697f76bef4e2f634969294d',
-        	unconfirmedSignature: false,
-        	secondSignature: false,
-        	secondPublicKey: '',
-        	multisignatures: [],
-        	u_multisignatures: [],
-        	lockHeight: 0
-      	}
+	 	account:
+	  	{
+	  		address: 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr',
+	    	unconfirmedBalance: 9996006130000000,
+	    	balance: 9996006130000000,
+	    	publicKey: 'bd93add22ab931a279f0ef741b768796afc3756ec697f76bef4e2f634969294d',
+	    	unconfirmedSignature: false,
+	    	secondSignature: false,
+	    	secondPublicKey: '',
+	    	multisignatures: [],
+	    	u_multisignatures: [],
+	    	lockHeight: 0
+	  	}
    	}
 
 #### 1.3 根据地址获取账户信息
@@ -243,7 +243,6 @@ JSON返回示例：
 			,"net":"localnet"
 		}
 	}
-
 
 #### 1.4 获取账户余额
 接口地址：/api/accounts/getBalance
@@ -308,7 +307,6 @@ JSON返回示例：
 		"publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961"
 	}
 
-
 #### 1.6 生成公钥
 接口地址：/api/accounts/generatePublickey
 请求方式：POST
@@ -338,7 +336,6 @@ JSON返回示例：
 		"success":true,
 		"publicKey":"813a4934192334fdd55f966f25975757b3bc2b866552fa58687e7f8420190961"
 	}
-
 
 #### 1.7 根据地址获取其投票列表
 接口地址：/api/accounts/delegates
@@ -409,7 +406,6 @@ JSON返回示例：
 		"fee":10000000
 	}
 
-
 #### 1.9 给受托人投票
 接口地址：/api/accounts/delegates
 请求方式：PUT
@@ -467,7 +463,6 @@ JSON返回示例：
 	}
 
 
-
 #### 1.10 生成新账户
 接口地址：/api/accounts/new
 请求方式：GET
@@ -499,7 +494,6 @@ JSON返回示例：
 		"privateKey":"bdf1b1963d5bd26938f15a7ca7d02a6a77054b7d4d353d5618cae1570dbb56485e975d4b31c741af773b8b53d54f34f4b4f0ea2ab1bf629cdb5bd692192c9a55",
 		"address":"APAJi5oU5zffU3y5JDufWiKGyMskrdVAT7"
 	}
-
 
 #### 1.11 获取账户排行榜前100名
 接口地址：/api/accounts/top
@@ -591,7 +585,6 @@ JSON返回示例：
 		"count":209
 	}
 
-
 #### 1.13 查询延迟到账列表
 接口地址：/api/accounts/delayOrders
 请求方式：GET
@@ -666,7 +659,6 @@ JSON返回示例：
 	}
 
 
-
 ### 2.交易
 
 #### 2.1 获取交易信息
@@ -708,7 +700,6 @@ JSON返回示例：
 
 
 	curl -k -H "Content-Type: application/json" -X http://etm.red:8096/api/transactions?limit=2
-
 
 JSON返回示例：
 
@@ -754,7 +745,6 @@ JSON返回示例：
 			}],
 		"count":468
 	}
-
 
 #### 2.2 根据交易id查看交易详情
 接口地址：/api/transactions/get
@@ -984,7 +974,6 @@ JSON返回示例：
 	  });
 	}
 
-
 	axios.put(url, createTransaction()).then(res => {
 	  console.log(res);
 	}).catch(err => {
@@ -998,7 +987,6 @@ JSON返回示例：
 		success: true,
 		transactionId: '60a945e64cd02ed98d6598d08ceb62dc226e6b7d5495adbbebfde15dbbbac66b'
 	}
-
 
 ### 3.区块
 
@@ -1239,7 +1227,6 @@ JSON返回示例：
 		"reward": 600000000
 	}
 
-
 #### 3.7 获取代币当前供应值
 接口地址：/api/blocks/getSupply
 请求方式：GET
@@ -1266,7 +1253,6 @@ JSON返回示例：
 		"success": true,
 		"supply": 10153984000000000
 	}
-
 
 #### 3.8 区块链状态
 接口地址：/api/blocks/getStatus
@@ -1356,7 +1342,6 @@ JSON返回示例：
 
 
 
-
 ### 4.受托人delegates
 #### 4.1 获取受托人总个数
 接口地址：/api/delegates/count
@@ -1385,7 +1370,6 @@ JSON返回示例：
 		"success":true,
 		"count":101
 	}
-
 
 #### 4.2 根据受托人公钥查看哪些人为其投了票
 接口地址：/api/delegates/voters
@@ -1739,7 +1723,6 @@ JSON返回示例：
 		"address": "A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr"
 	}
 
-
 #### 4.10 受托人出块状态查看
 接口地址：/api/delegates/forging/status
 请求方式：GET
@@ -2065,7 +2048,6 @@ JSON返回示例：
 	  });
 	}
 
-
 	axios.put(url, setMultisignature()).then(res => {
 	  console.log(res);
 	}).catch(err => {
@@ -2213,7 +2195,6 @@ JSON返回示例：
 	let url = 'http://etm.red:8097/api/lockvote/'
 	let secret = 'race forget pause shoe trick first abuse insane hope budget river enough';
 
-
 	//创建交易
 	//此方式不安全，可以查考./issueAssert.js中transferETM()
 	function createTransaction() {
@@ -2222,7 +2203,6 @@ JSON返回示例：
 	    'args':["100000000"],
 	  });
 	}
-
 
 	axios.put(url, createTransaction()).then(res => {
 	  console.log(res);
@@ -2350,7 +2330,6 @@ JSON返回示例：
 		"count": 2
 	}
 
-
 #### 9.4 解除锁仓
 接口地址：/api/lockvote/remove
 请求方式：PUT
@@ -2379,7 +2358,6 @@ JSON返回示例：
 	let url = 'http://etm.red:8097/api/lockvote/remove'
 	let secret = 'race forget pause shoe trick first abuse insane hope budget river enough';
 
-
 	//创建交易
 	//此方式不安全，可以查考./issueAssert.js中transferETM()
 	function createTransaction() {
@@ -2389,13 +2367,11 @@ JSON返回示例：
 	  });
 	}
 
-
 	axios.put(url, createTransaction()).then(res => {
 	  console.log(res);
 	}).catch(err => {
 	  console.error(err);
 	})
-
 
 JSON返回示例：
 
@@ -2461,7 +2437,6 @@ JSON返回示例：
 	"totalCount": 1,
 	"success": true
 	}
-
 
 #### 10.2 修改信息
 接口地址：/api/dapps/[dappID]/transactions/signed

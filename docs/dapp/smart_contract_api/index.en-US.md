@@ -1,76 +1,80 @@
+# Smart Contract Sdk Detailed
 
 <img src="/images/dapp/dapp03_en.jpg"  >
 
-开发DApp的智能合约需要了解entanmo侧链支持的合约相关功能，本章列举了所有的功能，大家可以根据自己的需求查找相应功能函数。更多功能可以参考后续【案例】章节。
+In order to develop intelligent contract of DApp, we need to understand the contract-related functions supported by entanmo side chain. This chapter lists all the functions, and you can find the corresponding function according to your own needs. More features can be found in the [following chapters](Actual Demo).
 
-<!-- * [智能合约SDK](#-智能合约SDK详解)
-	* [1.余额](#1余额)
-		* [1.1 获取账户余额](#11-获取账户余额)
-		* [1.2 增加余额](#12-增加余额)
-		* [1.3 减少余额](#13-减少余额)
-		* [1.4 转账](14-转账)
-	* [2.数据库](#2数据库)
-		* [2.1 加载模型](#21-加载模型)
-		* [2.2 获取模型](#22-获取模型)
-		* [2.3 获取索引](#23-获取索引)
-		* [2.4 获取模型缓存](#24-获取模型缓存)
-		* [2.5 锁定](#25-锁定)
-		* [2.6 创建模型](#26-创建模型)
-		* [2.7 替代模型](#27-替代模型)
-		* [2.8 更新模型](#28-更新模型)
-		* [2.9 更新整数模型](#29-更新整数模型)
-		* [2.10 删除模型](#210-删除模型)
-	* [3.数据模型](#3数据模型)
-		* [3.1 获取实例](#31-获取实例)
-		* [3.2 获取所有字段](#32-获取所有字段)
-		* [3.3 计数](#33-计数)
-		* [3.4 是否存在](#34-是否存在)
-		* [3.5 查找](#35-查找)
-		* [3.6 查找全部](#36-查找全部)
-	* [4.路由](#4路由)
+* [Smart Contract Sdk Detailed](#-Smart Contract Sdk Detailed)
+	* [1.Balance](#1Balance)
+		* [1.1 Get account balance](#11-Get account balance)
+		* [1.2 Increase balance](#12-Increase balance)
+		* [1.3 Decrease balance](#13-Decrease balance)
+		* [1.4 Transfer accounts](14-Transfer accounts)
+	* [2.Data base](#2Data base)
+		* [2.1 Loading model](#21-Loading model)
+		* [2.2 Get model](#22-Get model)
+		* [2.3 Get index](#23-Get index)
+		* [2.4 Get Model Cache](#24-Get Model Cache)
+		* [2.5 Lock](#25-Lock)
+		* [2.6 Create model](#26-Create model)
+		* [2.7 Surrogate model](#27-Surrogate model)
+		* [2.8 Renewal model](#28-Renewal model)
+		* [2.9 Updating integer model](#29-Updating integer model)
+		* [2.10 Delete model](#210-Delete model)
+	* [3.Data model](#3Data model)
+		* [3.1 Get examples](#31-Get examples)
+		* [3.2 Get all fields](#32-Get all fields)
+		* [3.3 Count](#33-Count)
+		* [3.4 Existence](#34-Existence)
+		* [3.5 FindOne](#35-FindOne)
+		* [3.6 FindAll](#36-FindAll)
+	* [4.Route](#4Route)
 		* [4.1 get](#41-get)
 		* [4.2 post](#42-post)
 		* [4.3 put](#43-put)
-	* [5.手续费](#5手续费)
-		* [5.1 添加手续费](#51-添加手续费)
-	* [6.日志](#6日志)
-		* [6.1 设置等级](#61-设置等级)
-		* [6.2 日志](#62-日志)
-		* [6.3 跟踪](#63跟踪)
-		* [6.4 调试](#64-调试)
-		* [6.5 信息输出](65-信息输出)
-		* [6.6 警告](#66-警告)
-		* [6.7 错误](#67-错误)
-	* [7.工具](#7工具)
-		* [7.1 验证](#71-验证)
-		* [7.2 注册合约](#72-注册合约)
-		* [7.3 获取合约名字](#73-获取合约名字)
-		* [7.4 初始化手续费](#74-初始化手续费)
-		* [7.5 获取手续费](#75-获取手续费)
-		* [7.6 获取默认手续费](#76-获取默认手续费)
-		* [7.7 获取真实时间戳](#77-获取真实时间戳)
-		* [7.8 注册回调](#78-注册回调)
-		* [7.9 应用列表](#79-应用列表)
-		* [7.10 自增id获取](#710-自增id获取)
-		* [7.11 自增id增加](#711-自增id增加)
-		* [7.12 混沌随机](#712-混沌随机) -->
+	* [5.Service charge](#5Service charge)
+		* [5.1 Add service charge](#51-Add service charge)
+	* [6.Log](#6Log)
+		* [6.1 Set log level](#61-Set log level)
+		* [6.2 Output log](#62-Output log)
+		* [6.3 Trace](#63Trace)
+		* [6.4 Debug](#64-Debug)
+		* [6.5 Output information](65-Output information)
+		* [6.6 Warn](#66-Warn)
+		* [6.7 Error](#67-Error)
+	* [7.Tools](#7Tools)
+		* [7.1 Verification](#71-Verification)
+		* [7.2 Registration Contract](#72-Registration Contract)
+		* [7.3 Get the contract name](#73Get the contract name)
+		* [7.4 Initialization charges](#74-Initialization charges)
+		* [7.5 Get the fee](#75-Get the fee)
+		* [7.6 Setting default fee](#76-Setting default fee)
+		* [7.7 Get the real timestamp](#77-Get the real timestamp)
+		* [7.8 Registering callback function](#78-Registering callback function)
+		* [7.9 Application List](#79-Application List)
+		* [7.10 Get self-increasing ID](#710-Get self-increasing ID)
+		* [7.11 Self-increasing ID increase](#711-Self-increasing ID increase)
+		* [7.12 Chaotic random](#712-Chaotic random)
 
-以下所有接口都可以在[helloworld](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)中查询
+All of the following interfaces can be queried in [helloworld](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)
 
-### 1.余额
-余额接口是在合约中操作用户余额的方法集合，所有的操作接口都会在此做详细的说明。
+### 1.Balance
 
-#### 1.1 获取账户余额
+Balance interface is a set of methods to manipulate user balance in a contract, and all of them will be explained in detail here.
+
+#### 1.1 Get account balance
 **app.balances.get(address, currency)**
 
-- `address` 账户地址
-- `currency` 币种
+Parameters:
 
-说明：
+- `address` account address
+- `currency` currency
 
-- 获取指定账户、指定币种的余额
+Explain：
 
-示例:
+- Access to the specified account and specify currency balance
+
+Demo:
 
 
 	app.route.get("/balance/:address", async req => {
@@ -79,135 +83,138 @@
 	  	return { balance }
 	})
 
-	//输出结果 1*10^16
+	//export 1*10^16
 	>{"b":{"s":1,"e":16,"c":[1]},"success":true}
-	//同样可以http访问
+	//Also accessible by http
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
 	>{"balances":[{"currency":"HLB","balance":"10000000000000000"}],"success":true}
 
-
-
-#### 1.2 增加余额
+#### 1.2 Increase balance
 **app.balances.increase(address, currency, amount)**
 
-- `address` 账户地址
-- `currency` 币种
-- `amount` 增加的数额
+Parameters:
 
-说明：
+- `address` account address
+- `currency` currency
+- `amount` Increased amount
 
-- 无返回值
-- 增加指定账户、指定币种的余额
+Explain：
 
-示例:
+- No return value
+- Increase the balance of designated accounts and currencies
 
-	//第一步 查询新账户的余额
+Demo:
+
+	// Step 1: Find the balance of the new account
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[],"success":true}
 
-	// 第二步 增加余额
-
+	// Step 2: Increase the balance
 	app.route.get("/increase", async req => {
 	  await app.balances.increase('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',100000000)
 	})
-
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/increase
 	> {"success":true}
 
-	//第三步 再次查询
+	// Step 3: Query again
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
-
-
-#### 1.3 减少余额
+#### 1.3 Decrease balance
 **app.balances.decrease(address, currency, amount)**
 
-- `address` 账户地址
-- `currency` 币种
-- `amount` 减少的数额
+Parameters:
 
-说明：
+- `address` account address
+- `currency` currency
+- `amount` Decreased amount
 
-- 无返回值
-- 减少指定账户、指定币种的余额
+Explain：
 
-示例:
+- No return value
+- Decrease the balance of designated accounts and currencies
 
-	//第一步 查询
+Demo:
+
+	// Step 1: Find the balance of the new account
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
-	//第二步 减少余额
+	// Step 2: Decrease the balance
 	app.route.get("/decrease", async req => {
-  		await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
+	  	await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
 	})
-
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/decrease
 	> {"success":true}
 
-	//第一步 再次查询
+	// Step 3: Query again
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"50000000"}],"success":true}
 
-#### 1.4 转账
+#### 1.4 Transfer accounts
 **app.balances.transfer(currency, amount, from, to)**
 
-- `currency` 币种
-- `amount` 转移的数额
-- `from` 源地址(发款人)
-- `to` 目的地址(收款人)
+Parameters:
 
-说明：
-- 无返回值
-- 两个账户之间转移资产
+- `currency` currency
+- `amount` Amount of transfer
+- `from` Source address (sender)
+- `to` Destination address (payee)
 
-示例:
+Explain:
 
-	// 转账
+- No return value
+- Transfer of assets between two accounts
+
+Demo:
+
+	// transfer
 	app.route.get("/transfer", async req => {
 	  await app.balances.transfer('HLB', 50000000, 'A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr', 'AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX')
 	})
-	//调用接口并查询 相比上一小节多了50000000
+	//// Using the interface and querying, the account increased 50000000 compared with the previous section.
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
-
-### 2.数据库
-#### 2.1 加载模型
+### 2.Data base
+#### 2.1 Loading model
 **`aync` app.sdb.load(model, fields, indices)**
 
-参考[init.js](../example/helloworld/init.js)
+Reference[init.js](../example/helloworld/init.js)
 
-- `model` 模型名称
-- `fields` 加载到内存中的字段
-- `indices` 索引数组, 单字段索引时, 元素为字符串; 多字段索引时, 元素为字符串数组
+Parameters:
 
-说明：
+- `model` Model name
+- `fields` Fields loaded into memory
+- `indices` Index array. When indexing a single field, the element is a string; when indexing a multiple field, the element is an array of strings.
 
-- 无返回值, 出现错误时抛异常
-- 将指定模型的数据加载到内存并建立索引, 这样可以提高查询和更新一个状态的效率
-- 当一个数据模型需要频繁更新和查询时, 建议使用这个接口, 比如系统内置的账户余额、自增ID都使用了这个功能
+Explain:
 
-示例:
+- No return value, throw an exception when an error occurs
+- Loading the data of the specified model into memory and establishing an index ，it can improve the efficiency of querying and updating a state.
+- When a data model needs frequent updates and queries, we are recommended to use this interface, such as the built-in account balance and self-increasing ID of the system.
 
-	//最重要的工作是把数据加载到内存中，app.sdb.*是操作的内存数据，等区块打包，才会写入数据库，所以load可以保持数据一致性
+Demo:
+
+	// The most important task is to load the data into memory. app.sdb.* is the memory data of the operation. Only when the blocks are packaged can the data be written to the database. So load instruction can keep the data consistent.
 	await app.sdb.load('Balance', app.model.Balance.fields(), [['address', 'currency']])
 
+#### 2.2 Get model
 
-#### 2.2 获取模型
 **app.sdb.get(model, cond)**
 
-- `model` 模型名称
-- `cond` 查询条件
+Parameters:
 
-说明：
+- `model` Model name
+- `cond` query criteria
 
-- 返回一个数据项, 包含的字段为`load`时指定的字段
-- 按指定条件查询内存中的数据, 如果该模型没有被载入内存, 会抛出异常; 查询条件包换未建索引的字段时也会抛出异常
+Explain:
 
-示例:
+- Returns a data item that contains the field specified when the field is loaded
+- Query data in memory according to specified conditions, throw exceptions if the model is not loaded into memory, and throw exceptions when query condition packages replace fields that are not indexed.
 
-	//获取内存中的模型数据
+Demo:
+
+	// Getting model data in memory
 	app.route.get("/getModel", async req => {
 	  let balance = await app.sdb.get('Balance', {
 	    address: 'AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX',
@@ -218,22 +225,24 @@
 	  }
 	})
 
-	//调用合约接口
+	// Use contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getModel
 	> {"balance":{"address":"AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX","currency":"HLB","balance":"100000000"},"success":true}
 
-#### 2.3 获取索引
+#### 2.3 Get index
 **app.sdb.keys(model)**
 
-- `model` 模型名称
+Parameters:
 
-说明：
+- `model` Model name
 
-- 返回一个数据模型的全部索引字段
+Explain:
 
-示例:
+- Returns all index fields of a data model
 
-	//获取索引
+Demo:
+
+	// Get the index
 	app.route.get("/getKeys", async req => {
 	  let keys = await app.sdb.keys('Balance')
 	  return {
@@ -241,316 +250,333 @@
 	  }
 	})
 
-	//调用合约接口
+	// Use contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getKeys
-	//TODO  返回值有问题
+	// TODO There is a problem with the data returned
 	> {"keys":{},"success":true}
 
-
-#### 2.4 获取模型缓存
+#### 2.4 Get Model Cache
 **app.sdb.entries(model)**
 
-- `model` 模型名称
+Parameters:
 
-说明：
+- `model` Model name
 
-- 返回一个数据模型的所有缓存项
+Explain:
 
-示例:
+- Returns all cached items of a data model
 
-	//获取模型缓存
+Demo:
+
+	// Getting Model Cache
 	app.route.get("/getEntry", async req => {
 	  let entries = await app.sdb.entries('Balance')
 	  return {
 	    entries
 	  }
 	})
-	// 请求接口以及输出
+	// Request interface and output
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getEntry
-	//TODO 返回数据有问题
+	// TODO There is a problem with the data returned
 	> {"entries":{},"success":true}
 
-#### 2.5 锁定
+#### 2.5 Lock
+
 **app.sdb.lock(key)**
 
-参考[helloworld.js](../example/helloworld/contract/helloworld.js)
+Reference [helloworld.js](../example/helloworld/contract/helloworld.js)
 
-- `key` 索引
+Parameters:
 
-说明：
+- `key` index
 
-- 无返回值
-- 对一个key进行加锁, 有效期为一个区块间隔, 在同一个区块生命周期内不允许对一个key二次加锁, 否则会抛异常
-- 该功能主要是为了解决对未确认数据的依赖问题。比如, 一个合约中需要对某账户设置昵称, 在这个合约调用被确认之前, 我们需要防止再次调用, 这种情况下可以使用加锁功能
+Explain:
 
-示例:
+- No return value
+- The validity period of locking a key is a block interval, and it is not allowed to lock a key twice in the same block life cycle, otherwise an exception will be thrown.
+- The main purpose of this function is to solve the problem of dependence on unacknowledged data. For example, a contract requires a nickname for an account. Before the contract call is confirmed, we need to prevent it from being called again. In this case, we can use the locking function.
+
+Demo:
 
 	app.sdb.lock("add-word")
 
-
-#### 2.6 创建模型
+#### 2.6 Create model
 **app.sdb.create(model, values)**
-参考[helloworld.js](../example/helloworld/contract/helloworld.js)
+Reference  [helloworld.js](../example/helloworld/contract/helloworld.js)
 
-- `model` 模型名称
-- `values` 待创建的数据项
+Parameters:
 
-说明：
-- 无返回值
-- 创建一个数据项, 如果该模型有缓存, 会实时更新缓存. 在区块确认后, 持久化到磁盘数据库
+- `model` Model name
+- `values` Data items to be created
 
-示例:
+Explain：
+- No return value
+- Create a data item that updates the cache in real time if the model has a cache. After block validation, persist to the disk database
+
+Demo:
 
 	hello: async function(words) {
-    //单步添加单词
-    app.sdb.lock("add-word")
-    app.sdb.create('Word', {
-      'words': words
-    })
+	// Step-by-step addition of words
+	app.sdb.lock("add-word")
+	app.sdb.create('Word', {
+	  'words': words
+	})
   }
 
-#### 2.7 替代模型
+#### 2.7 Surrogate model
 **app.sdb.replace(model, values)**
 
-- `model` 模型名称
-- `values` 待创建或更新的数据项
+Parameters:
 
-说明：
-- 无返回值
-- 创建或更新一个数据项, 如果数据库中无此项则创建, 否则更新. 模型必须包含主键, `values`必须包含主键
+- `model` Model name
+- `values` Data items to be created or updated
 
-示例:
+Explain：
+- No return value
+- Create or update a data item if it is not in the database, or update it. The model must contain the primary key, and the `values` must contain the primary key.
 
-	//示例中无法表示，开发者可以按照此方式调用
+Demo:
+
+	// In the example, it can't be expressed, and the developer can call it in this way.
 	app.sdb.replace('Account', {
 	  address: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85',
 	  nickname: 'Nakamoto'
 	})
 
-#### 2.8 更新模型
+#### 2.8 Renewal model
 **app.sdb.update(model, modifier, cond)**
 
-- `model` 模型名称
-- `modifier` 待更新的数据项
-- `cond` 更新条件
+Parameters:
 
-说明：
-- 无返回值
-- 按指定条件更新一个模型的若干个数据项
+- `model` Model name
+- `modifier` Data items to be updated
+- `cond` Update criteria
 
-示例:
+Explain：
+- No return value
+- Updating several data items of a model according to specified conditions
 
-	//示例中无法表示，开发者可以按照此方式调用
+Demo:
+
 	app.sdb.update('Account', { nickname: 'Nakamoto' }, { nickname: 'Satoshi' })
 
-
-#### 2.9 更新整数模型
+#### 2.9 Updating integer model
 **app.sdb.increment(model, modifier, cond)**
 
-- `model` 模型名称
-- `modifier` 待更新的数据项
-- `cond` 更新条件
+Parameters:
 
-说明：
-- 按指定条件增量更新一个模型的若干个数据项, 只能用于更新整数类型
+- `model` Model name
+- `modifier` Data items to be updated
+- `cond` Update criteria
 
-示例:
+Explain：
+- Updating several data items of a model according to specified conditions,  only be used to update integer types
 
-	//示例中无法表示，开发者可以按照此方式调用
+Demo:
+
 	app.sdb.increment('Article', { votes: -10 }, { id: '10000' })
 	app.sdb.increment('Article', { comments: 1 }, { id: '10000' })
 
-
-#### 2.10 删除模型
+#### 2.10 Delete model
 **app.sdb.del(model, cond)**
 
-- `model` 模型名称
-- `cond` 删除条件
+Parameters:
 
-说明：
+- `model` Model name
+- `cond` Delete condition
 
-- 无返回值
-- 按条件删除一个模型中的数据项
-- 删除操作的底层实现目前是标记为deleted, 默认的查询接口都会过滤掉被标记的数据, 但非标准接口或协议仍然可以获取到这些已经被`删除`的数据
+Explain：
 
-示例:
-	//示例中无法表示，开发者可以按照此方式调用
-	app.sdb.del('Article', { id: '100001' })
+- No return value
+- Delete data items according to conditions in this model
+- The underlying implementation of deletion is currently marked deleted. The default query interface filters out the marked data, but non-standard interfaces or protocols still have access to the deleted data.
+
+Demo:
+
+```
+app.sdb.del('Article', { id: '100001' })
+```
 
 
-### 3.数据模型
-#### 3.1 获取实例
+### 3.Data model
+#### 3.1 Get examples
 **app.model.[name]**
 
-- `name` 模型名称
-说明：
+Parameters:
 
-- 返回一个模型的实例, 主要用于查询已确认的数据
+- `name` Model name
 
-示例：
+Explain：
 
-	//获取数据库模型
+- Returns an instance of a model, mainly for querying validated data
+
+Demo：
+
+	// Getting the database model
 	app.route.get("/getDBModel", async req => {
 	  let entries = await app.model.Words.findAll({})
 	  return {
 	    entries
 	  }
 	})
-	//请求合约接口
+	// Request contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBModel
-	//返回数据
+	// Return data
 	> {"entries":[{"words":"helloworld"},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello ray "}],"success":true}
 
-#### 3.2 获取所有字段
+#### 3.2 Get all fields
 **app.model.[table].fields()**
 
-说明：
+Explain：
 
-- 返回该模型所有字段
+- Return all fields of the model
 
-示例：
+Demo：
 
-	//获取数据库模型字段
+	// Get the database model fields
 	app.route.get("/getDBMFields", async req => {
 	  let fields = await app.model.Words.fields()
 	  return {
 	    fields
 	  }
 	})
-	//请求接口
+	// Request interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBMFields
-	//返回结果
+	//Return result
 	> {"fields":["words"],"success":true}
 
-#### 3.3 计数
+#### 3.3 Count
 **app.model.[table].count(cond)**
 
-- `cond` 查询条件
+Parameters:
 
-说明：
+- `cond` query condition
 
-- 返回`Number`
-- 表示指定条件的数据项总数
+Explain：
 
-示例:
+- Return`Number`
+- Total number of data items with specified conditions
 
-	//获取数据库模型数据数量
+Demo:
+
+	// Get the number of database model data
 	app.route.get("/getDBMCount", async req => {
 	  let count = await app.model.Words.count({})
 	  return {
 	    count
 	  }
 	})
-	//请求合约接口
+	// Request contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getDBMCount
-	//返回结果
+	//return result
 	> {"count":12,"success":true}
 
-	//或者
+	//or
 	app.model.Block.count({ height: { $lt: 100 } })
-	//输出
+	//export
 	> 99
 
-
-#### 3.4 是否存在
+#### 3.4 Existence
 **app.model.[table].exists(cond)**
 
-- `cond` 查询条件
+Parameters:
 
-说明：
+- `cond` query criteria
 
-- 返回`Boolean`
-- 表示指定条件的数据项是否存在
+Explain：
 
-示例:
+- return`Boolean`
+- Existence of data items representing specified conditions
+
+Demo:
 
 
-	//获取数据库中是否存在某些数据
+	// Get whether there is some data in the database
 	app.route.get("/exist", async req => {
 	  let exist = await app.model.Words.exists({"words":" hello ray "})
 	  return {
 	    exist
 	  }
 	})
-	//请求合约
+	// Request contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/exist
-	//返回结果
+	//return result
 	> {"exist":true,"success":true}
 
-	//或者
+	//or
 	app.model.Transaction.exists({ id: '9a5ec0669c79b9f5a1d5a4dbb2c200bc28c9ea829dbff71f41cbb2ad5a7d9b01' })
-	//输出
+	//export
 	false
 
 	app.model.Account.exists({ nickname: 'Nakamoto' })
-	//输出
+	//export
 	true
 
-#### 3.5 查找
+#### 3.5 FindOne
 **app.model.[table].findOne(condition)**
 
-`options`是一个对象, 包含以下元素
+`options`is an object that contains the following elements
 
-- `condition ` 查询条件
+- `condition ` query criteria
 
-说明：
+Explain：
 
-- 查询一个指定条件的数据项
+- Query a data item for a specified condition
 
-示例:
+Demo:
 
-	//查找数据库中的数据
+	// Find the data in the database
 	app.route.get("/findOne", async req => {
 	  let one = await app.model.Words.findOne({"words":" hello ray "})
 	  return {
 	    one
 	  }
 	})
-	//调用接口
+	// Request contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/findOne
-	//返回结果
+	//return result
 	> {"one":{"words":"helloworld"},"success":true}
 
-	//或者
+	//or
 	app.model.Account.findOne({ nickname: 'Nakamoto' })
-	//输出
+	//export
 	{
 	  address: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85',
 	  nickname: 'Nakamoto',
 	  ...other values
 	}
 
-#### 3.6 查找全部
+#### 3.6 FindAll
 **app.model.[table].findAll(condition）**
 
-`options`是一个对象, 包含以下元素
+`options` is an object that contains the following elements
 
-- `condition` 查询条件
-- `fields` 返回的字段
-- `sort` 排序字段
-- `limit` 返回的最大数量
-- `offset` 偏移量
+- `condition` query criteria
+- `fields` Return fields
+- `sort` Sort field
+- `limit` Maximum number of returns
+- `offset` Offset
 
-说明：
+Explain：
 
-- 查询指定条件的所有数据项
+- Query all data items for specified conditions
 
-示例:
+Demo:
 
-	// 获取所有单词
+	// Get all the words
 	app.route.get("/words", async req => {
 	  let words = await app.model.Words.findAll({})
 	  return {
 	    words
 	  }
 	})
-	//调用合约接口
+	// Request contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/words
-	//返回结果
+	//return result
 	> {"words":[{"words":"helloworld"},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello world "},{"words":" hello ray "}],"success":true}
 
 	app.model.Transfer.findAll({ senderId: 'AC3pinmvz9qX9cj6c7VrGigq7bpPxVJq85'})
-	//输出
+	//export
 	[
 	  {
 	    tid: "50e062f25946d220b924cb5ec6e52e260e44c9417d9f3c8ea041b704e06895f7",
@@ -574,15 +600,14 @@
 	  }
 	]
 
-
-### 4.路由
-路由参数说明：
-- `path` 路由路径
-- `handler` http请求处理函数, async类型
+### 4.Route
+The routing parameters:
+- `path` routing path
+- `handler` HTTP request handler, async type
 #### 4.1 get
 **app.route.get(path, handler)**
 
-	注册一个`get`类型的http请求处理函数
+	//Register an <get> type of HTTP request handler
 	app.route.get('/helloworld', async function(req) {
 	  return {
 	    message: 'helloworld'
@@ -592,229 +617,281 @@
 #### 4.2 post
 **app.route.post(path, handler)**
 
-	注册一个`post`类型的http请求处理函数
+	//Register an <post> type of HTTP request handler
+	app.route.post('/helloworld', async function(req) {
+	  return {
+	    message: 'helloworld'
+	  }
+	})
 
 #### 4.3 put
 **app.route.put(path, handler)**
 
-	注册一个`put`类型的http请求处理函数
+	//Register an <put> type of HTTP request handler
+	app.route.put('/helloworld', async function(req) {
+	  return {
+	    message: 'helloworld'
+	  }
+	})
 
-### 5.手续费
-#### 5.1 添加手续费
+### 5.Service charge
+#### 5.1 Add service charge
+
 **app.feePool.add(currency, amount)**
 
-- `currency` 币种
-- `amount` 数额
+parameter:
 
-说明：
+- `currency`  currency
+- `amount`  amount
 
-- 无返回值
-- 将资产加入费用池(在每一个`round`结尾平均分给记账人)
+Explain：
 
-示例:
+- No return value
+- Add assets to the cost pool (average to the bookkeeper at the end of each `round`)
 
-	//----------添加费用池----------
+Demo:
+
+	//----------Adding cost pool----------
 	app.route.get("/addFee", async req => {
 	  await app.feePool.add('HLB', '10000000000')
 	})
 
-	//查看数据库中
+	// View the database
 	sqlite3 blockchain.db
 	sqlite> select * from round_fees;
-	//结果中增加了
+	//The results show an increase
 	> 12565|HLB|10000000000|0
 
+### 6.Log
 
-### 6.日志
-#### 6.1 设置等级
+#### 6.1 Set log level
 
-	app.logger.setLevel('debug')
-	app.logger.setLevel('info')
-#### 6.2 日志
-	logger.log('hello');
-#### 6.3 跟踪
-	logger.trace('hello', 'world');
-#### 6.4 调试
-	logger.debug('hello %s',  'world', 123);
-#### 6.5 信息输出
-	logger.info('hello %s %d',  'world', 123, {foo:'bar'});
-#### 6.6 警告
-	logger.warn('hello %s %d %j', 'world', 123, {foo:'bar'});
-#### 6.7 错误
-	logger.error('hello %s %d %j', 'world', 123, {foo:'bar'}, [1, 2, 3, 4], Object);
+```
+app.logger.setLevel('debug')
+app.logger.setLevel('info')
+```
 
+#### 6.2 Output log
 
-### 7.工具（合入自增id）
-#### 7.1 验证
+```
+logger.log('hello');
+```
+
+#### 6.3 Trace
+
+```
+logger.trace('hello', 'world');
+```
+
+#### 6.4 Debug
+
+```
+logger.debug('hello %s',  'world', 123);
+```
+
+#### 6.5 Output information
+
+```
+logger.info('hello %s %d',  'world', 123, {foo:'bar'});
+```
+
+#### 6.6 Warn
+
+```
+logger.warn('hello %s %d %j', 'world', 123, {foo:'bar'});
+```
+
+#### 6.7 Error
+
+```
+logger.error('hello %s %d %j', 'world', 123, {foo:'bar'}, [1, 2, 3, 4], Object);
+```
+
+### 7.Tools (incorporating self-increasing id)
+
+#### 7.1 Verification
+
 **app.validate(type, value)**
 
-- `type` 待验证的数据类型
-- `value` 待验证的数据值
+Parameter:
 
-说明：
+- `type` Data types to be validated
+- `value` Value of data to be validated
 
-- 验证一个数据是否符合规范, 不符合则抛出异常
+Explain：
 
-示例:
+- Verify that a data conforms to the specification and throw an exception if it does not.
+
+Demo:
 
 	app.validate('amount', '10000') // pase
 	app.validate('amount', 10000) // throws
 	app.validate('amount', 'abc') // throws
 	app.validate('amount', '1e10') // throws
 
-
-#### 7.2 注册合约
+#### 7.2 Registration Contract
 **app.registerContract(type, name)**
 
-参考[init.js](../example/helloworld/init.js)
+Reference  [init.js](../example/helloworld/init.js)
 
-- `type` 合约数值类型或编号
-- `name` 合约的字符串名称
+Parameter:
 
-说明：
+- `type` Data types to be validated
+- `name` The string name of the contract
 
-- 无返回值
-- 为合约注册一个数字类型, 未注册的合约无法被外部调用
+Explain：
 
-示例:
+- No return value
+- Register a number type for a contract, and unregistered contracts cannot be externally invoked
 
-	//注册合约方法
-  	app.registerContract(1000, 'helloworld.hello')
+Demo:
 
+	// Registration contract method
+	app.registerContract(1000, 'helloworld.hello')
 
-
-
-#### 7.3 获取合约名字
+#### 7.3 Get the contract name
 **app.getContractName(type)**
 
-- `type` 合约的数字类型或编号
+Parameter:
 
-说明：
+- `type` Number or type of contract
 
-- 根据合约编号查询名称
+Explain：
 
-示例:
+- Query name according to contract number
+
+Demo:
 
 	app.getContractName(1000) === 'helloworld.hello'
 
-#### 7.4 初始化手续费
+#### 7.4 Initialization charges
 **app.registerFee(type, min, currency)**
 
-- `type` 合约的数字类型或编号
-- `min` 最小费用
-- `currency` 币种
+Parameter:
 
-说明：
+- `type` Number or type of contract
+- `min` Minimum cost
+- `currency` currency
 
-- 为一个合约注册最小费用, 不固定资产, 可通过`currency`参数指定收哪种资产作为手续费
-- `min`表示最小费用, 实际调用合约的时候, 费用不能小于`min`, 但可以大于, 超过的部分自动放入费用池
+Explain：
 
-示例:
+- You can register the minimum cost needed for a contract, no fixed assets, cash assets which can be specified as a fee by the currency parameter
+- `min` represents the minimum cost. When the contract is actually invoked, the cost should not be less than `min`, but it can be greater than that. The excess part is automatically put into the cost pool.
+
+Demo:
 
 	app.registerFee(1000, '100000', 'HLB')
 
-#### 7.5 获取手续费
+#### 7.5 Get the fee
 **app.getFee(type)**
 
-- `type` 合约的数字类型或编号
+Parameter:
 
-说明：
+- `type` Number or type of contract
 
-- 获取指定合约的费用设定
+Explain:
 
-示例:
+- Cost Settings for Acquiring Designated Contracts
+
+Demo:
 
 	app.getFee(1000)
-	//输出
+	//export
 	{
 	  min: '100000',
 	  currency: 'HLB'
 	}
-#### 7.6 获取默认手续费
+#### 7.6 Setting default fee
 **app.setDefaultFee(min, currency)**
 
-- `min` 最小费用
-- `currency` 币种
+Parameter:
 
-说明：
-- 为系统的所有合约设置默认手续费
+- `min` Minimum cost
+- `currency` currency
 
-示例:
+Explain:
+- Set default fees for all contracts in the system
+
+Demo:
 
 	app.setDefaultFee('10000000', 'HLB')
 
-
-#### 7.7 获取真实时间戳
+#### 7.7 Get the real timestamp
 **app.getRealTime(epochTime)**
 
-- `epochTime` 距离创世区块生成时间的秒数
+Parameter:
 
-说明：
+- `epochTime` The number of seconds from the generation time of the Genesis Block
 
-- 返回完整的时间戳, 即区块创世时间加上偏移量, 单位为毫秒
-- entanmo系统中底层存储和上层查询的时间戳均为一个偏移量, 并非实际时间戳, 可以调用这个函数转换为真实的时间戳
+Explain:
 
-示例:
+- Returns the complete timestamp, that is, the block creation time plus offset, in milliseconds
+- In entanmo system, the timestamp of both the underlying storage and the upper query is an offset, not the actual timestamp. This function can be invoked to convert to the real timestamp.
 
-	//获取真实时间戳
+Demo:
+
+	// Get the real timestamp
 	app.route.get("/getRealTime", async req => {
 	  let realtime = await app.getRealTime(4353634)
 	  return {
 	    realtime
 	  }
 	})
-	//调用合约接口
+	// Use contract interface
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getRealTime
-	//返回结果
+	//return result
 	> {"realtime":1543699234000,"success":true}
 
+#### 7.8 Registering callback function
 
-#### 7.8 注册回调
 **app.registerHook**
 
 	//TODO
 
-#### 7.9 应用列表
+#### 7.9 Application List
 **app.custom[]**
 
 	//TODO
 
-说明：
+Explain:
 
-- 应用的名字空间, 可用来保存应用本身自定义的一些全局变量, 主要是为了与系统级的全局变量进行隔离
+- The namespace of an application can be used to store some global variables defined by the application itself, mainly for isolation from the global variables at the system level.
 
-#### 7.10 自增id获取
+#### 7.10 Get self-increasing ID
 **app.autoID.get(name)**
 
-- `name` ID类型名称
+Parameter:
 
-说明：
-- 返回`String`
-- 获取一个类型的当前最大ID
+- `name` ID type name
 
-#### 7.11 自增id增加
+Explain:
+- return`String`
+- Get the current maximum ID of a type
+
+#### 7.11 Self-increasing ID increase
 **app.autoID.increment(name)**
 
-- `name` ID类型名称
+Parameter:
 
-说明：
+- `name` ID type name
 
-- 返回`String`
-- 对指定类型的ID增加1并以字符串形式返回更新后的数值, 相当于原子的`++1`, 超大数也适用
+Explain:
 
-示例:
+- return `String`
+- The ID of the specified type is increased by 1 and the updated value is returned in the form of a string, which is equivalent to atomic +1, and the super large number is also applicable.
 
-	//示例 加密马合约部分代码
+Demo:
+
+	//Example Encrypted Horse Contract Part Code
 	app.sdb.create("Market", {
-        id: app.autoID.increment("market_max_id"),
-        type: 1,
-        status: 1,
-        price: Math.round(price),
-        horse: id,
-        seller: sender
-      })
+	    id: app.autoID.increment("market_max_id"),
+	    type: 1,
+	    status: 1,
+	    price: Math.round(price),
+	    horse: id,
+	    seller: sender
+	  })
 
+#### 7.12 Chaotic random
 
-#### 7.12 混沌随机
-
-	//TODO 暂时还没有接口
+	//TODO There is no interface yet.

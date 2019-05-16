@@ -1,120 +1,126 @@
-<img src="/images/dapp/dapp02_en.jpg" >
+# Smart Contract
+<img src="/images/dapp/dapp02_en.jpg"  >
 
-简单地说，一个现实世界的合约是一个管理行动结果的协议，给定一组输入。合同的范围可以从正式的法律合同（例如，金融交易）到诸如游戏“规则”之类的简单实现。典型的行为可以是诸如资金转移（在金融合约的情况下）或游戏下注（在游戏合约的情况下）的事情。
+In  short, a real-world contract is an agreement that manages the outcome of an action.The scope of contracts can range from formal legal contracts (e.g., financial transactions)  or simple implementations such as  "game rules". Typical actions can be things like money transfers (in the case of financial contracts) or gambling (in the case of game contracts).
 
-entanmo智能合约定义了接口（操作，参数，数据结构）和实现接口的代码。代码被编译成规范的字节码格式，区块链存储合约的交易（例如，转账，游戏下注）。每一个智能合约都必须附有一份李嘉图合同，该合同定义了合同中具有法律约束力的条款和条件。
+Smart contract is a computer protocol designed to disseminate, validate or execute contracts in an informational way. Smart contracts allow for trusted transactions without third parties, which are traceable and irreversible.
 
-<!-- * 合约开发
-	* [1. 开始之前](#1-开始之前)
-	* [2. 应用节点同步](#2-启动节点)
-		* [测试节点](#测试节点)
-		* [应用节点](#应用节点)
-	* [3. helloworld](#3-helloworld)
-		* [3.1 注册代理人账号](#31-注册代理人账号)
-		* [3.2 生成dapp模版](#32-生成dapp模版)
-		* [3.3 注册dapp到主链](#33-注册dapp到主链)
-		* [3.4 部署代码到应用节点](#34-部署代码到应用节点)
-		* [3.5 重启etm应用节点](#35-重启etm应用节点)
-		* [3.6 验证helloworld](#36-验证helloworld)
-	* [4.多节点运行](#4多节点运行)
-		* [4.1 多个代理人配置](#41-多个代理人配置)
-		* [4.2 修改config中的peers](#42-修改config中的peers) -->
+The entanmo Smart contract defines the interface (operation, parameters, data structure) and the code to implement the interface. Code is compiled into a standard bytecode format, and blockchain store contract transactions (e.g., transfers, game bets). Every smart contract must be accompanied by Ricardian Contracts, which defines legally binding terms and conditions in the contract.
 
-### 1. 开始之前
-开始编写合约之前，大家一定保证看完前一章【开发准备】，保证大家的测试主链已经运行起来，开始出块。
+* Smart Contract
+	* [1. Before the start](#1-Before the start)
+	* [2. Start Node](#2-Start Node)
+		* [2,1Build test nodes](#21Build test nodes)
+		* [2.2 Applies node](#22 Applies node)
+	* [3. HelloWorld](#3-HelloWorld)
+		* [3.1 Registered Agent Account](#31-Registered Agent Account)
+		* [3.2 Download Dapp Starter Kit](#32-Download Dapp Starter Kit)
+		* [3.3 Register DApp to mainchain](#33-Register DApp to mainchain)
+		* [3.4 Deploy code to application nodes](#34-Deploy code to application nodes)
+		* [3.5 Restart ETM application node](#35-Restart ETM application node)
+		* [3.6 Verify HelloWorld](#36-Verify HelloWorld)
+	* [4. Multi-node operation](#4-Multi-node operation)
+		* [4.1 Configuring multiple agents](#41-Configuring multiple agents)
+		* [4.2 Modify peers in config](#42-Modify peers in config)
 
-我们再来回顾下entanmo主链与侧链的关系，请看下图：
+### 1.Before the start
+Before you start to write the contract, you need to make sure that the main test chain is running and that it starts to create block.
+
+Let's review the relationship between the entanmo main chain and the side chain. Please see the figure below:
 ![](/images/sidechain1.png)
 
-	1.主链与侧链出块数相互独立，但是只有主链出块，侧链才会出块（比如：主链出块10000，侧链可以从0开始出块）。
-	2.侧链之间相互独立，各不影响。
-	3.各个侧链之间的价值交换，需要通过主链完成。
-	4.可以起无数条侧链，这也是第一章讲的侧链之间是合作共赢关系，可以无限横向拓展。
 
-在了解了主链与侧链的关系之后，再来看看entanmo的网络分类。
-entanmo有三种网络类型，分别是localnet，testnet，mainnet，后两种是发布到线上的，可通过公网访问。下面对这三种网络做一个介绍：
 
-- localnet：运行在本地的、只有一个节点（101个受托人都配置在本地的config.json文件中）的私链，主要是为了方便本地测试和开发。locanet就是私有链。
-- testnet：ETM链公网测试环境，由多个服务器组成，具备完整的p2p广播、分布式存储等，在功能上跟mainnet一致，和mainnet的区别在于magic不同（可以理解为用于区分不同链的id，目前ETM testnet的magic为594fe0f3，mainnet的magic为：5f5b3cf5）
-- mainnet：ETM主网正式环境，这上面的ETM Token会在各大交易平台进行交易。
+> 1. Main chain and side chain are independent of each other, but only the main chain begin to create block, the side chain will create block (for example: The main chain creates 10,000 blocks, and the side chain can create blocks from 0.).
+>
+>
+> 2. The exchange of value between each side chain needs to be completed through the main chain.
+>
+>
+> 3. Countless side chains can be built, and the relationship between side chains is win-win cooperation, which can be expanded infinitely horizontally.
 
-Dapp的开发同样要涉及到这三种网络，即
+After understanding the relationship between the main chain and the side chain, let's look at network classification of entanmo.
 
-- 第一步，在localnet开发、本地调试
-- 第二步，在testnet测试
-- 第三步，正式发布到mainnet，其他节点可以安装
+Entanmo has three kinds of network types: localnet, testnet and mainnet. Following is an introduction to these three networks:
 
-### 2. 启动节点
+- localnet: a private chains that run locally and have only one node (101 trustees are configured in the local config. json file), mainly to facilitate local testing and development.
+- testnet: a ETM Chain Public Network Test Environment that composed of multiple servers, with complete P2P broadcasting, distributed storage and so on. It is consistent with mainnet in function.but different from mainnet in magic (which can be understood as the ID used to distinguish different chains. At present, the magic of ETM Tesnet is 594fe0f3, and the magic of mainnet is 5f5b3cf5).
+- mainnet: The formal environment of the ETM main network, where ETM Token trades on major trading platforms.
 
-#### 测试节点
-在未正式发布合约前，开发者可以使用自己搭建的测试网络进行合约开发。
+The development of Dapp also involves these three kinds of networks：
 
-配置方式请参考【开发准备（2.开发环境准备）】
+- Step 1: Develop and debug locally
+- Step 2: Testing on testnet
+- Step 3: Publish it officially to mainnet and other nodes can install it
 
-entanmo官方已经为开发者修改好了配置：
+### 2.Start Node
 
-	//如果是单机测试，请使用 config-personal.json 替换 config.json(同时也需要使用genesisBlock-personal.json 替换genesisBlock.json)
+#### 2.1 Build test nodes
+Before the contract is officially released, developers can use their own test network for contract development.
+
+Refer to  Start Configuration[ready]()
+
+We have modified the configuration for developers and saved it in config-personal.json and genesisBlock-personal.json files. All we need to do is replace it:
+
+	// If it's a stand-alone test, use config-personal.json instead of config.json (you also need to use genesisBlock-personal.json instead of genesisBlock.json)
 		cd config
 		mv config.json config.json.bk && mv config-personal.json config.json
-		mv genesisBlock.json genesisBlock.json.bk && mv cgenesisBlock-personal.json genesisBlock.json
+		mv genesisBlock.json genesisBlock.json.bk && mv genesisBlock-personal.json genesisBlock.json
 
-#### 应用节点
+#### 2.2 Applies node
 
-一般entanmo出块节点是需要投票和挖矿来决定的，所以在现实情况中，开发者一般只是充当一个应用节点，只同步数据，而此应用节点会维护自己的一条侧链（在多节点情况下，充当一个侧链的出块节点。）
+Generally, entanmo  output node is decided by voting and mining. so in reality, developers usually only act as an applied node, only synchronize data, and this applied node will maintain its own side chain (in the case of multiple nodes, act as a side chain outgoing node).
 
-**配置**
+**Configuration **
 
-假设出块节点ip为：xxx.xx.xx.xxx，端口4096，如果是测试主链（第一章已经可以知道如何搭建测试主链），端口就是config.json中的端口，ip就是本机ip。
+Assume that the block node IP is xxx.xx.xx.xx xx, port 4096, if it is the test main chain (the first chapter already knows how to build the test main chain), the port is the port in config.json, and IP is the local ip.
 
+**Synchronize data**
 
+> If you are testing the main link node, you can skip this step as an application node without synchronizing any more.
 
-**同步数据**
+The actual situation is that the out-of-block node and the application node are not the same computer (it is not recommended to run the application on the out-of-block node, testing is certainly possible), so we need the following steps. Reference resources [config.json](../../../images/config_sigle_node.json)
 
-*ps：如果大家闲麻烦，测试主链节点也可以当作应用节点完全可以不用再同步，即可跳过此步骤*
-
-实际情况是出块节点与应用节点不是同一台电脑（也不推荐在出块节点上跑应用，测试当然是可以的）所以我们需要以下步骤。
-
-	//clone 最新的entanmo代码 xxx 代表稳定release分支
+	//clone the latest entanmo code ,XXX represents the stable release branch
 	git  clone -b xxx https://github.com/entanmo/etm.git
-	//修改配置
+	//modify configuration
 	"peers": {
-   		"list": [
-      		{"ip": "xxx.xx.xx.xxx", "port": 4096}
-    	],
-    	...
-    }
+		"list": [
+	      		{"ip": "xxx.xx.xx.xxx", "port": 4096}
 
-参考[config.json](../../../images/config_sigle_node.json)
+	    	],
+	    	...
+	    }
 
-配置完成以后即可启动应用节点
+After the configuration modification is completed, the application can be started.
 
-	//可以参考第一章，启动主链，启动侧链也是一样的
 	node app.js
 	...
 	> info 2019-02-15 14:48:05 764 blocks.js:962 Block applied correctly 	with 0 transactions
 	> log 2019-02-15 14:48:05 764 blocks.js:1468 Forged new block id: 	b40c48deaeb23b7cedd59515e8665f7b347aa86f565a21cbd53283365ec3237a 	> height: 6 round: 1 slot: 3632162 reward: 600000000
 	> [transport] 3s boardcast tr count: 0
 
+### 3.HelloWorld
+Every program starts with "Hello world", and entanmo is no exception. This section outlines the process of contract publishing and simple invocation.
 
+#### 3.1 Registered Agent Account
+Each DApp has an independent trustee, who is also the default bookkeeper. They are responsible for the production of blocks, the transfer of assets across the chain, and at the same time can obtain transaction fees.
 
-### 3. helloworld
-每一个程序的开始都是从[hello world](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)开始的，entanmo也不例外，此小节大致介绍合约发布的过程以及简单的调用。
+When registering a DApp, we only need to collect the trustee's public keys. In order to decentralize power, each secret key is kept by one person.
 
-#### 3.1 注册代理人账号
-每个dapp都有独立的受托人，这些受托人也是默认的记账人，他们负责区块的生产，跨链资产的中转，与此同时可以获得交易手续费。
-注册dapp的时候，我们只需要收集受托人的公钥就行，为了权力分散，最好每个秘钥分别由一个人保管。
-这里为了演示，我们一次性创建5个账户，一个dapp最多有101个受托人，最少是5个。
+For demonstration purposes, we create five accounts at a time. A DApp has a maximum of 101 trustees and a minimum of 5 trustees.
 
-**注意：代理人账号是作演示用途，且不可用于正式的dapp中**
+> Note: Agent account is for demonstration purposes and cannot be used in formal Dapp
 
 ```
-// 注意这里的密码都是演示用途，且不可用于正式的dapp中
 > etm-cli crypto -g
 
-#　接下来输入 5 即可生成5个账户
-[ { address: 'AijfU9bAE6Jpt5ve7zG3LoriDamH67eLb', // 地址
-    secret: 'easy snap cable harvest plate tone planet yellow spot employ humble what', // 主密码，也叫一级密码，可以生成公钥和地址，实质为私钥的助记词，必须记录下来
-    publicKey: 'a437a1d4bedf738e8620920ef29542644e3366c635b16fc9faa6f5db744bcd5c' },// 公钥，用于4.2章节配置受托人公钥
+#　Next, enter 5 to generate 5 accounts.
+[ { address: 'AijfU9bAE6Jpt5ve7zG3LoriDamH67eLb', // address
+    secret: 'easy snap cable harvest plate tone planet yellow spot employ humble what',
+    // The master password, also known as the first-level password, can generate public keys and addresses, and is essentially a private key mnemonic, which must be recorded.
+    publicKey: 'a437a1d4bedf738e8620920ef29542644e3366c635b16fc9faa6f5db744bcd5c' },
+    // Public key: Used to configure trustee public key in Chapter 3.2
   { address: 'ABGGUL5D2SoBaQTqDMAb3u9RdUjYBcmRxx',
     secret: 'adjust edge exist hurry joke carbon spice envelope battle shuffle hawk thought',
     publicKey: '522cdc822d3bec74aa5c4e972ed6cba84850f9c4d521e43fe08675e9e4759bb9' },
@@ -128,18 +134,19 @@ entanmo官方已经为开发者修改好了配置：
     secret: 'response modify knife brass excess absurd chronic original digital surge note spare',
     publicKey: '6b2594ebeee9b072087e5f1e89e5c41ee2d73eb788b63abeedf5c04664f0ce5b' } ]
 ```
-#### 3.2 生成dapp模版
-应用模板包括注册dapp必须的元信息、创世块以及一个初始的目录结构
+#### 3.2 Download Dapp Starter Kit
 
-生成应用模板需要使用`dapps`子命令，如下所示
+Application templates include meta-information, creation blocks, and an initial directory structure for registering DApp
+
+To generate an application template, you need to use the dapps subcommand, as shown below
 
 ```
-# 生成应用模板的时候，最好建立一个新目录
+# When generating application templates, We need to create a new directory
 > mkdir etm-test-dapp && cd etm-test-dapp
 > etm-cli dapps -a
 ```
 
-接下来，我们要回答一系列的问题，以生成应用的注册信息与创世块
+Next, we have a series of configurations to generate registration information and genesis  block .
 
 ```
 ? Enter DApp name ETM-test-dapp
@@ -148,7 +155,8 @@ entanmo官方已经为开发者修改好了配置：
 ? Choose DApp category Common
 ? Enter DApp link https://github.com/entanmo/ETM-test-dapp.zip
 ? Enter DApp icon url https://yourdomain.com/logo.png
-? Enter public keys of dapp delegates - hex array, use ',' for separator //这里是4.1章节生存的5个受托人对应的公钥
+? Enter public keys of dapp delegates - hex array, use ',' for separator
+// Here are five trustees'corresponding public keys generated in Chapter 3.1
 a437a1d4bedf738e8620920ef29542644e3366c635b16fc9faa6f5db744bcd5c,522cdc822d3bec74aa5c4e972ed6cba84850f9c4d521e43fe08675e9e4759bb9,6ee3ae36166f69e8b9408d277486c9870f40c1b7c16016328737d6445409b99f,ad558e44b347a54981295fcb5ee163c2915ca03536496129103e9d72c5025d69,6b2594ebeee9b072087e5f1e89e5c41ee2d73eb788b63abeedf5c04664f0ce5b
 ? How many delegates are needed to unlock asset of a dapp? 3
 DApp meta information is saved to ./dapp.json ...
@@ -159,44 +167,44 @@ DApp meta information is saved to ./dapp.json ...
 ? Enter asset precision 8
 ```
 
-有几个注意事项
+some notes
 
-1. `DApp link`是为了方便普通用户自动安装，必须以`.zip`结尾, 如果您的dapp不打算开源或者没有准备好，可以把这个选项当做占位符，它所在的地址不必真实存在
-2. `DApp icon url`这是在阿希应用中心展示用的应用图标, 必须以`.jpg`或`.png`结尾，如果该图片无法访问，阿希应用中心会展示一个默认的图标
-3. `How many delegates ...`这个选项表示从`dapp`跨链转账资产时需要多少个受托人联合签名，该数字必须大于等于3、小于等于你配置的受托人公钥个数且小于等于101，数字越大越安全，但效率和费用越高
-4. Dapp的创世块中可以创建内置资产，但不是必须的，内置资产无法跨链转账，只能在链内使用。在主链发行的UIA（用户自定义资产）可以充值到任意dapp中，也可从dapp提现到主链，这是dapp内置资产和UIA最大的区别。“一链多币，一币多链”指的就是主链可以发行多个UIA，而每个UIA都可以充值到多个dapp中。
+1. `DApp link ` is for the convenience of ordinary users to install automatically. It must end with`. zip`. If your DApp is not open source or not ready, you can use this option as a placeholder. Its address does not need to be real.
+2. `DApp icon url`  This is the application icon displayed in En-Tan-Mo Application Center. It must end with`. jpg `or`. png`. If the image is not accessible, En-Tan-Mo Application Center will display a default icon.
+3. `How many delegates ...`This option indicates how many trustee joint signatures are required when transfer assets across the chain from DApp. The number must be greater than or equal to 3, less than or equal to the number of trustee public keys you configure and less than or equal to 101. The larger the number, the safer it is, but the  efficiency and cost are higher.
+4. Built-in assets can be created in Dapp's genesis block, but they are not necessary. Built-in assets can not be transferred across the chain, but can only be used in current chain. UIA(User-defined assets) issued in the main chain can be recharged to any DApp or withdrawn from DApp to the main chain, which is the biggest difference between the built-in assets of DApp and UIA. "One chain of multi-coin, one coin multi-chain" means that the mainchain can issue multiple UIA, and each UIA can be recharged into multiple DApp.
 
-**下面是etm dapp的目录结构**
+**The following is the directory structure of ETM DApp**
 
 ```
 etm-test-dapp/
-├── blockchain.db         // dapp数据库文件，与主链的数据是分开存放的,没有启动则没有此文件
-├── config.json           // 应用的节点配置文件，目前主要用于配置受托人秘钥
-├── contract              // 合约目录
-│   └── domain.js         // 域名合约的实现代码
-├── dapp.json             // 注册dapp时用到的元文件
-├── genesis.json          // 创世区块
-├── init.js               // 应用初始化代码，可以在该文件进行一些设置、事件注册等
-├── interface             // 查询接口的实现目录
-│   ├── domain.js         // 域名查询接口实现
+├── blockchain.db         // Dapp database file, which is stored separately from the main chain data, is not available without startup
+├── config.json           // Node profiles for applications are currently used to configure trustee keys
+├── contract              // Contract catalogue
+│   └── domain.js         // Implementation Code of Domain Name Contract
+├── dapp.json             // Metafiles used to register DApp
+├── genesis.json          // Genesis block
+├── init.js               // Application Initialization Code: Some settings, event registration and so on can be done in this file.
+├── interface             // Implementation directory of query interface
+│   ├── domain.js         // Implementation of Domain Name Query Interface
 │   └── helloworld.js
-├── logs                  // 日志目录
+├── logs                  // Log directory
 │   └── debug.20170928.log
 ├── model
-│   └── domain.js         // 域名业务数据模型定义
+│   └── domain.js         // Definition of Domain Name Business Data Model
 └── public
-    └── index.html        // 默认前端页面
+    └── index.html        // Default front-end page
 
 ```
 
-#### 3.3 注册dapp到主链
-注意这里的`主链`不是指`mainnet`， 每个`net`下都有相应的主链， 主链是相对Dapp（侧链）而言。
+#### 3.3 Register DApp to mainchain
+Note that the `mainchain` here does not refer to `mainnet`, there are corresponding main chains under each net, the main chain is relative to Dapp (sidechain).
 
-我们可以使用`registerdapp`注册应用到主链，如下所示
+We can use `registerdapp` to registration application to mainchain, as follows
 
 ```
-// 先生成一个dapp注册账户
-// 注意这里的密码都是演示用途，且不可用于正式的dapp中
+// First, generate a DAPP registered account
+// Note that the passwords here are for demonstration purposes and are not available in a formal DApp
 > etm-cli crypto -g
 ? Enter number of accounts to generate 1
 [ { address: 'A9rhsV5xDny4G45gD2TXmFFpeiTfvAAQ7W',
@@ -204,14 +212,14 @@ etm-test-dapp/
     publicKey: '74db8511d0021206abfdc993a97312e3eb7f8595b8bc855d87b0dc764cdfa5a8' } ]
 Done
 
-// 在http://127.0.0.1:4096  用创世账户“someone manual strong movie roof episode eight spatial brown soldier soup motor”登陆（该账户中有初始发行的1亿ETM token），然后给A8QCwz5Vs77UGX9YqBg9kJ6AZmsXQBC8vj地址转10000个ETM
+// In address http://127.0.0.1:4096  use Genesis account"someone manual strong movie roof episode eight spatial brown soldier soup motor"to login(There are 100 million ETM token initially issued in this account)，then transfer 10,000 ETMs to A8QCwz5Vs77UGX9YqBg9kJ6AZmsXQBC8vj address
 
 > etm-cli registerdapp -f dapp.json -e "possible melt adapt spoon wing coyote found flower bitter warm tennis easily"
-# 返回结果如下,这就是应用id。每个应用注册时返回的id不同，请记下你自己的应用id
+# The result is as follows, which is the application ID. Each application registers with a different ID. Please note down your own application ID.
 0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb
 ```
 
-使用浏览器访问`http://localhost:4096/api/dapps/get?id=0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb`, 可以查询到该dapp了，下面是返回信息
+Visit `http://localhost:4096/api/dapps/get?Id=0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb` by browser. You can query the DApp. Here is the return information
 
 ```
 {
@@ -237,16 +245,16 @@ Done
 }
 ```
 
-#### 3.4 部署代码到应用节点
-现在我们把4.2小节中创建的模板代码拷贝到etm的安装目录下的dapp子目录，并改名为dapp的id
+#### 3.4 Deploy code to application nodes
+Now let's copy the template code created in Section 3.2 to the DAPP subdirectory in the ETM installation directory and rename it the ID of DAPP
 
 ```
 > cp -r etm-test-dapp path/to/etm/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb
 ```
 
-最后`path/to/etm/dapps/dappid/`目录下的文件与`etm-test-dapp`目录下文件相同。
+Finally, the files in path/to/etm/dapps/dappid/directory are the same as those in etm-test-dapp directory.
 
-然后把4.1章节创建的5个受托人密码写入这个dapp的配置文件中
+Then write the five trustee passwords created in Chapter 3.1 to the DApp configuration file
 
 ```
 > cat path/to/etm/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb/config.json
@@ -261,60 +269,61 @@ Done
 }
 ```
 
-注意别忘了新建目录
+Be careful not to forget to create a new directory
 
 	mkdir -p path/to/etm/public/dist/dapps/
 
-这里我们把所有受托人的配置到同一个节点了，在生产环境中不推荐这样做，应该把秘钥尽量分散到多个节点，以防止单点故障。
-至此，dapp手工安装部署完成，开发调试阶段需要这样。等以后正式发布到mainnet后，其他节点只需要在钱包页面点击dapp就可以安装。
+Here we configure all trustees to the same node, which is not recommended in the production environment. We should try to spread the secret key to multiple nodes to prevent a single point of failure.
 
-#### 3.5 重启etm应用节点
+So far, the Dapp installation and deployment in the development and debugging phase has been completed. When it is officially released to mainnet, other nodes can be installed by clicking DAPP on the wallet page.
+
+#### 3.5 Restart ETM application node
 
 ```
-> node ETM_HOME/app.js  //contrl+c 结束  然后重新运行，参考 3.初始化 中的运行系统
+> node ETM_HOME/app.js  //end by contrl+c and restart
 ```
 
-使用浏览器打开`http://localhost:4096/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb/`，可以访问默认的一个前端页面，该页面可以进行一些简单的接口测试
+Open `http://localhost:4096/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb/` with a browser to access the default onstage  page, which can conduct some simple interface tests.
 
-也可以观察dapp的日志来排查一些问题
+We can also look at the Dapp log to sort out some problems
 
 ```
 > tail -f path/to/etm/dapps/0599a6100280df0d296653e89177b9011304d971fb98aba3edcc5b937c4183fb/logs/debug.*.log
 ```
 
-#### 3.6 验证helloworld
+#### 3.6 Verify HelloWorld
 
-	//查看侧链是否启动
+	//Check whether the side chain is started
 	http://xxx.xxx.xxx.xxx:port/api/dapps/launched
 	> {"success":true,"launched":["fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236"]}
-	//查看侧链高度
+	//View Side Chain Height
 	http://xxx.xxx.xxx.xxx:port/api/dapps/fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236/blocks/height
 	> {"height":88,"success":true}
 
-只要能显示以上信息就代表该dapp发布成功
-新建的dapp模块没有修改任何信息，可以查看interface目录下的[helloworld.js](../example/helloworld/interface/helloworld.js)
+As long as the above information can be displayed, the DApp will be released successfully.
+
+The new DAPP module does not modify any information, so you can view [helloworld. js](../example/helloworld/interface/helloworld.js) in the interface directory
 
 	...
 	app.route.get('/helloworld',  async function (req) {
-  		return { message: 'helloworld' }
-	})
-	...
-
-根据此代码，请求该接口
+	  		return { message: 'helloworld' }
+		})
+		...
+According to this code, request the interface
 
 	http://etm.red:8096/api/dapps/fbf58b3a079cd85cc78c4584fd2805a1ac677752134380bd0d95c57c0220e236/helloworld
 	> {"message":"helloworld","success":true}
 
-就此，一个helloworld就发布成功了。
+A "helloworld " demo was released successfully,period
 
 
-### 4.多节点运行
+### 4.Multi-node operation
 
-以上小节为开发者演示了单节点运行dapp示例，下面为开发者演示多节点（2个节点）配置方式。
+section demonstrates the example of running DApp on a single node for developers. The following section demonstrates how to configure multiple nodes (2 nodes) for developers.
 
-#### 4.1 多个代理人配置
+#### 4.1 Configuring multiple agents
 
-查看dapp目录结构：
+View the DApp directory structure：
 
 	-rw-r--r--@  1 wanglei  staff   469 Feb 20 16:43 config.json
 	drwxr-xr-x   3 wanglei  staff    96 Feb 18 14:50 contract
@@ -325,41 +334,40 @@ Done
 	drwxr-xr-x   3 wanglei  staff    96 Feb 19 13:56 model
 	drwxr-xr-x   3 wanglei  staff    96 Feb 17 21:52 public
 
-`config.json`中`secrets`数组与`dapp.json`中`delegates`数组是一一对应的，需要修改成多节点，就要把对应secret与delegate复制到另外一个节点上。
+The `secrets` array in `config.json` corresponds to the `delegates` array in `dapp.json`. If you need to modify it to multiple nodes, you need to copy the corresponding secrets and delegates to another node.
 
-	//比如  第一与第二个secret
+	//For example, the first and the second secret
 	"secrets": [
-    "brave friend tumble below garden beyond salmon voyage reflect weasel live emerge",
-    "subject dutch flavor short kit creek owner throw analyst trick melody target",
-    "neck hole winter frown aunt print dutch round clip minute milk olive",
-    "metal taxi judge raw agent wire close muffin bicycle royal current moral",
-    "cat coconut mouse rule crack habit holiday useless mobile flag picnic hockey"
-  	]
-	//也需要复制第一与第二个delegate
+	"brave friend tumble below garden beyond salmon voyage reflect weasel live emerge",
+	"subject dutch flavor short kit creek owner throw analyst trick melody target",
+	"neck hole winter frown aunt print dutch round clip minute milk olive",
+	"metal taxi judge raw agent wire close muffin bicycle royal current moral",
+	"cat coconut mouse rule crack habit holiday useless mobile flag picnic hockey"
+	]
+	//You also need to copy the first and second delegate
 	"delegates": [
-	    "8169c6672f5985d8b13d81c17c16a4f2318779bdcd676385f755535883a9b2ad",
-	    "7004f44fb5849b8628ee8431fa3e1a95b06d0cc70e414c875603e0fead739362",
-	    "b21360d7c0f4c55bfe30d6f9291000b171442f04c887a03f6466d9dcac1fcb79",
-	    "4f73d11c9a6eddbc46cb3af17debb2350cc702240493032761287f387128cc58",
-	    "6271ff0d381b0bf8d24661b2b4902c3d1ac5411fa502bf32696a7ca2569e1eed"
-	  ]
+	"8169c6672f5985d8b13d81c17c16a4f2318779bdcd676385f755535883a9b2ad",
+	"7004f44fb5849b8628ee8431fa3e1a95b06d0cc70e414c875603e0fead739362",
+	"b21360d7c0f4c55bfe30d6f9291000b171442f04c887a03f6466d9dcac1fcb79",
+	"4f73d11c9a6eddbc46cb3af17debb2350cc702240493032761287f387128cc58",
+	"6271ff0d381b0bf8d24661b2b4902c3d1ac5411fa502bf32696a7ca2569e1eed"
+	]
+#### 4.2 Modify peers in config
 
-#### 4.2 修改config中的peers
-
-在`config.json`中还有一个属性，就是peers字段，如果是多节点启动，就需要把所有节点的ip端口都写进去（除开本节点ip端口）。
+Another property in `config.json `is the peers field. If a multi-node is started, all the IP ports of the nodes need to be written in (except the IP ports of the node).
 
 	//...
 	"peers": {
-    "list": [
-      {"ip": "45.32.19.241", "port": 4096},
-      {"ip": "45.32.62.184", "port": 4096},
-      {"ip": "45.32.22.78", "port": 4096},
-      {"ip": "45.32.248.33", "port": 4096}
-    ],
-    "blackList": [],
-    "options": {
-      "timeout": 4000
-    }
-    //...
+	"list": [
+	  {"ip": "45.32.19.241", "port": 4096},
+	  {"ip": "45.32.62.184", "port": 4096},
+	  {"ip": "45.32.22.78", "port": 4096},
+	  {"ip": "45.32.248.33", "port": 4096}
+	],
+	"blackList": [],
+	"options": {
+	  "timeout": 4000
+	}
+	//...
 
- 重启所有节点即可看到应用启动成功。
+Restart all nodes to see that the application started successfully.

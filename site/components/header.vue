@@ -63,7 +63,8 @@ export default {
                 {
                   searchData.map(({ title, subtitle, url }) =>
                     <a-select-option key={url}>
-                      {title} {isCN && subtitle}
+                      {/* title} {isCN && subtitle*/}
+                      {isCN ? subtitle : title}
                     </a-select-option>)
                 }
               </a-select>

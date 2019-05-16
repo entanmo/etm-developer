@@ -8,17 +8,17 @@ Invented in 2008, Bitcoin has witnessed a sea change in the world over the cours
 
 Never has a technology attracted so much attention like blockchain. Born with a close affinity with finance, it has been, unfortunately, exploited most for profit rather than for progress. The emergence of a large number of short-sighted blockchain projects represents a shift away from the technology focus. They derail the industry, and marginalize ordinary users. Mainstream currencies such as Ethereum and EOS become a game for thefew where the powerful acquire an unfair leverage and the ordinary are excluded from sharing the benefits. This not only leads to an unhealthy ecosystem, but also puts network security at risk.
 
-Upholding the same visions as Satoshi Nakamoto's, En-Tan-Mo scientists believe that the build-up of hash power will not make blockchain network safer. It is the level of decentralization, i.e. hash power probability distribution, that plays a decisive role in the security of Bitcoin and other cryptocurrencies. This is evidenced by the fact that Bitcoin’s security deteriorates with capital influx and the rise of mining monopolies.
+Upholding the same visions as Satoshi Nakamoto's, En-Tan-Mo scientists believe that the build-up of hash power will not make blockchain network safer. It is the level of decentralization, i.e. hash power probability distribution, that plays a decisive role in the security of Bitcoin and other cryptocurrencies. This is evidenced by the fact that Bitcoin's security deteriorates with capital influx and the rise of mining monopolies.
 
 ## The Strength of En-Tan-Mo Blockchain
 
-In the view of En-Tan-Mo sc ien tists, decentralization is not only a technical framework but more importantly, a new mechanism, a change in mindset and the common thread running throughout En-Tan-Mo’s philosophical thoughts. In En-Tan-Mo, decentralization is brought to life by distributed system (framework), the peoplecentered voting, election and bonus system (politics) and the Unified-Proof-of-Stake consensus protocol (underlying logics).
+In the view of En-Tan-Mo sc ien tists, decentralization is not only a technical framework but more importantly, a new mechanism, a change in mindset and the common thread running throughout En-Tan-Mo's philosophical thoughts. In En-Tan-Mo, decentralization is brought to life by distributed system (framework), the peoplecentered voting, election and bonus system (politics) and the Unified-Proof-of-Stake consensus protocol (underlying logics).
 
 Compared with traditional system, distributed system has three major strengths:
 
 1. Fault Tolerance: In distributed systems, a partial glitch does not lead to a systematic breakdown, because the system is dependent upon many decentral ized , i ndependent components, all of which have a role to play in keeping it running. Therefore, such systems are more robust than others.
 
-2. Robustness against Attack: It is prohibitively expensive to manipulate or attack distributed systems, because they don’t have a central authority. Besides, due to their decentralized nature, distributed hardware and ecosystem are hard to be monitored and attacked simultaneously.
+2. Robustness against Attack: It is prohibitively expensive to manipulate or attack distributed systems, because they don't have a central authority. Besides, due to their decentralized nature, distributed hardware and ecosystem are hard to be monitored and attacked simultaneously.
 
 3. Resistance against Collusion: Collusion is somewhat hard to define. Traditionally, oligarchies collude to prey on the ordinary people. To end this practice, anti-trust law is adopted throughout the world. For distributed systems, the possibility of such collusion between malicious actors is significantly lowered. With a view to better address this problem, En-Tan-Mo implements the idea of Nash equilibrium to foster a more equitable ecosystem.
 
@@ -32,14 +32,14 @@ Alarmed by the harms of centralization, EnTan-Mo realizes it is time to put in 
 
 By implementing mathematical and philosophical theories into mechanism design, scientists from En-Tan-Mo devise a voting system in a bid to change traditional structure and to steer cryptocurrency back on track.
 
-Users obtain voting right after the lock-up of a certain portion of ETM. Note that token balance doesn’t equal voting stake (the number of votes). The coversion from balance to stake is governed by the function X u = t T· (where T is the balance locked up. t is time gain coefficient and u is the coefficient of stake constraints). To eliminate monopolies and guarantee network stability and security, En-Tan-Mo makes the following changes:
+Users obtain voting right after the lock-up of a certain portion of ETM. Note that token balance doesn't equal voting stake (the number of votes). The coversion from balance to stake is governed by the function X u = t T· (where T is the balance locked up. t is time gain coefficient and u is the coefficient of stake constraints). To eliminate monopolies and guarantee network stability and security, En-Tan-Mo makes the following changes:
 
 1. Time Gain Coefficient----increasing opportunities for private investors
 
 <img src="/images/skill/vote_step01_en.png" style="width:500px" >
 
 
-More too often private investors get an unfair share of market profits. That’s why En-Tan-Mo introduces the concept of time gain coefficient in a bid to deliver equality for small stake holders. Under such mechanism, stakes (votes) increase over time so that even users with small holdings are rewarded with considerable payoffs. Every 24 hours the time gain coefficient increases automatically. Therefore for small holders the probability of getting a bonus also improves over time and is halved when the block producer whom they vote for successfully adds a block to the chain.
+More too often private investors get an unfair share of market profits. That's why En-Tan-Mo introduces the concept of time gain coefficient in a bid to deliver equality for small stake holders. Under such mechanism, stakes (votes) increase over time so that even users with small holdings are rewarded with considerable payoffs. Every 24 hours the time gain coefficient increases automatically. Therefore for small holders the probability of getting a bonus also improves over time and is halved when the block producer whom they vote for successfully adds a block to the chain.
 
 2.  Stake Constraints----lowering the weight of oligarchs
 
@@ -53,13 +53,13 @@ Oligarchs amass massive wealth, monopolize resources and create imbalances. All 
 <img src="/images/skill/vote_step03_en.png" style="width:500px" >
 
 
-The lack of mobility is the culprit of an anemia community. Hence En-Tan-Mo’s makes sure that block producers are selected on a dynamic basis. To be more specific, block producers are chosen via a probabilistic draw among miners based on their share of votes, rather than from the top 101 high-performers. This otherwise can be written as P X  / Xn . The result is that miners who rank below the 101th place may make it to producers also. Through this mechanism design, En-Tan-Mo introduces uncertainty into the election outcome so that miners who used to stand no chance now have a possibility of being elected.
+The lack of mobility is the culprit of an anemia community. Hence En-Tan-Mo's makes sure that block producers are selected on a dynamic basis. To be more specific, block producers are chosen via a probabilistic draw among miners based on their share of votes, rather than from the top 101 high-performers. This otherwise can be written as P X  / Xn . The result is that miners who rank below the 101th place may make it to producers also. Through this mechanism design, En-Tan-Mo introduces uncertainty into the election outcome so that miners who used to stand no chance now have a possibility of being elected.
 
 As such hash power is in general evenly distributed among users and monopoly is kept in check. As long as the ordinary majority controls 50% of stakes(votes), they would have 50% say in the system. Thus, decentralization is secured and security is boosted.
 
 #### Lock-up
 
-Unlike bond market, En-Tan-Mo only use “lock up” in a literal sense. For every system, it is essential to have liquidity. However, a degree of stationarity is also needed in case of unexpected shocks. Thus En-Tan-Mo requires users to lock up a certain amount of ETM tokens in exchange for stakes (votes) and they can use these votes to decide who will be the block producer. The lock-up is the prerequisite of becoming a voter. The sum being locked is still kept in users’ personal accounts but it can’t be used for transactions. Through the lockup mechanism, En-Tan-Mo protects the rights and interests of small holders and sets the system on a sustainable course.
+Unlike bond market, En-Tan-Mo only use “lock up” in a literal sense. For every system, it is essential to have liquidity. However, a degree of stationarity is also needed in case of unexpected shocks. Thus En-Tan-Mo requires users to lock up a certain amount of ETM tokens in exchange for stakes (votes) and they can use these votes to decide who will be the block producer. The lock-up is the prerequisite of becoming a voter. The sum being locked is still kept in users' personal accounts but it can't be used for transactions. Through the lockup mechanism, En-Tan-Mo protects the rights and interests of small holders and sets the system on a sustainable course.
 
 #### Voters
 
@@ -67,7 +67,7 @@ Voters refer to every En-Tan-Mo participants. They are closely associated with m
 
 #### Voting
 
-The voting page will list out each miner’s votes and performance record. Voters can choose whoever they want to become block producers.
+The voting page will list out each miner's votes and performance record. Voters can choose whoever they want to become block producers.
 
 #### Vote/Stake
 
@@ -116,4 +116,4 @@ votes he/she casts.
 
 ## From the People, For the People
 
-As a traditional Chinese saying goes, “never forget why you started and your mission can be accomplished.” When it comes to En-Tan-Mo, its founding vision is to create true value and remove the impediment of blockchain’s development; to embrace extensive participation instead of being the game restricted to the elite; to become a truly decentralized autonomous community, makes the unobstructed value transfer a reality and putan end to monopoly once and for all. As such, En-Tan-Mo’s entire infrastructure, be it voting system or bonus system, are designed to realize these goals and be true to its promise----from the people, for the people
+As a traditional Chinese saying goes, “never forget why you started and your mission can be accomplished.” When it comes to En-Tan-Mo, its founding vision is to create true value and remove the impediment of blockchain's development; to embrace extensive participation instead of being the game restricted to the elite; to become a truly decentralized autonomous community, makes the unobstructed value transfer a reality and putan end to monopoly once and for all. As such, En-Tan-Mo's entire infrastructure, be it voting system or bonus system, are designed to realize these goals and be true to its promise----from the people, for the people

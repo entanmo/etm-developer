@@ -6,13 +6,13 @@ ETM Wallet是一款服务于ETM用户的钱包，致力于为用户提供简单�
 
 ## 2.钱包登录流程
 
-<img src="/images/intro/register01.jpg">
+<img src="/images/intro/register01.png" style="width:920px;margin:20px 0 10px 0;">
 
 输入网址/扫描二维码进入钱包登录页面——已有账户输入主密码登录/新账户需注册钱包（新账户生成的主密码由浏览器本地生成，请妥善备份保存）——进入钱包首页
 
 ## 3.钱包框架（脑图形式）
 
-<img src="/images/intro/register02.jpg">
+<img src="/images/intro/register02.jpg" style="width:920px;margin:30px 0 10px 0;">
 
 ### 3.1钱包首页
 
@@ -36,7 +36,7 @@ ETM Wallet是一款服务于ETM用户的钱包，致力于为用户提供简单�
 用户在本页面进行钱包金额转账，由于操作无法撤消，所以需要正确输入接收者地址以及转账金额等信息。
 （注意：每次转账需支付0.1ETM手续费）
 
-### 3.7 Dapp Store
+### 3.7Dapp Store
 用户能够使用ETM钱包金额进行Dapp操作。
 目前已开发Dapp游戏：epony加密马，epony加密马是En-Tan-Mo制作的一款拥有开箱、繁殖、买卖、租赁、分红、赛马等独特基因组的机械马游戏。
 未来，ETM将不断扩展Dapp生态系统。

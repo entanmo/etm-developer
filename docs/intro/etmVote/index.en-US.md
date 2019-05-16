@@ -1,29 +1,53 @@
 # Participate In Voting To Receive Dividends
 
-## 1.投票介绍
-ETM以全新的投票与分红机制，让每个参与者都可以以矿工或投票人的身份，平等参与区块链的建设，并获得均衡的奖励，开启更为公平、更为公正的区块链公链系统。
-在ETM世界，所有Token持有者都拥有投票的权利。投票人手上的Token通过上凸权益映射转化为可投票数，选出矿工并获得相应奖励。
-用户在Wallet投票栏进行相应投票操作。
+## 1.Voting Mechanism
+En-Tan-Mo ushers in a fairer and equitable public chain through the adoption of a brand new voting and bonus mechanism that allows all participants to be equally involved in the blockchain construction as miners or voters and to be rewarded on an equitable basis.
+All token holders of En-Tan-Mo are entitled to vote. They map their holdings via a concave function into votes and receive bonus for choosing block generator candidates.
+Voting can be performed on the voting column of En-Tan-Mo wallet.
 
-## 2.投票须知
-### 2.1锁仓是投票的前提，⽤户锁仓之后才能进行投票。
-登陆ETM钱包，点击“投票”栏——点击“锁仓”——点击“新增锁仓”（也可批量锁仓）——输入锁仓金额——确认锁仓——锁仓成功
+## 2.Voting Instructions
+### 2.1Locking the warehouse is the premise of voting, and the user can only vote after locking the position.
 
-（注意：每次锁仓需支付0.1ETM手续费，请预留足额ETM作为手续费）
-<img src="/images/intro/vote01.jpg" >
+Lock-up steps are shown in the chart below:
 
-锁仓流程
+<img src="/images/intro/vote01_en.png" >
+
+- Step One: Log in to En-Tan-Mo Wallet and lick “Voting”
+
+- Step Two: Click “Lock Up”
+
+- Step Three: Click “New Lock Up”
+
+- Step Four: Enter the amount of ETM you want to lock up
+
+- Step Five: Confirm
+
+- Step Six: Lock up complete
+
+(Note that you have to pay 0.1 ETM for each lock-up. Please reserve enough ETM in your account as transaction fee.)
 
 
-### 2.2每人可进行多次投票，每次投票只能投一位矿工。若修改投票后的矿工与上次不一样，系统默认取消上次投票。
-### 2.3每次投票需支付0.1ETM手续费，请预留足额ETM作为手续费
+### 2.2Voters are allowed to vote for more than one time but each time he/she can only give his/her vote to one candidate. If voter change his/her vote to another candidate then the system would cancel his/her last vote by default.
 
-## 3.投票流程
-<img src="/images/intro/vote02.jpg" >
+### 2.3Each vote costs 0.1 ETM. Please reserve enough ETM in your account as transaction fee.
 
-登陆ETM钱包，点击“投票”栏——点击“矿工列表”——勾选列表中一位矿工——点击“投票”——确认后提交——投票成功后，矿工显示蓝点
+## 3.Voting Steps
+<img src="/images/intro/vote02_en.png" style="width:1200px">
+
+- Step One: Open En-Tan-Mo Wallet and click “Voting”
+
+- Step Two: Click “Miner List”
+
+- Step Three: Select your desired miner for block generation on the list
+
+- Step Four: Click “Vote”
+
+- Step Five: Click “Confirm” and “Submit”
+
+- Step Six: After you complete Step Five, the miner of your choice will become blue.
+
+## 4.Bonus Mechanism
+Voters and miners are closely related. Voters receive bonus every time a new block is mined. 5% of the ETM supply (i.e. 25 million ETMs) will go to voting bonus and they will be distributed within six years. Each year will see a steady decrease in the amount of ETM distributed for this purpose. Of the total voting bonus, 1/4 will be shared among all the voters in proportion to their respective votes. 1/4 will first be equally divided among the respective voters of the elected 101 block producers and then be given to each voter in proportion to his/her votes. 1/2 will be created to one of the voters of elected block producers.
 
 
-## 4.分红机制
-矿⼯与投票⼈密不可分，每产出⼀个区块，投票⼈可以获得⼀定的投票分红。投票分红奖励占 Token 总量的 5%，共 2500 万枚。在 6 年内分配完毕，逐年递减。奖励总额中，1/4 给所有投票⼈按票数⽐例分配；1/4 给投中⼊选矿机的投票⼈，依⼊选矿⼯数量分成 101 份后，每名矿⼯的投票⼈按票数⽐例分配；1/2 从投中⼊选矿机的投票⼈中选出⼀位奖励。
 

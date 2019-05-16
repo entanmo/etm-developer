@@ -172,10 +172,10 @@ export default {
           options.pagesKey.push({
             name: key,
             url: `/${route}/${key}/`,
-            title: options.isCN ? `${title} ${subtitle}` : title,
+            title: options.isCN ? `${title} ${subtitle}` : entitle,
           })
           options.searchData.push({
-            title,
+            title: entitle,
             subtitle,
             url: `/${route}/${key}/`,
           })
@@ -242,7 +242,6 @@ export default {
       locale = enUS
     }
     const { showSideBars } = this
-
     return (
       <div class='page-wrapper'>
         <Header searchData={options.searchData} name={name}/>

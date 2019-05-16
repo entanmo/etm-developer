@@ -1,22 +1,23 @@
+# Find Problem
 <img src="/images/dapp/dapp06_en.jpg"  >
 
-### 主链log查看
-目录：xxx/etm/logs/xxx.log
+### Main Chain Log View
+Directory:xxx/etm/logs/xxx.log
 
-如何查看日志？如果出现问题立刻可以查看日志
+How to view the log? If there is a problem, you can check the log immediately.
 
-	//将最新的10000行日志写入debug.log 因为此时的log文件可能很大
+	//Write the latest 10,000 rows of logs to debug.log because the log file may be large at this time
 	tail -n 10000 xxx.log > debug.log
-	//根据自己的dappID等关键词查看问题
+	//View questions according to your own dappID and other keywords
 	vi debug.log
-	//此处需要大家有一定的bug查看能力
+	//Here you need to have a certain ability to view bugs
 
-### 侧链log查看
+### Side Chain Log View
 xxx/etm/dapps/dappId/logs/xxx.log
 
 
-	//将最新的10000行日志写入debug.log
+	//Write the latest 10,000 rows of logs to debug.log
 	tail -n 10000 xxx.log > debug.log
-	//根据自己的dappID等关键词查看问题
+	//View questions according to your own dappID and other keywords
 	vi debug.log
-	//此处需要大家有一定的bug查看能力
+	//Here you need to have a certain ability to view bugs

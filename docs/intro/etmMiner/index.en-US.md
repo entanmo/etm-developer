@@ -1,60 +1,58 @@
 # Join ETM To Become A Miner
 
-当人类发现黄金的价值以后，挖金矿无疑成为一种热门职业，为人类提供源源不断的财富原料。在区块链的世界里，也存在着这样一个特殊的群体，他们很少为人所知，却一直默默地为行业提供着价值源泉——各类币种，他们就是区块链矿工。
+As the most stable form of money, gold once made its miners the most attractive profession and provided the world with a steady flow of fortune. In the world of blockchain, however, there exist a different kind of "miners" who mine another source of value—cryptocurrencies.
 
-## 矿工是什么？
+## What Is Blockchain Miner?
 
-区别以往真实世界的矿工形象，区块链矿工不用手持镐头、下矿井、砸矿石，而是使用高科技的方式来进行数字货币的挖矿。
+Instead of toiling with picks and shovels, blockchain miners mine digital currency by means of high-end technologies.
 
-矿工的主要工作是确认网络交易和数据打包，也就是记账。要成为一名矿工，只需购买一台专用的计算设备即可，在设备上下载挖矿软件，启动程序，就可挖矿。
-<img src="/images/intro/miner01.jpg" style="width:600px">
+The job of blockchain miner is to keep a ledger, or more specifically, to validate transactions and pack data. Anyone with a computing device can become a miner. All he/she has to do is download a mining software and let the programme get to work.
+<img src="/images/intro/miner01_en.jpg" style="width:600px">
 
-## 为什么要成为ETM矿工？
+## Why En-Tan-Mo?
 
-矿工的成本，不在于付出多少时间，而主要是设备和电力，就像自动驾驶的汽车，有车和油（电）就够了。
+The cost of mining is quite similar with that of autonomous driving. It is not about the time of time spent mining (driving) but how expensive is the gear (car) and how much electricity is consumed in the process.
 
-采用无损双挖的ETM则正好符合节省成本的两个条件，可以说几乎是零成本获得收益。
+En-Tan-Mo meets the abovementioned two conditions for low-cost mining, allowing users to mine on multiple blockchains simultaneously and getting payoffs at a negligible expense.
 
-何出此言？
+How?
 
-无损双挖，就意味着在挖矿的过程中，会同时挖出两种币，莱特币与狗狗币就是最典型的代表，而其中消耗的设备和电力成本与挖一种币是一样的。
+Litecoin and Dogecoin are two typical blockchains that allow users to simultaneously mine more than one cryptocurrencies, with the same electricity and gear as mining only one.
 
-回到ETM挖矿，从设备上来看，无需专业的矿机，一台中端显卡就可以满足要求，这与动辄上万的蚂蚁矿机相比成本相当低。
+let's move back to mining on En-Tan-Mo. As for En-Tan-Mo-based mining, specialized mining machine is not necessary. A middle-end graphics card is enough to do the job. Thus the cost is significantly lower than other blockchain mining that requires antminer more than 10，000 yuan's worth.
 
-同时，无损双挖过程中，对矿机和算力没有任何损耗，或者说损耗小到可以忽略不计，挖两种矿的时候可以并行运行且互不干扰。
+What's more, no electricity is wasted and gear worn during the multi-currency mining, or we can say such loss is next to zero. Users can mine on two cryptocurrencies at the same time without interference.
 
-从电力成本来看，由于算力没有损耗，电力消耗也基本上不会增加，成本仍然为零。
+With respect to electricity input, multi-currency mining will neither lead to an increase in consumption nor in cost, for there is negligible electricity loss in the process.
 
-再看收益端，根据目前ETH全网算力，假设按照6显卡RX570，160 Mhash/s 算力计算，收益 0.0138096 ETH/天，折合15.19 RMB（按1100RMB市价算）。
+Currently if we mine Ethereum with six RX570 cards at a hashrate of roughly 60 Mhash/s, the payoff is 0.0138096 ETH , equivalent to 15.19 RMB, per day. (1ETH=1100RMB)
 
-而 ETM 每天产生约28000个块，如果每次都入选的话，生产280块，获得 840 ETM，折合 840 RMB（按照1 ETM约为1 RMB换算）。哪怕入选比例只有 1/10，也有 84 RMB。
+The payoff of En-Tan-Mo mining is much higher. As we know, there are approximately 28000 new blocks being chained to En-Tan-Mo every day. Suppose a miner is elected in every round of production and generates 280 blocks in total, then he/she will be able to get 840 ETMs or 840 RMB as return (1 ETM=1RMB). Even if the miner in question only gets elected once out of every ten rounds, he/she will also obtain 84 RMB in reward.
 
 
-| 币种 | 矿机 | 算力 | 比重收益 | 折合现金收益 |
+| Crypto-currency | Mining Rig | Hashrate | Mining Reward | Reward in Cash |
 |------|----------|-----------|---------------|--------------------------|
-|ETH   | 显卡RX570|160 Mhash/s|0.0138096ETH/天|15.19RMB/天（按1100RMB计算）|
-|ETM   | 双挖，无需矿机|15 Mhash/s 每分钟占用0.5秒|840ETM/天(理想状态),按1/10算，约84ETM/天|84RMB/天（按1RMB计算）|
+|ETH   | RX570 card|160 Mhash/s|0.0138096ETH/day|15.19RMB/day（1ETH=1100RMB）|
+|ETM   | Multi-currency<br>mining without mining machine|15 Mhash/s<br>occupies 0.5sec/min|840ETM/day (ideal condition)<br>84ETM/day (if the miner is elected once out of ten rounds)|84RMB/day（1ETM=1RMB）|
 
 
-所以，成为ETM矿工，几乎是无本千利的生意，不做白不做。
+As such it is fair to say that En-Tan-Mo mining enables users to profit handsomely at negligible cost.
 
-## 如何成为ETM矿工？
+## How to Be An En-Tan-Mo Miner?
 
-想要成为一名ETM矿工，只需要一个钱包地址和一台矿机即可。
+To become an En-Tan-Mo miner, all you need is a wallet address and a mining rig to receive reward and get started.
 
-钱包地址用来获取ETM奖励，而矿机用来挖矿。
+First you need to register a En-Tan-Mo Wallet through our official website https://wallet.entanmo.com/. Please make sure that your password and wallet address are well-kept.
 
-矿工先要通过官方渠道进入注册钱包页面，进行钱包注册https://wallet.entanmo.com/，并保管好自己的登陆密码，保存自己的钱包地址。
-
-随后，便可以在已有的矿机/高端显卡上添加ETM挖矿节点程序，输入自己的节点名和ETM地址，创建双挖方式，便可成为ETM的挖矿节点之一。再次启动设备后，双挖程序就会自动运行。
+Then add the En-Tan-Mo mining program to your existing mining rig or high-end graphics card and become an En-Tan-Mo node. You can create the multi-currency mining mode by entering your user name and wallet address. After all the aforementioned steps are completed, restart your gear and the multiple-currency mining mode will start running automatically.
 
 
-|必备 | 来源|操作|注意事项|
+|Mining Necessities | Where can I get one?|Steps|Notes|
 |------|----------|-----------|---------------|--------------------------|
-|钱包  |官方渠道注册|保存登录密码，保存钱包地址   | 登录密码一旦丢失无法找回，需妥善保管|
-|矿机  |已再使用的高端显卡，无需单配|添加ETM挖矿节点程序，输入自己的节点名和ETM地址，创建双挖方式|暂无|
+|En-Tan-Mo Wallet  |Official Website|Save your password<br>And your wallet address.   | The password can't be recovered if lost. <br>Please kept yours safe.|
+|Mining Rig  |Use your existing graphics card. <br>No need to buy a new one.|Create the multiple-currency mining mode by adding En-Tan-Mo mining program.<br>Entering your user name and wallet address.|Null|
 
 
-更多配置项，请查看
+<!-- 更多配置项，请查看
  [`ETM UPoS 共识机制详解`](/skill/upos-cn/)
-[`ETM 投票、优选与分红机制详解`](/skill/vote-cn/)。
+[`ETM 投票、优选与分红机制详解`](/skill/vote-cn/)。 -->

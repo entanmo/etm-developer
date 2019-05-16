@@ -1,3 +1,4 @@
+# 合约SDK
 
 <img src="/images/dapp/dapp03.jpg"  >
 
@@ -47,7 +48,7 @@
 		* [7.3 获取合约名字](#73-获取合约名字)
 		* [7.4 初始化手续费](#74-初始化手续费)
 		* [7.5 获取手续费](#75-获取手续费)
-		* [7.6 获取默认手续费](#76-获取默认手续费)
+		* [7.6 设置默认手续费](#76-设置默认手续费)
 		* [7.7 获取真实时间戳](#77-获取真实时间戳)
 		* [7.8 注册回调](#78-注册回调)
 		* [7.9 应用列表](#79-应用列表)
@@ -85,8 +86,6 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/A9mhydu4PJd3KnSbi1p6vwuoBMGcHc4xjr
 	>{"balances":[{"currency":"HLB","balance":"10000000000000000"}],"success":true}
 
-
-
 #### 1.2 增加余额
 **app.balances.increase(address, currency, amount)**
 
@@ -118,8 +117,6 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/balances/AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
-
-
 #### 1.3 减少余额
 **app.balances.decrease(address, currency, amount)**
 
@@ -140,8 +137,8 @@
 
 	//第二步 减少余额
 	app.route.get("/decrease", async req => {
-  		await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
-	})
+	  		await app.balances.decrease('AN8qanfYV4HFdtVYoVacYm9CvVeLQ8tKFX', 'HLB',50000000)
+		})
 
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/decrease
 	> {"success":true}
@@ -171,7 +168,6 @@
 	//调用接口并查询 相比上一小节多了50000000
 	> {"balances":[{"currency":"HLB","balance":"100000000"}],"success":true}
 
-
 ### 2.数据库
 #### 2.1 加载模型
 **`aync` app.sdb.load(model, fields, indices)**
@@ -190,9 +186,8 @@
 
 示例:
 
-	//最重要的工作是把数据加载到内存中，app.sdb.*是操作的内存数据，等区块打包，才会写入数据库，所以load可以保持数据一致性
+	//最重要的工作是把数据加载到内存中，app.sdb.*是操作的内存数据，等区块打包完毕，才会写入数据库，所以load可以保持数据一致性
 	await app.sdb.load('Balance', app.model.Balance.fields(), [['address', 'currency']])
-
 
 #### 2.2 获取模型
 **app.sdb.get(model, cond)**
@@ -246,7 +241,6 @@
 	//TODO  返回值有问题
 	> {"keys":{},"success":true}
 
-
 #### 2.4 获取模型缓存
 **app.sdb.entries(model)**
 
@@ -287,7 +281,6 @@
 
 	app.sdb.lock("add-word")
 
-
 #### 2.6 创建模型
 **app.sdb.create(model, values)**
 参考[helloworld.js](../example/helloworld/contract/helloworld.js)
@@ -302,11 +295,11 @@
 示例:
 
 	hello: async function(words) {
-    //单步添加单词
-    app.sdb.lock("add-word")
-    app.sdb.create('Word', {
-      'words': words
-    })
+	//单步添加单词
+	app.sdb.lock("add-word")
+	app.sdb.create('Word', {
+	  'words': words
+	})
   }
 
 #### 2.7 替代模型
@@ -343,7 +336,6 @@
 	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.update('Account', { nickname: 'Nakamoto' }, { nickname: 'Satoshi' })
 
-
 #### 2.9 更新整数模型
 **app.sdb.increment(model, modifier, cond)**
 
@@ -359,7 +351,6 @@
 	//示例中无法表示，开发者可以按照此方式调用
 	app.sdb.increment('Article', { votes: -10 }, { id: '10000' })
 	app.sdb.increment('Article', { comments: 1 }, { id: '10000' })
-
 
 #### 2.10 删除模型
 **app.sdb.del(model, cond)**
@@ -450,7 +441,6 @@
 	app.model.Block.count({ height: { $lt: 100 } })
 	//输出
 	> 99
-
 
 #### 3.4 是否存在
 **app.model.[table].exists(cond)**
@@ -574,7 +564,6 @@
 	  }
 	]
 
-
 ### 4.路由
 路由参数说明：
 - `path` 路由路径
@@ -618,12 +607,11 @@
 	  await app.feePool.add('HLB', '10000000000')
 	})
 
-	//查看数据库中
+	//查看数据库
 	sqlite3 blockchain.db
 	sqlite> select * from round_fees;
-	//结果中增加了
+	//结果显示增加
 	> 12565|HLB|10000000000|0
-
 
 ### 6.日志
 #### 6.1 设置等级
@@ -643,7 +631,6 @@
 #### 6.7 错误
 	logger.error('hello %s %d %j', 'world', 123, {foo:'bar'}, [1, 2, 3, 4], Object);
 
-
 ### 7.工具（合入自增id）
 #### 7.1 验证
 **app.validate(type, value)**
@@ -661,7 +648,6 @@
 	app.validate('amount', 10000) // throws
 	app.validate('amount', 'abc') // throws
 	app.validate('amount', '1e10') // throws
-
 
 #### 7.2 注册合约
 **app.registerContract(type, name)**
@@ -730,7 +716,7 @@
 	  min: '100000',
 	  currency: 'HLB'
 	}
-#### 7.6 获取默认手续费
+#### 7.6 设置默认手续费
 **app.setDefaultFee(min, currency)**
 
 - `min` 最小费用
@@ -742,7 +728,6 @@
 示例:
 
 	app.setDefaultFee('10000000', 'HLB')
-
 
 #### 7.7 获取真实时间戳
 **app.getRealTime(epochTime)**
@@ -767,7 +752,6 @@
 	http://etm.red:8096/api/dapps/5929ee23ea77968a7ec686c124ed3bad43c096e5b38a54eb7ab72ef7b635900d/getRealTime
 	//返回结果
 	> {"realtime":1543699234000,"success":true}
-
 
 #### 7.8 注册回调
 **app.registerHook**
@@ -806,14 +790,13 @@
 
 	//示例 加密马合约部分代码
 	app.sdb.create("Market", {
-        id: app.autoID.increment("market_max_id"),
-        type: 1,
-        status: 1,
-        price: Math.round(price),
-        horse: id,
-        seller: sender
-      })
-
+	    id: app.autoID.increment("market_max_id"),
+	    type: 1,
+	    status: 1,
+	    price: Math.round(price),
+	    horse: id,
+	    seller: sender
+	  })
 
 #### 7.12 混沌随机
 
