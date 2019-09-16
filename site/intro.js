@@ -1,4 +1,4 @@
-export default{
+export default {
   etmInfo: {
     category: 'Components',
     subtitle: 'ETM 是什么？',
@@ -16,7 +16,7 @@ export default{
   etmVote: {
     category: 'Components',
     subtitle: '参与投票获得分红',
-    entitle: 'Participate In Voting To Receive Dividends',
+    entitle: 'Participate In Voting To Receive Benefits',
     type: 'General',
     title: 'etm-vote',
   },

@@ -2,7 +2,7 @@
 
 ## ——From the Mass, For the Mass: interpretations of En-Tan-Mo voting, election and bonus system
 
-<img src="/images/skill/guide02_en.jpg" >
+<img src="/images/skill/guide02_en.png" >
 
 Invented in 2008, Bitcoin has witnessed a sea change in the world over the course of a little more than a decade.
 
@@ -34,12 +34,11 @@ By implementing mathematical and philosophical theories into mechanism design, s
 
 Users obtain voting right after the lock-up of a certain portion of ETM. Note that token balance doesn't equal voting stake (the number of votes). The coversion from balance to stake is governed by the function X u = t T· (where T is the balance locked up. t is time gain coefficient and u is the coefficient of stake constraints). To eliminate monopolies and guarantee network stability and security, En-Tan-Mo makes the following changes:
 
-1. Time Gain Coefficient----increasing opportunities for private investors
+1. Time Gain Coefficient----increasing opportunities for platform participants
 
 <img src="/images/skill/vote_step01_en.png" style="width:500px" >
 
-
-More too often private investors get an unfair share of market profits. That's why En-Tan-Mo introduces the concept of time gain coefficient in a bid to deliver equality for small stake holders. Under such mechanism, stakes (votes) increase over time so that even users with small holdings are rewarded with considerable payoffs. Every 24 hours the time gain coefficient increases automatically. Therefore for small holders the probability of getting a bonus also improves over time and is halved when the block producer whom they vote for successfully adds a block to the chain.
+More too often platform participants get an unfair share of market benefits. That's why En-Tan-Mo introduces the concept of time gain coefficient in a bid to deliver equality for small stake holders. Under such mechanism, stakes (votes) increase over time so that even users with small holdings are rewarded with considerable benefits. Every 24 hours the time gain coefficient increases automatically. Therefore for small holders the probability of getting a benefits also improves over time and is halved when the block producer whom they vote for successfully adds a block to the chain.
 
 2.  Stake Constraints----lowering the weight of oligarchs
 
@@ -47,11 +46,9 @@ Oligarchs amass massive wealth, monopolize resources and create imbalances. All 
 
 <img src="/images/skill/vote_step02_en.png" style="width:500px" >
 
-
 3. Uncertainty (probability)---making the impossible possible
 
 <img src="/images/skill/vote_step03_en.png" style="width:500px" >
-
 
 The lack of mobility is the culprit of an anemia community. Hence En-Tan-Mo's makes sure that block producers are selected on a dynamic basis. To be more specific, block producers are chosen via a probabilistic draw among miners based on their share of votes, rather than from the top 101 high-performers. This otherwise can be written as P X  / Xn . The result is that miners who rank below the 101th place may make it to producers also. Through this mechanism design, En-Tan-Mo introduces uncertainty into the election outcome so that miners who used to stand no chance now have a possibility of being elected.
 
@@ -89,7 +86,7 @@ The voting mechanism of traditional DPoSbased systems are usually regarded as f
 
 1. m≠0,n≠0 v=m/n
 2. m=0,n=0 v=the average value of previous round
-3. m=0,n≠0 v=1/10*n^2
+3. m=0,n≠0 v=1/10\*n^2
 
 ### En-Tan-Mo Bonus System
 
@@ -99,20 +96,20 @@ In En-Tan-Mo system, miners and voters are closely related. When a block produce
 
 The timetable of block voting bonus is shown in table 2:
 
-| Reward     | Stage                            |
-| -------- | :-------------------------------- |
+| Reward   | Stage                                      |
+| -------- | :----------------------------------------- |
 | 1 ETM    | Preliminary Stage,before 10,112,000 blocks |
-| 0.5 ETM  | Stage 1，before 20,224,000 blocks   |
-| 0.25 ETM | Stage 1，before 30,336,000 blocks   |
-| 0.25 ETM | Stage 1，before 40,448,000 blocks   |
-| 0.25 ETM | Stage 1，before 50,560,000 blocks   |
-| 0.26 ETM | Stage 1，before 59,328,000 blocks   |
+| 0.5 ETM  | Stage 1，before 20,224,000 blocks          |
+| 0.25 ETM | Stage 1，before 30,336,000 blocks          |
+| 0.25 ETM | Stage 1，before 40,448,000 blocks          |
+| 0.25 ETM | Stage 1，before 50,560,000 blocks          |
+| 0.26 ETM | Stage 1，before 59,328,000 blocks          |
 
 the total amount of rewards:
 
 - 1/2 will be first evenly divided into 101 shares and then given to the voters of elected block producers. The bonus a voter receives is proportional to the votes he/she casts.
 - 1/2 will be given to the voters of a random elected block producers after the round is over. The bonus a voter receives is proportional to the
-votes he/she casts.
+  votes he/she casts.
 
 ## From the People, For the People
 

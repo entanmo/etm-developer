@@ -12,7 +12,7 @@ The development of DApp should be divided into intelligent contract development 
 5. Processing the returned data.
 
 
-* [Detailed Http Interface](#Detailed Http Interface)
+<!-- * [Detailed Http Interface](#Detailed Http Interface)
 	* [1. Account system](#1Account system)
 		* [1.1 Login](#11-Login)
 		* [1.2 Direct login without encryption](#12-Direct login without encryption)
@@ -78,7 +78,7 @@ The development of DApp should be divided into intelligent contract development 
 	* [10. Custom contract interface call](#10Custom contract interface call)
 		* [10.1 Custom contract interface call](#101-Custom contract interface call)
 		* [10.2 Modify information](#102-Modify information)
-
+ -->
 
 ### 1. Account system
 Account operations are performed through HTTP requests.

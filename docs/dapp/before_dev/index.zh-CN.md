@@ -1,10 +1,10 @@
 # 开发准备
 
-<img src="/images/dapp/dapp01.jpg"  >
+<img src="/images/dapp/dapp01.png"  >
 
 本章为大家介绍，dapp开发者需要掌握的开发技能，开发的硬件设施等
 
-
+<!-- 
 * [1.介绍](#1介绍)
   * [1.1 entanmo组件版本](#11-entanmo组件版本)
   * [1.2 etm-vm功能](#12-etm-vm功能)
@@ -23,7 +23,7 @@
   * [4.2 En-Tan-Mo钱包的使用](#41-En-Tan-Mo钱包的使用)
 * [5.etm-cli介绍](#5etm-cli介绍)
   * [5.1 etm-cli的安装](#51-etm-cli的安装)
-  * [5.1 etm-cli的使用](#51-etm-cli的使用)
+  * [5.1 etm-cli的使用](#51-etm-cli的使用) -->
 
 
 ### 1.介绍

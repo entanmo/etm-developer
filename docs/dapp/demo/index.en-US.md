@@ -5,7 +5,7 @@
 This chapter will explain a number of practical cases, from easy to difficult  easy for developers to analyze the whole process of DApp.
 If developers don't know much about dapp, check out the smart contract section, which explains the role of each document in the contract template and the modules that developers need to focus on.
 
-* [Actual Demo](#Actual Demo)
+<!-- * [Actual Demo](#Actual Demo)
 	* [1.helloworld](#1helloworld)
 		* [1.1 Configuration and route](#11-Configuration and route)
 		* [1.2 Definition of model](#12-Definition of model)
@@ -17,7 +17,7 @@ If developers don't know much about dapp, check out the smart contract section, 
 		* [2.4 Transfer between tokens](#24-Transfer between tokens)
 	* [3.Secret DApp](#3Secret DApp)
 		* [3.1 Contract development](#31-Contract development)
-		* [3.2 ontract invocation](#32-ontract invocation)
+		* [3.2 ontract invocation](#32-ontract invocation) -->
 ### 1.helloworld
 For a detailed example, please refer to [hello world](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld). This example is for reference only. In order to explain the use of entanmo DApp for you more conveniently.
 

@@ -10,7 +10,7 @@ For app builders, the value of blockchain goes beyond the benefits of deploying 
 
 Today's app market is riddled with bad business practices. Technology behemoths monopolize profits. App transparency is lacking. Abuse of user permission runs rampant while personal data is sold and leveraged. However, things could change with blockchain-powered DApp, which enables users to make transactions in a safer, transparent and efficient manner, and opens up possibilities for new way of life in the internet age : taking your privacy back from the internet giants. Being transparent, open, reliable and decentralized, DApp addresses the major deficiencies of traditional apps, and is bound to give rise to a brand new business ecosystem.
 
-A great technology should benefit all rather than some. However, this would be impossible without the hard work of developers. For this reason, En-Tan-Mo is committed to putting in place a sound and high-performance platform for app development; a platform that runs an open, thriving developer's community and selfevolving blockchain application components; and a platform that shatters the walls between finance, energy, business and people's daily lives and encourages free flows of value.
+A great technology should benefit all rather than some. However, this would be impossible without the hard work of developers. For this reason, En-Tan-Mo is committed to putting in place a sound and high-performance platform for app development; a platform that runs an open, thriving developer's community and selfevolving blockchain application components; and a platform that shatters the walls between finance, energy, business and people's daily lives and encourages dynamic activity in the community.
 
 ## En-Tan-Mo enables developers to write and deploy Dapp easily.
 
@@ -24,7 +24,7 @@ JavaScript is enabled in En-Tan-Mo. As oneof the most commonly used scripting la
 
 ### High-performance
 
-While ensuring security and decentralization,En-Tan-Mo's Unified-Proof-of-Stake (UPoS)algorithm greatly enhances the performance ofmain chain with TPS reaching 1000/s and the timeneeded to produce a new block being shortenedto 3 seconds. Since side chains are independentfrom each other, En-Tan-Mo enjoys infinite potentialto scale. With the increase of DApps, the networkwill be able to allow N*1000 transactions persecond. Therefore, it is capable of running DAppsthat demand better user experience, such asgame. In short, under Unified-Proof-of-Stake (UPoS),developers can give free rein to their imaginationwithout worrying about scalability.
+While ensuring security and decentralization,En-Tan-Mo's Unified-Proof-of-Stake (UPoS)algorithm greatly enhances the performance ofmain chain with TPS reaching 1000/s and the timeneeded to produce a new block being shortenedto 3 seconds. Since side chains are independentfrom each other, En-Tan-Mo enjoys infinite potentialto scale. With the increase of DApps, the networkwill be able to allow N\*1000 transactions persecond. Therefore, it is capable of running DAppsthat demand better user experience, such asgame. In short, under Unified-Proof-of-Stake (UPoS),developers can give free rein to their imaginationwithout worrying about scalability.
 
 ### Modular Framework
 
@@ -49,5 +49,3 @@ En-Tan-Mo is an open-source, transparent and secure network under the MIT licens
 ## A Platform where Your Ideas Become Reality
 
 Empowered by En-Tan-Mo, JavaScript and frontier blockchain functionalities, developers areable to build first-of-a-kind DApps, turning their most creative ideas into reality.
-
-

@@ -7,7 +7,7 @@ Smart contract is a computer protocol designed to disseminate, validate or execu
 
 The entanmo Smart contract defines the interface (operation, parameters, data structure) and the code to implement the interface. Code is compiled into a standard bytecode format, and blockchain store contract transactions (e.g., transfers, game bets). Every smart contract must be accompanied by Ricardian Contracts, which defines legally binding terms and conditions in the contract.
 
-* Smart Contract
+<!-- * Smart Contract
 	* [1. Before the start](#1-Before the start)
 	* [2. Start Node](#2-Start Node)
 		* [2,1Build test nodes](#21Build test nodes)
@@ -21,7 +21,7 @@ The entanmo Smart contract defines the interface (operation, parameters, data st
 		* [3.6 Verify HelloWorld](#36-Verify HelloWorld)
 	* [4. Multi-node operation](#4-Multi-node operation)
 		* [4.1 Configuring multiple agents](#41-Configuring multiple agents)
-		* [4.2 Modify peers in config](#42-Modify peers in config)
+		* [4.2 Modify peers in config](#42-Modify peers in config) -->
 
 ### 1.Before the start
 Before you start to write the contract, you need to make sure that the main test chain is running and that it starts to create block.

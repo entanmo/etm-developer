@@ -4,7 +4,7 @@
 
 In order to develop intelligent contract of DApp, we need to understand the contract-related functions supported by entanmo side chain. This chapter lists all the functions, and you can find the corresponding function according to your own needs. More features can be found in the [following chapters](Actual Demo).
 
-* [Smart Contract Sdk Detailed](#-Smart Contract Sdk Detailed)
+<!-- * [Smart Contract Sdk Detailed](#-Smart Contract Sdk Detailed)
 	* [1.Balance](#1Balance)
 		* [1.1 Get account balance](#11-Get account balance)
 		* [1.2 Increase balance](#12-Increase balance)
@@ -54,7 +54,7 @@ In order to develop intelligent contract of DApp, we need to understand the cont
 		* [7.9 Application List](#79-Application List)
 		* [7.10 Get self-increasing ID](#710-Get self-increasing ID)
 		* [7.11 Self-increasing ID increase](#711-Self-increasing ID increase)
-		* [7.12 Chaotic random](#712-Chaotic random)
+		* [7.12 Chaotic random](#712-Chaotic random) -->
 
 All of the following interfaces can be queried in [helloworld](https://github.com/etm-dev/etm-doc/tree/master/example/helloworld)
 

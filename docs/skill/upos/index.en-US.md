@@ -67,5 +67,5 @@ The timetable of block reward is shown in table 1.
 
 ### Transaction Fees for Each Round
 
-Apart from block reward , En -Tan - Mo incentivizes participants with transaction fees. The active participants of each round will be given a proportional share of transaction fees. (see more details in reward and bonus system).
+Apart from block reward , En -Tan - Mo incentivizes participants with transaction fees. The miners of each round will be given a proportional share of transaction fees in proportion to their contributions. (see more details in reward and bonus system).
 

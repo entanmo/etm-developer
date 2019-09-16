@@ -25,22 +25,28 @@ En-Tan-Mo Wallet aims at providing En-Tan-Mo users with a simple, secure and pow
 On this page, you can check your account balance, block production and ranking list.
 
 ### 3.2Personal Centre
+
 Important personal information such as account balance, wallet address and secondary password is available here.
 (Warning: please keep your wallet address safe in order to receive and send ETM.)
 
 ### 3.3Block Production
+
 On this page, miners are able to check information relative to their block generation.
 
 ### 3.4Additional Block Information
+
 Information including block producer, the time of production, block height and block reward is available here.
 
 ### 3.5Voting
+
 On this page, voter can see miners' information, exercise a lock-up and check personal voting record including whom he/she votes for.
 
 ### 3.6Transfer
+
 On this page, you are able to make transfers. Please make sure that you have put in the correct address and amount for your transfer because once the transaction is made, it cannot be reversed.
 (Note that for each transfer 0.1 ETM is charged as transaction fee. )
 
 ### 3.7Dapp Store
+
 You can use the ETM in your wallet to do DApp-related operations.
 Epony is an En-Tan-Mo-based game that offers players with loot boxes and allows them to breed, trade, lease and race virtual ponies with distinctive genome.

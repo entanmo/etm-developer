@@ -1,11 +1,11 @@
 # Ready
 
-<img src="/images/dapp/dapp01_en.jpg"  >
+<img src="/images/dapp/dapp01_en.png"  >
 
 This chapter introduces the development skills and hardware facilities that DAPP developers need to know.
 
 
-* 1.[Introduction](#1Introduction)
+<!-- * 1.[Introduction](#1Introduction)
   * [1.1 En-Tan-Mo Component Version](#11-En-Tan-Mo Component Version)
   * [1.2 etm-js](#12-etm-js)
   * [1.3 Developing Language Requirements](#13-Developing Language Requirements)
@@ -23,7 +23,7 @@ This chapter introduces the development skills and hardware facilities that DAPP
   * [4.2 Use En-Tan-Mo Wallet](#42-Use En-Tan-Mo Wallet)
 * [5.etm-cli Introduction](#5etm-cli Introduction)
   * [5.1 Install etm-cli](#51-Install etm-cli)
-  * [5.2 Use etm-cli](#52-Use etm-cli)
+  * [5.2 Use etm-cli](#52-Use etm-cli) -->
 
 
 ### 1.Introduction
