@@ -1,4 +1,4 @@
-# Participate In Voting To Receive Dividends
+# Participate In Voting To Receive Benefits
 
 ## 1.What Is En-Tan-Mo Wallet
 

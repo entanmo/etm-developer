@@ -16,7 +16,7 @@ export default {
   VOTE: {
     category: 'Components',
     subtitle: 'ETM 投票、优选与分红机制详解',
-    entitle: 'ETM Voting, Optimization and Dividend Mechanism',
+    entitle: 'ETM Voting, Optimization and Benefit Mechanism',
     type: 'General',
     title: 'vote',
   },
